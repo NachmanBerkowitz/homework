@@ -1,0 +1,23 @@
+img{
+    width: 300px;
+    height:500px;
+    border: 1px solid black;
+}
+body{
+    font-size: 5em;
+}
+div{
+    font-size: .5em;
+}
+h2{
+    /*em compared to parent rem compared to root % compared to parent
+    also px makes it that the guy cant change the font size easily*/
+    font-size: .5em;
+}
+#womensShoes{/*this is for id id="name"*/
+    border:3px green ;
+}
+.shoe{
+    font-style: italic; /*this is a class
+    in html in tag write class"shoe"*/
+}
