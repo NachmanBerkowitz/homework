@@ -1,10 +1,10 @@
 img{
     margin: 20px;
-    margin-right: 20px;
     height: 200px;
     width: 325px;
 }
 .itemimg{
+    display: inherit;
     height: 100px;
     width: 160px;
 }
@@ -26,9 +26,7 @@ p{
 }
 
 .descript{
-    margin: auto;
-    width: fit-content;
-   width: max-content;
+    display: inline-block;
     padding:5px;
     background-color: white;
     font-size: 85%;
@@ -36,8 +34,8 @@ p{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 .itemdesc{
-      padding: inherit;
-    margin-top: auto;
+    display: inline;
+    padding: inherit;
 }
 a:hover{
     text-decoration: underline;
@@ -49,11 +47,9 @@ a{
     text-decoration: none;
 }
 .clickHolder{
-    
     width: 130px;
-    margin: auto;
+    margin-bottom: 10px;
     border: 5px dashed firebrick;
-    
 }
 .clickHolder:hover{
     border: 5px solid firebrick;
@@ -64,5 +60,5 @@ a{
      background-color: goldenrod;
      font-family: 'Courier New', Courier, monospace;
      margin: 0px;
-      text-shadow: gold ;
+     text-shadow: 5px 3px 1px darkblue;
  }
