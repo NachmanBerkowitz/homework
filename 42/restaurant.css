@@ -12,6 +12,12 @@ img{
     margin: auto; 
     width: fit-content;
 }
+h1{
+    position: sticky;
+    top: 0;
+    background-color: white;
+    border-bottom: solid 3px tomato;
+}
 p{
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -21,21 +27,23 @@ p{
     font-stretch: expanded;
     
 }
-.item{
+.items{
     border: 5px solid darkviolet;
 }
-
+.item{
+    display: inline-block;
+}
 .descript{
     display: inline-block;
     padding:5px;
     background-color: white;
     font-size: 85%;
-    font: 300;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 .itemdesc{
-    display: inline;
+    display: inline-block;
     padding: inherit;
+    
 }
 a:hover{
     text-decoration: underline;
@@ -49,7 +57,9 @@ a{
 .clickHolder{
     width: 130px;
     margin-bottom: 10px;
+    background-color: goldenrod;
     border: 5px dashed firebrick;
+    box-shadow: 7px 4px 2px 0px goldenrod;
 }
 .clickHolder:hover{
     border: 5px solid firebrick;
@@ -60,5 +70,5 @@ a{
      background-color: goldenrod;
      font-family: 'Courier New', Courier, monospace;
      margin: 0px;
-     text-shadow: 5px 3px 1px darkblue;
+     text-shadow: 5px 3px 1px gainsboro;
  }

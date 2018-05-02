@@ -7,53 +7,71 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="restaurant.css">
     <style>
-            p{
-                margin: 0px;
-            }
-            .click{
-                font-size:16px;
-            }
-        </style>
+        p {
+            margin: 0px;
+        }
+
+        .click {
+            font-size: 16px;
+        }
+    </style>
     <title>Restaurant Menu</title>
 </head>
 
 <body>
     <h1>
         MENU
+        <a href="restaurant.html">
+            <div class="clickHolder">
+                <p class="click">HOME</p>
+            </div>
+        </a>
     </h1>
     <div>
         <h2>
             MAIN
         </h2>
-        <div class="item">
+        <div class="items">
             <p>
                 Steak
             </p>
             <div class="descript">
-                <div class="itemdesc"> Delectable and juicy. Hits the spot. $2.99</div>
-                <img class="itemimg" src="images/beef-cooking-dinner-65175.jpg" alt="Sorry, no pic">
+                <div class="item">
+                    <div class="itemdesc"> Delectable and juicy. Hits the spot. $2.99</div>
+                    <img class="itemimg" src="images/beef-cooking-dinner-65175.jpg" alt="Sorry, no pic">
+                </div>
+                <div class="item">
+                <div class="itemdesc"> The best ever. Period. $4.99</div>
+                <img class="itemimg" src="images/barbecue-bbq-beef-410648.jpg" alt="Sorry, no pic">
+                </div>
             </div>
-        </div>
+        
     </div>
     <h2>
         DESSERT
     </h2>
-    <div class="item">
+    <div class="items">
         <p>
             Ice Cream
         </p>
         <div class="descript">
-                <div class="itemdesc"> Cool and refreshing. Hits the spot. $2.99</div>
-                <img class="itemimg" src="images/birthday-break-breakfast-461430.jpg" alt="Sorry, no pic">
-            </div>
-                <a href="heathInfo.html" >
-                        <div class= "clickHolder">
-                        <p class= "click">CLICK</p>
-                        <p class= "click">HERE for</p>
-                        <p class= "click">HEALTH INFO</p>
-                        </div>
-                    </a>
+            <div class="itemdesc"> Cool and refreshing. Hits the spot. $2.99</div>
+            <img class="itemimg" src="images/birthday-break-breakfast-461430.jpg" alt="Sorry, no pic">
+        </div>
+
     </div>
+    <a href="heathInfo.html" style="
+    margin: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: white;">
+        <div class="clickHolder">
+            <p class="click">CLICK</p>
+            <p class="click">HERE for</p>
+            <p class="click">HEALTH INFO</p>
+        </div>
+    </a>
 </body>
 
 </html>
