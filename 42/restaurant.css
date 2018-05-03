@@ -51,23 +51,23 @@ a:hover{
 a{
     display: block;
     margin: auto;
+    margin-bottom: 10px;
     width: fit-content;
     text-decoration: none;
 }
 .clickHolder{
     width: 130px;
-    margin-bottom: 10px;
-    background-color: goldenrod;
-    border: 5px dashed firebrick;
-    box-shadow: 7px 4px 2px 0px goldenrod;
+    background-color: lightgray;
+    border: 2px dashed firebrick;
+    box-shadow: 7px 4px 2px 0px gray;
 }
 .clickHolder:hover{
-    border: 5px solid firebrick;
+    border: 3px solid firebrick;
 }
 .click{
      width: inherit;
      margin: inherit;
-     background-color: goldenrod;
+     background-color: lightgray;
      font-family: 'Courier New', Courier, monospace;
      margin: 0px;
      text-shadow: 5px 3px 1px gainsboro;
