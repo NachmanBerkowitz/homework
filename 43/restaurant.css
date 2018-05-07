@@ -25,6 +25,7 @@ img{
     margin: 20px;
     height: 10em;
     width: 15em;
+    border-radius: 10px;
 }
 .itemimg{
     display: inherit;
@@ -32,7 +33,6 @@ img{
     max-width: 125px;
     margin: .5em;
     float: right;
-    border-radius: 10px;
 }
 p,ul li.healthItem{
     text-align: center;
