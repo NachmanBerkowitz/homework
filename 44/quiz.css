@@ -7,8 +7,8 @@ body{
     background-color: white;
 }
 .box{
-    display:inline-block;
     background-color: yellow;
+    display:inline-block;
     border: 1px solid black;
     box-sizing: border-box;
     width:233px;
