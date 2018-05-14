@@ -1,0 +1,140 @@
+body{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    max-width: 85%;
+    margin: auto;
+}
+h1{
+    position: sticky;
+    top: 0;
+    margin-top: .5em;
+    background-color: white;
+    box-shadow: 0px 5px 7px white;
+    border-bottom: solid 3px rgb(145, 34, 179);
+    border-radius: 2.5px;
+}
+#d1{
+    margin: auto; 
+    overflow: auto;
+    text-align: center;
+}
+.bodyDiv{
+    max-width: 80%;
+    margin:auto;
+}
+img{
+    margin: 20px;
+    height: 10em;
+    width: 15em;
+    border-radius: 10px;
+}
+.itemimg{
+    display: inherit;
+    max-height: 75px;
+    max-width: 125px;
+    margin: .5em;
+    float: right;
+}
+p:not(video + p),ul li.healthItem{
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: brown;
+    background-color: skyblue;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    font-size: 200%;
+    font-stretch: expanded;
+    
+}
+.items{
+    border: 5px solid darkviolet;
+    border-radius: 7px;
+    margin-top: 1em;
+    overflow: auto;
+}
+.item{
+    display: inline-block;
+}
+.descript{
+    display: inline-block;
+    padding:5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: white;
+}
+.itemdesc{
+    display: inline-block;
+    padding: inherit;
+    margin-top: 7%;
+}
+a{
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+    width: fit-content;
+    text-decoration: none;
+}
+nav{
+    text-align: center;
+    margin-top: .5em;
+}
+nav a{
+    display: inline-block;
+}
+.clickHolder{
+    width: 130px;
+    background-color: lightgray;
+    border: .09em solid purple;
+    box-shadow: 7px 4px 2px 0px gray;
+    border-radius: 4px;
+}
+.clickHolder:hover{
+    border: .1em solid purple;
+    border-radius: 4px;
+}
+.click{
+     width: inherit;
+     margin: inherit;
+     background-color: lightgray;
+     font-family: 'Courier New', Courier, monospace;
+     margin: 0px;
+     text-shadow: 5px 3px 1px rosybrown;
+ }
+ li ol li{
+     list-style: square outside url("images/star.png");
+     font-family: 'Tangerine', serif;
+     font-size: 1.5em;
+ }
+ video{
+     height: 9em;
+     width: 15em;
+  }
+@media screen and (min-width: 800px) {
+        video {
+            box-sizing: border-box;
+            padding: 6px;
+            width: 33.33%;
+        }
+    }
+@media screen and (max-width: 799px) {
+        video {
+            width: 100%;
+            margin: 10px 0;
+        }
+    }
+audio{
+     cursor: pointer;
+ }
+ .vid{
+     position: relative;
+     text-align: center;
+ }
+  video + p{
+             text-transform: lowercase;
+             font-size: 3em;
+             color: chartreuse;
+             position: absolute;
+             bottom: .5em;
+             right: 0;
+             left: 0;
+ }
