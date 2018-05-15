@@ -34,7 +34,7 @@ img{
     margin: .5em;
     float: right;
 }
-p:not(video + p),ul li.healthItem{
+p, ul li.healthItem{
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: brown;
@@ -129,12 +129,12 @@ audio{
      position: relative;
      text-align: center;
  }
-  video + p{
+  video + span{
              text-transform: lowercase;
              font-size: 3em;
              color: chartreuse;
              position: absolute;
-             bottom: .5em;
+             bottom: 1.5em;
              right: 0;
              left: 0;
  }
