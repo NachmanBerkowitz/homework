@@ -1,0 +1,33 @@
+table{
+    background-color: beige;
+    margin: 3em;
+    
+}
+tr{
+  transition:all 2.5s;  
+}
+tr:not(#head){
+    font-size: 1em;
+    height: 1em;
+}
+tr:not(#head) td:nth-child(1){
+    font-size: 1em;
+}
+tr:not(#head):hover{
+    height: 2em;
+    font-size: 2em;
+}
+tr:nth-child(2n){
+    background-color: brown;
+}
+label, input{
+    font-size: 1.5em;
+    margin: .7em;
+}
+span{
+    display: inline-block;
+}
+input[name="rating"]{
+    width: 50%;
+}
+ 
