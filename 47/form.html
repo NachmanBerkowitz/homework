@@ -29,7 +29,7 @@
         </a>
         <a href="form.html">
             <div class="clickHolder">
-                <p class="click">Survey</p>
+                <p class="click">SURVEY</p>
             </div>
         </a>
         </div>
@@ -40,26 +40,43 @@
     <h3>
         Help us serve you Better!!
     </h3>
-    <form action="action.com">
+    <form action="feedback.php">
         <span>
             <label for="FirstName">First Name</label>
-            <input type="text" name="FirstName" placeholder="FirstName">
+            <input type="text" name="FirstName" placeholder="First Name" id="FirstName">
         </span>
         <span>
             <label for="LastName">LastName</label>
-            <input type="text" name="Last Name" placeholder="First Name" required>
+            <input type="text" name="LastName" placeholder="Last Name" required>
         </span>
         <span>
             <label for="age">Age:</label>
             <input type="number" name="age" placeholder="Age" />
         </span>
+        <span>
+                <label for="date">Date visited:</label>
+                <input type="date" name="date" id="date" required/>
+            </span>
         <div></div>
-        <label for="rating">Rate Us:</label> <input type="range" name="rating" min="1" max="10"/>
+        <label for="rating">Rate Us:</label>
+         <input type="range" name="rating" id+"rating" min="1" max="10" required/>
         <div></div>
-        <label for="Reccomend">Would you reccomend us to you friend?</label>
-        <input type="radio" name="Reccomend" value="yes"/>yes
-        <input type="radio" name="Reccomend" value="no"/>no
-        <input type="radio" name="Reccomend" value="maybe"/>maybe
+        <span>
+            <label for="email">Enter email for info on our specials:</label>
+            <input type="email" name="email" placeholder="me@you.com">
+        </span>
+        <div></div>
+        <label for="Reccomend">Would you reccomend us to your friend?</label>
+        <div class="radio">
+            <span><input type="radio" name="Reccomend" value="yes"/>yes</span>
+            <span><input type="radio" name="Reccomend" value="no"/>no</span>
+            <span><input type="radio" name="Reccomend" value="maybe"/>maybe</span>
+        </div>
+        <div></div>
+        <span>
+            <label for="comments">We love to hear from our customers!</label>
+            <textarea name="comments" placeholder="Awesome food" id="comments"></textarea>
+        </span>
         <div></div>
         <button type="submit">Submit</button>
     </form> 

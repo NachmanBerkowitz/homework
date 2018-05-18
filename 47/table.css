@@ -16,9 +16,19 @@ tr:not(#head) td:nth-child(1){
 tr:not(#head):hover{
     height: 2em;
     font-size: 2em;
+    background-color: gold;
+    color: blueviolet;
+    font: weight 650; 
 }
 tr:nth-child(2n){
     background-color: brown;
+}
+td:last-child{
+    font-style: italic;
+}
+td:first-child{
+    text-shadow: 5em;
+    
 }
 label, input{
     font-size: 1.5em;
@@ -29,5 +39,28 @@ span{
 }
 input[name="rating"]{
     width: 50%;
+}
+button[type="submit"]{
+    margin: 2em;
+    width: 10%;
+    font-size: 120%;
+    border-radius: 5px;
+}
+form{
+    max-width: 75%;
+    border: 1px solid black;
+    margin: auto;
+}
+.radio{
+    display: inline-block;
+    width: 4em;
+    margin: .5em;
+}
+[type="radio"]{
+    margin: .1em;
+}
+label[for="Reccomend"],label[for="comments"]{
+    vertical-align:middle;
+    margin-right: 0;
 }
  
