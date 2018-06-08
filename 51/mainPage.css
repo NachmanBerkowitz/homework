@@ -1,0 +1,147 @@
+*{
+    font-family:  Helvetica, Arial,sans-serif;
+}
+body{
+    margin:0;
+}
+main, ul, .footer{
+    width: 85%;
+    margin: auto;
+}
+ul{
+    padding-left: 0;
+}
+li{
+    display: inline;
+    list-style: none;
+}
+a{
+    text-decoration:none;
+    color: white;
+    padding-right: 2%;
+}
+a:hover{
+    text-decoration: underline;
+}
+header, footer{
+    background-color: black;
+    color: white;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+    position: sticky;
+    z-index: 1;
+}
+header{
+    top: 0;
+}
+footer{
+    bottom: 0;
+}
+
+.banner, form{
+    background-color:lavender;
+    text-align: center;
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
+}
+#uc{
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.5em;
+}
+#itlcs{
+    font-weight: bold;
+    font-style: italic;
+}
+
+.productsGrid{
+    display: grid;
+    justify-content: center;
+}
+.product{
+    text-align: center;
+    padding: 3em;
+}
+.productArticle{
+    text-align: justify;
+}
+video, img{
+    width:100%;
+}
+
+form{
+    padding-top: 1.5em;
+    padding-bottom: 1em;
+    border-radius: 5px;
+}
+.inputs{
+    display: inline-block;
+    text-align: justify;
+}
+.formInput{
+    margin-bottom: .5em;
+}
+input{
+    border-radius: 5px;
+    box-shadow: 2px 3px 3px black;
+    width: 14em;
+    height: 1.8em;
+}
+button{
+    box-shadow:2px 2px 3px gray;
+    height: 1.8em;
+}
+
+table{
+    margin: auto;
+    border-collapse: collapse;
+    width: 85%;
+}
+th,tbody td{
+    border: 1px solid black;
+}
+td:nth-child(n+2){
+    text-align: end;
+}
+td:nth-child(1){
+    text-align: center;
+    font-weight: bold;
+}
+td:last-child{
+    color: red;
+}
+tbody tr:nth-child(odd){
+    background-color:lightblue; 
+}
+tbody tr:hover, tfoot:hover{
+    background-color: blue;
+}
+tfoot td:nth-child(6){
+    border: 1px solid black;
+}
+tfoot td{
+    border-bottom: 1px solid black;
+}
+tfoot td:nth-child(1){
+    border-left: 1px solid black;
+}
+tfoot td:nth-child(5){
+    font-weight: bold;
+}
+@media screen and (min-width: 1000px){
+    .formInput, .sm-inline{
+        display: inline;
+    }
+    .productsGrid{
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+    .product:nth-child(2){
+        border-left: .5px solid black;
+        border-right: .5px solid black;
+    }
+}
+
+
+
