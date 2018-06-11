@@ -61,6 +61,8 @@ footer{
 .product{
     text-align: center;
     padding: 3em;
+    padding-bottom: 1em;
+    padding-top: 1em;
 }
 .productArticle{
     text-align: justify;
