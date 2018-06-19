@@ -44,8 +44,8 @@ function onlyIfTwo(array, test, action){
     array.filter(test).forEach(action);
 }
 
-onlyIf(arrayWithUpper,isUppercase, (i)=>console.log('onlyIf ',i));
-onlyIfTwo(arrayWithUpper,isUppercase, (i)=>console.log('onlyIfTwo ',i));
+onlyIf(arrayMixCase,isUppercase, (i)=>console.log('onlyIf ',i));
+onlyIfTwo(arrayMixCase,isUppercase, (i)=>console.log('onlyIfTwo ',i));
 
 
  
