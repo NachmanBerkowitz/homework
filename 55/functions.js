@@ -94,7 +94,7 @@ Interest.setInterest(.20);
 amount = Interest.howMuchInterest();
 console.log('d',amount);
 
-amount = Interest.setInterest(.10).setYears(10).setIsCompounding(false).setIncludePrincable(true).howMuchInterest();
+amount = Interest.setInterest(.10).setYears(10).setIsCompounding(false).setIncludePrincable(true).howMuchInterest(200);
 console.log('e',amount);
 
 amount = Interest.interest(100,1,.1);
