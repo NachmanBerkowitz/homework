@@ -13,9 +13,16 @@ const Dow = (function () {
 
 console.log(Dow.getNameOfDay(1));
 console.log(Dow.getNumOfDay('Sunday'));
-
+/**
+ * An object with methods to calculate interest.
+ * @type object
+ */
 const Interest = (function () {
     'use strict';
+    /**
+     *The amount of years that interest is accruing.
+     *  @type integer;
+     */
     let years = 0;
     let interestAmount = 0;
     let moneyIn = 0;
@@ -35,6 +42,9 @@ const Interest = (function () {
     };
 
     const interstCalcObj = {
+        /**
+         * @function sets the amount of years interest is accruing.
+         */
         setYears: (amountOfYears) => {
             if (testNoNullOrUndef(amountOfYears)
                 && testIfPositiveNumber(amountOfYears)) {
