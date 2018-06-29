@@ -33,6 +33,7 @@ const Interest = (function () {
     /**
      * Tests if input is null or undefined
      * @param {any} input input to test
+     * @returns true if input is not null and not undefined
      */
     const testNoNullOrUndef = (input) => {
         return (input !== null) && (input !== undefined);
