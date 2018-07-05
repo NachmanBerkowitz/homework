@@ -15,3 +15,4 @@ for( let i = 0; i < 15; i++){
     counter2.increment();
 }
 console.log('Counter 2:',counter2.getCount());
+console.log('Amount of counters:',app.counterGetter.getAmountOfCounters());
