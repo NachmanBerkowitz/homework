@@ -1,0 +1,34 @@
+.colorBoard{
+    margin: auto;
+    margin-bottom: .5em;
+    height: 5em;
+    width: 7.5em;
+    background-color: white;
+    border-radius: 3px;
+    color:white;
+    font-size: 3em;
+    padding: 1em;
+}
+.innerBoard{
+    margin: auto;
+    height: 1.5em;
+    width: 6em;
+    background-color: white;
+    color:white;
+    border-radius: 7px;
+}
+body{
+    text-align: center;
+}
+td{
+    border: 1px solid black;
+    width: 150px;
+}
+table{
+    margin: auto;
+    margin-top:1em;
+    border-collapse: collapse;
+}
+#time{
+    width:200px;
+}
