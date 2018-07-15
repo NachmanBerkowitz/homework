@@ -2,7 +2,7 @@
     const colorBoard = document.getElementById('colorBoard');
     const innerBoard = document.getElementById('innerBoard');
     const theTable = document.getElementById('theTable');
-    const StartRepaintCycle = document.getElementById('StartRepaintCycle');
+    const startRepaintCycle = document.getElementById('StartRepaintCycle');
     const colorsAreChanging = true;
     const colorsAreNotChanging = false;
     let isColorsChanging = colorsAreNotChanging;
@@ -20,7 +20,7 @@
             color: randomColor,
             HTMLelement: HTMLelement,
             colorArea: colorArea
-        }
+        };
     }
 
     function paintPerRow(){
@@ -40,7 +40,7 @@
     let innerColorChange;
     let timeStamp;
 
-    StartRepaintCycle.addEventListener('click', function () {
+    startRepaintCycle.addEventListener('click', function () {
         let newRow;
         if (!isColorsChanging) {
 
@@ -75,7 +75,7 @@
                 timeCell.innerHTML= time.toLocaleTimeString() +' millscs ' + time.getMilliseconds();
             },10);
 
-            StartRepaintCycle.innerHTML = 'STOP';
+            startRepaintCycle.innerHTML = 'STOP';
             isColorsChanging = colorsAreChanging;
         } else {
 
@@ -84,7 +84,7 @@
             clearInterval(innerBgColorChange);
             clearInterval(innerColorChange);
             clearInterval(timeStamp);
-            StartRepaintCycle.innerHTML = 'repaint';
+            startRepaintCycle.innerHTML = 'repaint';
             isColorsChanging = colorsAreNotChanging;
         }
     });
