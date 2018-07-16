@@ -12,7 +12,7 @@
     }
 
     function cycleColors(HTMLelement, colorArea, cell) {
-        let randomColor = 'rgb(' + rgbString() + ', ' + rgbString() + ', ' + rgbString() + ')';
+        let randomColor = `rgb(${rgbString()}, ${rgbString()}, ${rgbString()})`;
         HTMLelement.style[colorArea] = randomColor;
         cell.innerHTML=randomColor;
         cell.style.backgroundColor = randomColor;
