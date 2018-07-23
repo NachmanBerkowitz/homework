@@ -24,7 +24,7 @@ app.clock = (function () {
                 hour: (d.getHours() > 12) ? d.getHours() - 12 : d.getHours(),
                 minutes: d.getMinutes(),
                 seconds: d.getSeconds(),
-            }
+            };
             hourSpan.innerHTML = `${time.hour}:`;
             minuteSpan.innerHTML = `${minSecndsString(time.minutes)}:`;
             secondSpan.innerHTML = minSecndsString(time.seconds);
