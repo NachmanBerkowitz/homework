@@ -1,0 +1,41 @@
+form{
+    padding-top: 1.5em;
+    padding-bottom: 1em;
+    border-radius: 5px;
+}
+.inputs{
+    display: inline-block;
+    text-align: justify;
+}
+.formInput{
+    margin-bottom: .5em;
+}
+input{
+    border-radius: 5px;
+    box-shadow: 2px 3px 3px black;
+    width: 14em;
+    height: 1.8em;
+}
+button{
+    box-shadow:2px 2px 3px gray;
+    height: 1.8em;
+}
+
+table{
+    margin: auto;
+    border-collapse: collapse;
+    min-width: 50%;
+}
+th,tbody td{
+    border: 1px solid black;
+}
+tbody{
+    display: none;
+}
+tr:nth-child(1){
+    text-align: center;
+    font-weight: bold;
+}
+tbody tr:nth-child(even){
+    background-color:lightblue; 
+}
