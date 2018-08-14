@@ -1,16 +1,18 @@
 /* global $ */
-const signUpForm= $('#signUpForm');
-const signUpTable= $('#signUpTable');
-const signUpButton = $('#signUpButton');
+(function(){
+    const signUpForm = $('#signUpForm');
+    const signUpTable = $('#signUpTable');
+    const signUpButton = $('#signUpButton');
 
-signUpButton.click((event)=>{
-    event.preventDefault();
-    signUpTable.append(`<tr>
+    signUpButton.click((event) => {
+        event.preventDefault();
+        signUpTable.append(`<tr>
     <td>${$('#name').val()}</td>
     <td>${$('#email').val()}</td>
     </tr>`)
 
-    signUpTable.show();
+        signUpTable.show();
 
-    signUpForm[0].reset();
-});
+        signUpForm[0].reset();
+    });
+}());
