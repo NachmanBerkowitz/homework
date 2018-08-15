@@ -1,5 +1,5 @@
 /* global $ */
-(function(){
+(function () {
     const signUpForm = $('#signUpForm');
     const signUpTable = $('#signUpTable');
     const signUpButton = $('#signUpButton');
@@ -9,7 +9,7 @@
         signUpTable.append(`<tr>
     <td>${$('#name').val()}</td>
     <td>${$('#email').val()}</td>
-    </tr>`)
+    </tr>`);
 
         signUpTable.show();
 
