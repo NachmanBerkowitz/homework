@@ -1,5 +1,6 @@
 /* global $ */
 (function () {
+    'use strict';
     const signUpForm = $('#signUpForm');
     const signUpTable = $('#signUpTable');
     const signUpButton = $('#signUpButton');
