@@ -6,13 +6,13 @@
 
 
     const waiting = () => {
-        dataViewer.css({ 'font-size': '5em', 'transition': 'all 10s ease' })
+        dataViewer.css({ 'font-size': '5em', 'transition': 'all 10s ease' , 'border' : 'none'});
         dataViewer.html('hold on');
-    }
+    };
 
     const finishedWaiting = ()=>{
-        dataViewer.css({ 'font-size': 'inherit', 'transition': 'none' })
-    }
+        dataViewer.css({ 'font-size': 'inherit', 'transition': 'none' });
+    };
 
     const postToScreen = (data) => {
 
@@ -21,7 +21,7 @@
             data = 'Empty file found';
         }
         dataViewer.css('border', 'black solid 1px');
-        dataViewer.html(data);
+        dataViewer.text(data);
     };
 
     $(loadButton).on('click', () => {
@@ -32,7 +32,7 @@
                 finishedWaiting();
                 $.get(userInput, postToScreen)
                     .fail(postToScreen('Some error has accured. Try a diferent file'));
-            }, 3000)
+            }, 3000);
         }
     });
 
