@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="ajaxWithJson.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="videogrid">
+
+
+        <div id="genres">
+            <h3>
+                Genres
+            </h3>
+            <ul id="genresList"></ul>
+        </div>
+        <div id="videos">
+            <h3>Videos</h3>
+
+            <div id="videoList">
+                Choose a genre
+            </div>
+        </div>
+        <div id="videoContainer">
+            <div>
+                <video id="theVideo" controlslist="nodownload" poster="https://images.pexels.com/photos/1050305/pexels-photo-1050305.jpeg?auto=compress&cs=tinysrgb">
+                </video>
+                <button id="videoControl" style="display: block; margin: auto">play/pause</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="ajaxWithJson.js"></script>
+</body>
+
+</html>

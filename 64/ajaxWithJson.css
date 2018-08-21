@@ -1,0 +1,11 @@
+#videogrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+}
+#theVideo{
+    width: 428px; 
+    height: 240px; 
+    margin:auto; 
+    object-fit: fill;
+    display: block
+}

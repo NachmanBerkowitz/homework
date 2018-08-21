@@ -1,0 +1,41 @@
+{
+    "videoList": [
+        {
+            "name": "Rain",
+            "src": "https://www.videvo.net/videvo_files/converted/2014_12/preview/Raindrops_Videvo.mp485639.webm",
+            "img": "https://images.pexels.com/photos/459451/pexels-photo-459451.jpeg?auto=compress&cs=tinysrgb&h=350",
+            "genre": [
+                0,
+                2
+            ]
+        },
+        {
+            "name": "Forest",
+            "src": "https://www.videvo.net/videvo_files/converted/2016_01/preview/Forest_15_3b_Videvo.mov47209.webm",
+            "img": "https://www.videvo.net/videvo_files/images/preview_Raindrops_Videvo.jpg",
+            "genre": [
+                0,
+                1
+            ]
+        },
+        {
+            "name": "rollercoaster",
+            "src": "https://ak2.picdn.net/shutterstock/videos/33330892/preview/stock-footage-flying-through-turns-on-wooden-roller-coaster.webm",
+            "img": "https://ak2.picdn.net/shutterstock/videos/33330892/thumb/1.jpg",
+            "genre": [
+                1
+            ]
+        },
+        {
+            "name": "",
+            "src": "",
+            "img": "",
+            "genre": []
+        }
+    ],
+    "genres": [
+        "nature",
+        "exciting",
+        "boring"
+    ]
+}
