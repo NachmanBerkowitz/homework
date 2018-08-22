@@ -7,5 +7,18 @@
     height: 240px; 
     margin:auto; 
     object-fit: fill;
-    display: block
+    display: block;
+}
+#videoControl, #videoStop{
+    display:none;
+}
+#buttonGrid{
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr 1fr;
+}
+#videoControl{
+    grid-column: 2/3;
+}
+#videoStop{
+    grid-column: 4/5;
 }

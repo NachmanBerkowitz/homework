@@ -7,6 +7,9 @@
     const theVideo = $('#theVideo');
     const theVideoDomObject = theVideo[0];
     const videoControl = $('#videoControl');
+    const videoStop = $('#videoStop');
+
+
 
     const initialLoad = (fileObject) => {
         fileObject.genres.forEach((genre, index) => {
@@ -15,7 +18,12 @@
                     videoListDiv.empty();
                     const videos = getVideosByGenre(fileObject, index);
                     videos.forEach((video) => {
-                        const videoElem = $(`<p class="vidElem">${video.name}</p>`);
+                        const videoElem = $(`<div class="vidElem">
+                            <p>${video.name}</p>
+                            <div>
+                            <img src="${video.img}" style="width:107px; height:60px">
+                            </div>
+                            </div>`);
                         for (const key in video) {
                             if (video.hasOwnProperty(key)) {
                                 const element = video[key];
@@ -28,9 +36,11 @@
         });
     };
 
-    videoListDiv.on('click', 'p.vidElem', (event) => {
-        const vidInfo = event.target.dataset;
+    videoListDiv.on('click', 'div.vidElem', (event) => {
+        const vidInfo = event.currentTarget.dataset;
         theVideo.attr({ src: vidInfo.src, poster: vidInfo.img });
+        videoControl.css('display', 'block');
+        videoStop.css('display', 'block');
         theVideoDomObject.play();
     });
 
@@ -48,7 +58,12 @@
     };
 
     videoControl.on('click', () => {
-        theVideoDomObject.paused ? theVideoDomObject.play() :theVideoDomObject.pause();
+        theVideoDomObject.paused ? theVideoDomObject.play() : theVideoDomObject.pause();
+    });
+
+    videoStop.on('click', () => {
+        theVideoDomObject.pause();
+        theVideoDomObject.currentTime = 0;
     });
 
     const videoFileCall = $.getJSON('ajaxWithJson.json')
