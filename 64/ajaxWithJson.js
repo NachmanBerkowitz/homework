@@ -21,7 +21,7 @@
                         const videoElem = $(`<div class="vidElem">
                             <p>${video.name}</p>
                             <div>
-                            <img src="${video.img}" style="width:107px; height:60px">
+                            <img src="${video.img}" class="video_image">
                             </div>
                             </div>`);
                         for (const key in video) {

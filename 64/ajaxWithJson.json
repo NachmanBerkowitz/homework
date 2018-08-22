@@ -36,6 +36,24 @@
             ]
         },
         {
+            "name": "Cat Hissing at Camera",
+            "src": "https://www.videvo.net/videvo_files/converted/2018_03/preview/180301_14_B_KowloonWetMarket_09.mp416170.webm",
+            "img": "https://www.videvo.net/videvo_files/images/preview_180301_14_B_KowloonWetMarket_09.jpg",
+            "genre": [
+                1,
+                3
+            ]
+        },
+        {
+            "name": "Siberian Tiger",
+            "src": "https://www.videvo.net/videvo_files/converted/2015_08/preview/Tiger.mp460597.webm",
+            "img": "https://www.videvo.net/videvo_files/images/preview_Tiger.jpg",
+            "genre": [
+                2,
+                3
+            ]
+        },
+        {
             "name": "",
             "src": "",
             "img": "",
@@ -45,6 +63,7 @@
     "genres": [
         "nature",
         "exciting",
-        "boring"
+        "boring",
+        "animals"
     ]
 }
