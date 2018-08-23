@@ -14,7 +14,9 @@
     const initialLoad = (fileObject) => {
         fileObject.genres.forEach((genre, index) => {
             $(`<li>${genre}</li>`).appendTo(genresList)
-                .on('click', () => {
+                .on('click', (event) => {
+                    genresList.find('li').css('fontSize', 'initial');
+                    event.currentTarget.style.fontSize = '2em';
                     videoListDiv.empty();
                     const videos = getVideosByGenre(fileObject, index);
                     videos.forEach((video) => {
@@ -66,7 +68,7 @@
         theVideoDomObject.currentTime = 0;
     });
 
-    const videoFileCall = $.getJSON('ajaxWithJson.json')
+    $.getJSON('ajaxWithJson.json')
         .fail((error) => {
             console.log(error);
             window.alert('Failed to retrieve files.');
