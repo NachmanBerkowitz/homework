@@ -9,14 +9,16 @@
     const videoControl = $('#videoControl');
     const videoStop = $('#videoStop');
 
-
+    var selectdGenreElem = $('');
+    var selectedVideoElem = $('');
 
     const initialLoad = (fileObject) => {
         fileObject.genres.forEach((genre, index) => {
             $(`<li>${genre}</li>`).appendTo(genresList)
                 .on('click', (event) => {
-                    genresList.find('li').css('fontSize', 'initial');
-                    event.currentTarget.style.fontSize = '2em';
+                    resetTextToInitial(selectdGenreElem);
+                    selectdGenreElem = $(event.currentTarget);
+                    setTextToX_Large(selectdGenreElem);
                     videoListDiv.empty();
                     const videos = getVideosByGenre(fileObject, index);
                     videos.forEach((video) => {
@@ -39,7 +41,10 @@
     };
 
     videoListDiv.on('click', 'div.vidElem', (event) => {
-        const vidInfo = event.currentTarget.dataset;
+        resetTextToInitial(selectedVideoElem);
+        selectedVideoElem = $(event.currentTarget);
+        setTextToX_Large(selectedVideoElem);
+        const vidInfo = selectedVideoElem[0].dataset;
         theVideo.attr({ src: vidInfo.src, poster: vidInfo.img });
         videoControl.css('display', 'block');
         videoStop.css('display', 'block');
@@ -58,6 +63,14 @@
         });
         return videos;
     };
+
+    const setTextToX_Large = (elem) => {
+        elem.css('fontSize', 'x-large');
+    };
+
+    const resetTextToInitial = (elem) => {
+        elem.css('fontSize', 'initial');
+    }
 
     videoControl.on('click', () => {
         theVideoDomObject.paused ? theVideoDomObject.play() : theVideoDomObject.pause();
