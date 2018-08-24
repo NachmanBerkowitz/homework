@@ -1,0 +1,31 @@
+#picGrid{
+    display: grid;
+    grid-template: "title title  ." 4em
+                   "left  pic   right" minmax(10em, auto)
+                   /1fr 10fr 1fr;
+    max-width: 30em;
+    justify-items: center;
+    align-items: center;
+    margin-top: 1em;
+}
+.picRevolve{
+    font-size: x-large;
+    transform: scaleY(4);
+    color: blue;
+}
+#previous{
+    grid-area: left;
+}
+#next{
+    grid-area: right;
+}#pic{
+    grid-area: pic;
+}
+#title{
+    grid-area: title;
+}
+#theButton{
+    background-color: initial;
+    border: none;
+    font-size: 1.3em;
+}

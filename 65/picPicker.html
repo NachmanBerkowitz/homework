@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Picture picker</title>
+    <link rel="stylesheet" href="picPicker.css">
+</head>
+
+<body>
+
+
+    <label for="pickerInput">
+        Pick a category
+    </label>
+    <input id="pickerInput" type="text" placeholder="smiley face" maxlength="20">
+    <button id="theButton">✅</button>
+    <div id="picGrid">
+        <span id="title"></span>
+        <div id="previous" class="picRevolve">
+            <span><</span>
+        </div>
+        <div id="pic">
+            <img id="thePic" src="" alt="picture is shy :(">
+        </div>
+        <div id="next" class="picRevolve">
+            <span>></span>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="picPicker.js"></script>
+</body>
+
+</html>
