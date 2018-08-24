@@ -31,7 +31,7 @@
                         for (const key in video) {
                             if (video.hasOwnProperty(key)) {
                                 const element = video[key];
-                                videoElem.attr(`data-${key}`, `${element}`)
+                                videoElem.attr(`data-${key}`, `${element}`);
                             }
                         }
                         videoListDiv.append(videoElem);
@@ -70,7 +70,7 @@
 
     const resetTextToInitial = (elem) => {
         elem.css('fontSize', 'initial');
-    }
+    };
 
     videoControl.on('click', () => {
         theVideoDomObject.paused ? theVideoDomObject.play() : theVideoDomObject.pause();
