@@ -12,6 +12,7 @@
     font-size: x-large;
     transform: scaleY(4);
     color: blue;
+    cursor: pointer;
 }
 #previous{
     grid-area: left;

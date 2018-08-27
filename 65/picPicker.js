@@ -47,8 +47,16 @@
     };
 
     function showPic(picIndex) {
-        const src = pictures[picIndex].media.m;
-        const theTitle = pictures[picIndex].title;
+        let src;
+        let theTitle;
+        try {
+            src = pictures[picIndex].media.m;
+            theTitle = pictures[picIndex].title;
+        } catch (error) {
+            src = '';
+            theTitle = '';
+            console.log(error);
+        }
         image.attr('src', src);
         title.text(theTitle);
     }
