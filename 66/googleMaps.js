@@ -22,7 +22,7 @@
     const localeTitle = $('#localeTitle');
     const info = $('#info');
 
-    const summary = $('#summary');
+    const summarySpot = $('#summary');
     const img = $('#info img');
 
     let previousSelection = 'Jerusalem';
@@ -31,8 +31,8 @@
         getLocales('Jerusalem')
             .done((data) => {
                 showLocale(data);
-                const a = $('.locale')[0];
-                showinfo(a.attributes);
+                const a = $($('.locale')[0]);
+                showinfo(a.data());
             });
     }());
 
@@ -58,34 +58,31 @@
     function showLocale({ geonames: localeArray }) {
         if (localeArray.length > 0) {
             localeTitle.empty();
-            localeArray.forEach(({ lat, lng, summary, thumbnailImg, title, wikipediaUrl }) => {
+            localeArray.forEach( ({ lat, lng, summary, thumbnailImg, title, wikipediaUrl }) => {
                 const div = $(`<div class="locale">${title}</div>`)
                     .appendTo(localeTitle)
                     .css('background-color', helper.randomColor())
-                    .on('click', (event) => {
-                        showinfo(event.currentTarget.attributes);
+                    .data({ lat, lng, summary, thumbnailImg, wikipediaUrl })
+                    .on('click', () => {
+                        showinfo(div.data());
                     });
-                div.attr({ lat, lng, summary, thumbnailImg, wikipediaUrl });
             });
         }
     }
 
-    function showinfo(localeInfo) {
-        const lat = parseFloat(localeInfo.lat.nodeValue);
-        const lng = parseFloat(localeInfo.lng.nodeValue);
-        const location = { lat, lng };
-
+    function showinfo({ lat, lng, summary, thumbnailImg, wikipediaUrl }) {
+        
         new google.maps.Map(document.getElementById('map'), {
-            center: location,
+            center: { lat, lng },
             zoom: 18,
             mapTypeId: google.maps.MapTypeId.MAP
         });
 
         info.empty;
-        summary.text(localeInfo.summary.nodeValue.substr(0, localeInfo.summary.nodeValue.length-5));
-        img.attr('src', localeInfo.thumbnailImg.nodeValue);
-        console.log(img);
-        $('#info a').attr('href', `https://${localeInfo.wikipediaUrl.nodeValue}`);
+      
+        summarySpot.text(`${summary.substr(0, summary.length-5)}... (For more see Wikapedia)`);
+        img.attr('src', thumbnailImg);
+        $('#info a').attr('href', `https://${wikipediaUrl}`);
     }
     
 

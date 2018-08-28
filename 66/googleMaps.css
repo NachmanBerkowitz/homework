@@ -1,6 +1,6 @@
 #grid{
     display: grid;
-    grid-template: "map map locales" 67vh   
+    grid-template: "map map locales" minmax(25em ,67vh)
                    "info info info" minmax(33vh, auto)
                    /2fr 2fr 1fr;
 }
@@ -23,7 +23,7 @@
     grid-column-gap: 1em;
     justify-items: center;
     align-items: center;
-
+    
 }
 #input{
     position: sticky;
