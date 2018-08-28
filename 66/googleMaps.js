@@ -30,7 +30,6 @@
     (function setup() {
         getLocales('Jerusalem')
             .done((data) => {
-                console.log(data);
                 showLocale(data);
                 const a = $('.locale')[0];
                 showinfo(a.attributes);
@@ -85,6 +84,7 @@
         info.empty;
         summary.text(localeInfo.summary.nodeValue.substr(0, localeInfo.summary.nodeValue.length-5));
         img.attr('src', localeInfo.thumbnailImg.nodeValue);
+        console.log(img);
         $('#info a').attr('href', `https://${localeInfo.wikipediaUrl.nodeValue}`);
     }
     
