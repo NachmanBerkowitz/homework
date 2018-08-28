@@ -1,0 +1,48 @@
+#grid{
+    display: grid;
+    grid-template: "map map locales" 67vh   
+                   "info info info" 33vh
+                   /2fr 2fr 1fr;
+}
+#map{
+    height: 100%;
+    grid-area: map;
+}
+#locales{
+    grid-area: locales;
+    overflow: scroll;
+}
+#info{
+    grid-area: info;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(152, 141, 323);
+    display:grid;
+    grid-template: "summary link img"
+                  /3.2fr .6fr 1.2fr;
+    justify-items: center;
+    align-items: center;
+
+}
+#input{
+    position: sticky;
+    top: 0;
+    padding: 1em;
+    background-color: lightblue;
+}
+.locale{
+    padding: 1em;
+    text-align: center;
+}
+#summary{
+    grid-area:summary;
+    text-align: justify;
+    padding-left: 1em;
+}
+#info img{
+    grid-area:img; 
+    height: 100%;
+}
+#info a{
+    grid-area:link;
+}

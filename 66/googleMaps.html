@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Maps</title>
+    <link rel="stylesheet" href="googleMaps.css">
+</head>
+
+<body>
+    <div id='grid'>
+        <div id='map'></div>
+        <div id='locales'>
+            <div id="input">
+                <label for="place">Enter a place</label><br>
+                <input type="text" name="placeInput" id="placeInput" placeholder="Jerusalem" maxlength="20">
+                <button id='placeButton'>GO</button>
+            </div>
+            <div id="localeTitle">
+
+            </div>
+        </div>
+        <div id="info">
+            <p id="summary"></p>
+            <a href="" target="_blank">Wikapedia</a>
+            <img src="" alt="">
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLWdz-LiTqdxkwk-UnpDqAFjvDhF4cpOE"></script>
+    <script src="googleMaps.js"></script>
+</body>
+
+</html>
