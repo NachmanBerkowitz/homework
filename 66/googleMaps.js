@@ -69,7 +69,7 @@
     });
 
     function getLocales(locale) {
-        return $.getJSON(`http://api.geonames.org/wikipediaSearch?q=${locale}&maxRows=10&username=slubowsky&type=json`);
+        return $.getJSON(`http://api.geonames.org/wikipediaSearch?q=${locale}&maxRows=10&username=nachman_berkowitz&type=json`);
     }
 
     function showLocale({ geonames: localeArray }) {
@@ -97,7 +97,7 @@
 
         info.empty;
       
-        summarySpot.text(`${summary.substr(0, summary.length-5)}... (For more see Wikapedia)`);
+        summarySpot.text(`${summary.substr(0, summary.length-5)}... (For more see Wikipedia)`);
         img.attr('src', thumbnailImg);
         $('#info a').attr('href', `https://${wikipediaUrl}`);
     }

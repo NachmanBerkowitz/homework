@@ -62,7 +62,7 @@
     text-decoration:underline;
 }
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 800px){
     #info{
         grid-template: "summary img"
                        "link    img"
