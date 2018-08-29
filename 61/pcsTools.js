@@ -15,7 +15,7 @@ const pcs = (function () {
         },
 
         rgbString: function () {
-            return (Math.floor(Math.random() * 226)).toString();
+            return (Math.floor(Math.random() * 256)).toString();
         },
 
         cycleColors: function (HTMLelement, background) {
