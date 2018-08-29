@@ -46,6 +46,17 @@
     max-width: 100%;
     max-height: 15em;
 }
-#info a{
-    grid-area:link;
+#wikLinkDiv{
+    background-color: rgb(200,200,200);
+    border-radius: 50%;
+    height: fit-content;
+    align-items: center;
+    padding: 20% 1em;
+    grid-area: link;
+}
+#wikLinkDiv a{
+    text-decoration: overline;
+}
+#wikLinkDiv a:hover {
+    text-decoration:underline;
 }

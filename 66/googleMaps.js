@@ -3,17 +3,34 @@
     'use strict';
 
     const helper = {
-        randomRgb: function () {
-            return (Math.floor(Math.random() * 226));
+        randomLightColor: function (){
+            const minTotal = 383;
+            const max_rgb = 255;
+            
+            const r = helper.randInt(0,max_rgb);
+            let min = (r < (minTotal - max_rgb))? (minTotal - r)-max_rgb: 0;
+            const g =helper.randInt(min,max_rgb);
+            min = (r+g < minTotal)?(minTotal - (g+r)):0;
+            const b = helper.randInt(min,max_rgb);
+
+            return `rgb(${r},${g},${b})`;
         },
 
-        randomColor: function (HTMLelement, background) {
-            let randomColor = `rgb(${helper.randomRgb()}, ${helper.randomRgb()}, ${helper.randomRgb()})`;
-            if (!HTMLelement) {
-                return randomColor;
-            }
-            const ground = background ? 'backgroundColor' : 'color';
-            $('HTMLelement').css(`${ground}`, randomColor);
+        randomDarkColor: function(){
+            const maxTotal = 383;
+            const max_rgb = 255;
+
+            const r = helper.randInt(0,max_rgb);
+            let max = maxTotal-r<max_rgb?maxTotal-r:max_rgb;
+            const g = helper.randInt(0,max);
+            max = maxTotal-(r+g)<max_rgb?maxTotal-(r+g):max_rgb;
+            const b = helper.randInt(0,max);
+
+            return `rgb(${r},${g},${b})`;
+        },
+
+        randInt: function (min,limit){
+            return (Math.floor (( Math.random()* ((limit+1)-min)) +min));
         }
     };
 
@@ -61,7 +78,7 @@
             localeArray.forEach( ({ lat, lng, summary, thumbnailImg, title, wikipediaUrl }) => {
                 const div = $(`<div class="locale">${title}</div>`)
                     .appendTo(localeTitle)
-                    .css('background-color', helper.randomColor())
+                    .css('background-color', helper.randomLightColor())
                     .data({ lat, lng, summary, thumbnailImg, wikipediaUrl })
                     .on('click', () => {
                         showinfo(div.data());
