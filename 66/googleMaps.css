@@ -30,6 +30,7 @@
     top: 0;
     padding: 1em;
     background-color: lightblue;
+    overflow: auto;
 }
 .locale{
     padding: 1em;
@@ -51,7 +52,7 @@
     border-radius: 50%;
     height: fit-content;
     align-items: center;
-    padding: 20% 1em;
+    padding: 1.5em;
     grid-area: link;
 }
 #wikLinkDiv a{
@@ -59,4 +60,11 @@
 }
 #wikLinkDiv a:hover {
     text-decoration:underline;
+}
+
+@media screen and (max-width: 1000px){
+    #info{
+        grid-template: "summary img"
+                       "link    img"
+    }
 }
