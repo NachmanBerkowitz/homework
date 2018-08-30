@@ -1,3 +1,6 @@
+html, body{
+    margin:0;
+}
 #grid{
     display: grid;
     grid-template: "map map locales" minmax(25em ,67vh)
