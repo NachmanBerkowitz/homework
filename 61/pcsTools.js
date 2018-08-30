@@ -1,4 +1,4 @@
-const pcs = (function () {
+const pcs = (function () { // eslint-disable-line no-unused-vars
     'use strict';
 
     const helper = {
