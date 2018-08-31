@@ -35,37 +35,46 @@
     };
 
     const drawShapes = {
-        marker: function (latLng) {
-            new google.maps.Marker({
+        marker: function (latLng, index) {
+            const m = new google.maps.Marker({
                 position: latLng,
-                map: map
+                map: map,
+                draggable:true
             });
+            m.index = index;
         },
-        circle: function ({ center, radius }) {
-            new google.maps.Circle({
+        circle: function ({ center, radius }, index) {
+            const c = new google.maps.Circle({
                 center: center,
                 radius: radius,
-                map: map
+                map: map,
+                draggable:true
             });
+            c.index = index;
         },
-        polyline: function (points) {
-            new google.maps.Polyline({
+        polyline: function (points, index) {
+            const p = new google.maps.Polyline({
                 path: points,
-                map: map
+                map: map,
+                draggable:true
             });
+            p.index = index;
         },
-        polygon: function (points) {
-            new google.maps.Polygon({
+        polygon: function (points, index) {
+            const p = new google.maps.Polygon({
                 paths: points,
-                map: map
+                map: map,
+                draggable:true
             });
+            p.index = index;
         },
-        rectangle: function (bounds) {
-            console.log(bounds);
-            new google.maps.Rectangle({
+        rectangle: function (bounds, index) {
+            const r = new google.maps.Rectangle({
                 bounds: bounds,
-                map: map
+                map: map,
+                draggable:true
             });
+            r.index = index;
         }
     };
 
@@ -74,21 +83,28 @@
         map = mapSetup.map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: 31.783333, lng: 35.216667 },
             zoom: 18,
-            mapTypeId: google.maps.MapTypeId.MAP
+            mapTypeId: google.maps.MapTypeId.MAP,
+
         });
 
-        const drawingManager = new google.maps.drawing.DrawingManager();
+        const drawingManager = new google.maps.drawing.DrawingManager({
+            markerOptions:{draggable:true},
+            circleOptions:{draggable:true},
+            rectangleOptions:{draggable:true},
+            polylineOptions:{draggable:true},
+            polygonOptions:{draggable:true}
+        });
         drawingManager.setMap(map);
 
         function addToLocalStorage(shape, info) {
             let shapeLocalStorage = localStorage[shape];
             const shapeArray = shapeLocalStorage ? JSON.parse(shapeLocalStorage) : [];
             shapeArray.push(info);
-            console.table(shapeArray);
             localStorage[shape] = JSON.stringify(shapeArray);
         }
 
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
+            console.log(event);
             const info = event.overlay;
             const shape = event.type;
             let coordinates;
@@ -131,14 +147,14 @@
         for (const shape in localStorage) {
             if (localStorage.hasOwnProperty(shape)) {
                 const shapeArray = JSON.parse(localStorage[shape]);
-                shapeArray.forEach((shapeInfo) => {
-                    drawShapes[shape](shapeInfo);
+                shapeArray.forEach((shapeInfo,index) => {
+                    drawShapes[shape](shapeInfo,index);
                 });
             }
         }
     }());
 
-    
+
 
     input.on('keyup', (event) => {
         if (event.keyCode === 13) {
