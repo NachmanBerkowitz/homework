@@ -34,6 +34,78 @@
         }
     };
 
+    const drawShapes = {
+        marker: function (latLng) {
+            new google.maps.Marker({
+                position: latLng,
+                map: map
+            });
+        },
+        circle: function ({ center, radius }) {
+            new google.maps.Circle({
+                center: center,
+                radius: radius,
+                map: map
+            });
+        },
+        polyline: function (points) {
+            new google.maps.Polyline({
+                path: points,
+                map: map
+            });
+        },
+        polygon: function (points) {
+            new google.maps.Polygon({
+                paths: points,
+                map: map
+            });
+        },
+        rectangle: function (bounds) {
+            console.log(bounds);
+            new google.maps.Rectangle({
+                bounds: bounds,
+                map: map
+            });
+        }
+    };
+
+    function mapSetup() {
+
+        map = mapSetup.map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 31.783333, lng: 35.216667 },
+            zoom: 18,
+            mapTypeId: google.maps.MapTypeId.MAP
+        });
+
+        const drawingManager = new google.maps.drawing.DrawingManager();
+        drawingManager.setMap(map);
+
+        function addToLocalStorage(shape, info) {
+            let shapeLocalStorage = localStorage[shape];
+            const shapeArray = shapeLocalStorage ? JSON.parse(shapeLocalStorage) : [];
+            shapeArray.push(info);
+            console.table(shapeArray);
+            localStorage[shape] = JSON.stringify(shapeArray);
+        }
+
+        google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
+            const info = event.overlay;
+            const shape = event.type;
+            let coordinates;
+            if (shape === 'marker') {
+                coordinates = { lat: info.position.lat(), lng: info.position.lng() };
+            } else if (shape === 'circle') {
+                coordinates = { center: { lat: info.center.lat(), lng: info.center.lng() }, radius: info.radius };
+            } else if (shape === 'rectangle') {
+                coordinates = info.bounds;
+            } else if (shape === 'polyline' || event.type === 'polygon') {
+                coordinates = info.latLngs.b[0].b;
+            }
+            addToLocalStorage(shape, coordinates);
+        });
+    }
+
+    let map;
     const input = $('#placeInput');
     const placeButton = $('#placeButton');
     const localeTitle = $('#localeTitle');
@@ -41,16 +113,7 @@
     const summarySpot = $('#summary');
     const img = $('#info img');
 
-    let previousSelection = 'Jerusalem';
-
-    (function setup() {
-        getLocales('Jerusalem')
-            .done((data) => {
-                showLocale(data);
-                const a = $($('.locale')[0]);
-                showinfo(a.data());
-            });
-    }());
+    let previousSelection = '';
 
     placeButton.on('click', () => {
         const curentInput = input.val();
@@ -60,6 +123,22 @@
         }
         previousSelection = curentInput;
     });
+
+    (function setup() {
+        mapSetup();
+        placeButton.trigger('click');
+
+        for (const shape in localStorage) {
+            if (localStorage.hasOwnProperty(shape)) {
+                const shapeArray = JSON.parse(localStorage[shape]);
+                shapeArray.forEach((shapeInfo) => {
+                    drawShapes[shape](shapeInfo);
+                });
+            }
+        }
+    }());
+
+    
 
     input.on('keyup', (event) => {
         if (event.keyCode === 13) {
@@ -83,17 +162,11 @@
                         showinfo(div.data());
                     });
             });
+            $($('.locale')[0]).click();
         }
     }
-    let map;
-    function showinfo({ lat, lng, summary, thumbnailImg, wikipediaUrl }) {
 
-        map = map ||
-            new google.maps.Map(document.getElementById('map'), {
-                center: { lat, lng },
-                zoom: 18,
-                mapTypeId: google.maps.MapTypeId.MAP
-            });
+    function showinfo({ lat, lng, summary, thumbnailImg, wikipediaUrl }) {
 
         map.setCenter({ lat, lng });
 
@@ -101,8 +174,6 @@
         img.attr('src', thumbnailImg);
         $('#info a').attr('href', `https://${wikipediaUrl}`);
     }
-
-
 }());
 
 
