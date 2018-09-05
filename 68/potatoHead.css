@@ -7,10 +7,6 @@ body{
     background-size: cover;
     margin:.1em;
 }
-html{
-    padding:0;
-
-}
 .left{
     transform: scaleX(-1)
 }
