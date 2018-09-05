@@ -6,7 +6,6 @@
     let inSandbox = $();
     let offset;
     let zIndex = 1;
-    let deg = 5;
     const sandbox = $('#sandbox');
     const left_button = $('#left_button');
     const right_button = $('#right_button');
@@ -20,20 +19,26 @@
         if (dragging) {
             wasDragged = dragging;
             dragging = null;
-            const sandbox_left = sandbox[0].getBoundingClientRect().left;
-            const _wasDragged_ = {
-                left: parseInt(wasDragged[0].getBoundingClientRect().left),
-                right: parseInt(wasDragged[0].getBoundingClientRect().right)
+            const _sandbox_ = {
+                left: sandbox[0].getBoundingClientRect().left,
+                bottom: sandbox[0].getBoundingClientRect().bottom
             };
-            if (_wasDragged_.left > sandbox_left && wasDragged.css('z-index') !== inSandbox.css('z-index')) {
-                inSandbox.css('left', `${sandbox_left - (_wasDragged_.right - _wasDragged_.left) - 80}px`);
+            const _wasDragged_ = {
+                left: wasDragged[0].getBoundingClientRect().left,
+                right: wasDragged[0].getBoundingClientRect().right,
+                bottom: wasDragged[0].getBoundingClientRect().bottom
+            };
+            if (_wasDragged_.left > _sandbox_.left
+                && _wasDragged_.bottom < _sandbox_.bottom) {
+                if (wasDragged.css('z-index') !== inSandbox.css('z-index')) {
+                    inSandbox.removeClass('in_sandbox');
+                    inSandbox = wasDragged;
+                    inSandbox.addClass('in_sandbox');
+                }
+            } else if (inSandbox[0] && inSandbox[0].getBoundingClientRect().left < _sandbox_.left) {
                 inSandbox.removeClass('in_sandbox');
-                inSandbox = wasDragged;
-                inSandbox.addClass('in_sandbox');
-            } else if (inSandbox[0] && parseInt(inSandbox[0].getBoundingClientRect().left) < sandbox_left) {
-                inSandbox.removeClass('in_sandbox');
+                inSandbox.removeClass('bright');
                 inSandbox = $();
-                deg = 5;
             }
         }
         event.preventDefault();
@@ -60,7 +65,7 @@
             const newWidth = (newHeight * width) / height;
             inSandbox.css({ height: `${newHeight}`, width: `${newWidth}` });
         } else {
-            deg = inSandbox.data().deg || 0;
+            let deg = inSandbox.data().deg || 0;
             inSandbox.css('transform', `rotate(${deg += 5}deg)`);
             inSandbox.data({ deg });
         }
@@ -73,8 +78,8 @@
             const newWidth = (newHeight * width) / height;
             inSandbox.css({ height: `${newHeight}`, width: `${newWidth}` });
         } else {
-            deg = inSandbox.data().deg || 0;
-            inSandbox.css('transform', `rotate(${deg += 5}deg)`);
+            let deg = inSandbox.data().deg || 0;
+            inSandbox.css('transform', `rotate(${deg -= 5}deg)`);
             inSandbox.data({ deg });
         }
     });
@@ -139,5 +144,18 @@
             });
         }
         tracks[0].play();
+        let bright = false;
+        setInterval(() => {
+            if (inSandbox[0]) {
+                if (!bright) {
+                    inSandbox.addClass('bright');
+                    bright = true;
+                } else {
+                    inSandbox.removeClass('bright');
+                    bright = false;
+                }
+            }
+        }, 500);
     }());
+
 }());

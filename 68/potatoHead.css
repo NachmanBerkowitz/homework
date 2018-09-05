@@ -1,23 +1,36 @@
+:root{
+    --sandbox_border:solid .5em red;
+}
 body{
     background-image: url(bg/22900-blue-sky-prairie-scenery.jpg);
     background-repeat: repeat-y;
     background-size: cover;
-    
+    margin:.1em;
+}
+html{
+    padding:0;
+
 }
 .left{
     transform: scaleX(-1)
 }
 #grid{
     display: grid;
-    grid-template: "d p s" 26em
-                    /1fr 3fr 2fr;
+    grid-template: "d p s" minmax(26em, auto)
+                   "d p c"
+                    /1.5fr 3fr 2fr;
 }
 #drawers{
+    background-color: rgba(100, 100, 100, 0.6);
     grid-area: d;
+    display:grid;
+    grid-template-areas: "a a";
+    grid-auto-rows: 1fr 1fr;
 }
 #sandbox{
     grid-area: s;
-    border-left:solid 1em black;
+    border-left:var(--sandbox_border);
+    border-bottom:var(--sandbox_border);
     display:grid;
     background-image: url(bg/sandboximage.jpg);
     background-repeat: no-repeat;
@@ -28,7 +41,7 @@ body{
     cursor: pointer;
 }
 .drawer{
-    height: 4em;
+    height: 4.5em;
     overflow: auto;
 }
 #buttons, #change_buttons{
@@ -36,5 +49,12 @@ body{
 }
 #copy_machine{
     height:5em;
-    align-self: end;
+    grid-area: c;
+}
+.in_sandbox{
+    transition: transform 0.5s, height 0.5s, width 0.5s , filter 0.95s;
+    filter: brightness(100%);
+}
+.bright{
+    filter: brightness(150%);
 }
