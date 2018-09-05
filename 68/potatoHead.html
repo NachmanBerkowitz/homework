@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Potato Head</title>
+    <link rel="stylesheet" href="potatoHead.css">
+</head>
+<body>
+    <div id="whole">
+        <div id="grid">
+            <div id="drawers">
+                <div class="drawer" id="hat_drawer">
+                    <div class="drawer_cover"></div>
+                </div>
+                <div class="drawer" id="eyes_drawer">
+                    <img src="parts/eyes.png" class="body_part old" id="eyes1" alt="">
+                    <div class="drawer_cover"></div>
+                </div>
+                <div class="drawer" id="right_ear_drawer">
+                    <img src="parts/ear.png" class="body_part old" id="right_ear1" alt="">
+                   <div class="drawer_cover"></div>
+                </div>
+                <div class="drawer" id="left_ear_drawer">
+                    <img src="parts/ear.png" class="left body_part old" id="left_ear1" alt="">
+                <div class="drawer_cover"></div>
+                </div>
+                <div class="drawer" id="nose_drawer">
+                    <img src="parts/nose.png" class="body_part old" id="nose1" alt="">
+                    <div class="drawer_cover"></div>
+                </div>
+                <div class="drawer" id="mouth_drawer">
+                    <img src="parts/mouth.png" class="body_part old" id="mouth1" alt="">
+                    <div class="drawer_cover"></div>
+                </div>
+                <div class="drawer" id="right_hand_drawer">
+                    <img src="parts/right_hand.png" alt="" class="body_part old" id="right_hand1">
+                    <div class="drawer_cover"></div>
+                </div>
+                <div class="drawer" id="left_hand_drawer">
+                    <img src="parts/left_hand.png" alt="" class="body_part old" id="left_hand1">
+                    <div class="drawer_cover"></div>
+                </div>
+                <div class="drawer" id="feet_drawer">
+                    <img src="parts/feet.png" alt="" class="body_part old" id="feet1">
+                    <div class="drawer_cover"></div>
+                </div>
+            </div>
+            <div id="play">
+                <button id="save">save</button>
+                <button id="reset">reset</button>
+                <img src="parts/body.png"  class="body" alt="">
+            </div>
+            <div id="sandbox">
+                <div id="buttons">
+                    <button id="copy">copy</button>
+                    <button id="delete">delete</button>
+                    <br>
+                    <button id="set_size">resize</button>
+                    <button id="set_rotate">rotate</button>
+                    <br>
+                    <div id="change_buttons">
+                        <button id="left_button">?</button>
+                        <button id="right_button">?</button>
+                    </div>
+                </div>
+                <div id="change"></div>
+            </div>
+            <div id="copy_machine"></div>
+        </div>
+    </div>
+    <audio src="music/Shmuel Kunda-When zaidy was young 1-Track 1.mp3" class="bg_music" id="track_1"></audio>
+    <audio src="music/Shmuel Kunda-When zaidy was young 2-Track 1.mp3" class="bg_music" id="track_2"></audio>
+    <script src="../../jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="potatoHead.js"></script>
+</body>
+</html>
