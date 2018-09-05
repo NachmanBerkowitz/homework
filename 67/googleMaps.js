@@ -39,7 +39,7 @@
             const m = new google.maps.Marker({
                 position: latLng,
                 map: map,
-                draggable:true
+                draggable: true
             });
             m.index = index;
         },
@@ -48,7 +48,7 @@
                 center: center,
                 radius: radius,
                 map: map,
-                draggable:true
+                draggable: true
             });
             c.index = index;
         },
@@ -56,7 +56,7 @@
             const p = new google.maps.Polyline({
                 path: points,
                 map: map,
-                draggable:true
+                draggable: true
             });
             p.index = index;
         },
@@ -64,7 +64,7 @@
             const p = new google.maps.Polygon({
                 paths: points,
                 map: map,
-                draggable:true
+                draggable: true
             });
             p.index = index;
         },
@@ -72,7 +72,7 @@
             const r = new google.maps.Rectangle({
                 bounds: bounds,
                 map: map,
-                draggable:true
+                draggable: true
             });
             r.index = index;
         }
@@ -88,38 +88,42 @@
         });
 
         const drawingManager = new google.maps.drawing.DrawingManager({
-            markerOptions:{draggable:true},
-            circleOptions:{draggable:true},
-            rectangleOptions:{draggable:true},
-            polylineOptions:{draggable:true},
-            polygonOptions:{draggable:true}
+            markerOptions: { draggable: true },
+            circleOptions: { draggable: true },
+            rectangleOptions: { draggable: true },
+            polylineOptions: { draggable: true },
+            polygonOptions: { draggable: true }
         });
         drawingManager.setMap(map);
 
-        function addToLocalStorage(shape, info) {
-            let shapeLocalStorage = localStorage[shape];
-            const shapeArray = shapeLocalStorage ? JSON.parse(shapeLocalStorage) : [];
-            shapeArray.push(info);
-            localStorage[shape] = JSON.stringify(shapeArray);
-        }
-
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
-            console.log(event);
-            const info = event.overlay;
+            const overlay = event.overlay;
             const shape = event.type;
             let coordinates;
             if (shape === 'marker') {
-                coordinates = { lat: info.position.lat(), lng: info.position.lng() };
+                coordinates = { lat: overlay.position.lat(), lng: overlay.position.lng() };
             } else if (shape === 'circle') {
-                coordinates = { center: { lat: info.center.lat(), lng: info.center.lng() }, radius: info.radius };
+                coordinates = { center: { lat: overlay.center.lat(), lng: overlay.center.lng() }, radius: overlay.radius };
             } else if (shape === 'rectangle') {
-                coordinates = info.bounds;
-            } else if (shape === 'polyline' || event.type === 'polygon') {
-                coordinates = info.latLngs.b[0].b;
+                coordinates = overlay.bounds;
+            } else if (shape === 'polyline' || shape === 'polygon') {
+                coordinates = overlay.latLngs.b[0].b;
             }
-            addToLocalStorage(shape, coordinates);
+            addToLocalStorage(shape, coordinates, overlay);
         });
+
+        function addToLocalStorage(shape, info ,overlay) {
+            let shapeLocalStorage = localStorage[shape];
+            const shapeArray = shapeLocalStorage ? JSON.parse(shapeLocalStorage) : [];
+            overlay.index = shapeArray.length;
+            shapeArray.push(info);
+            localStorage[shape] = JSON.stringify(shapeArray);
+        }
+        
+        
     }
+
+
 
     let map;
     const input = $('#placeInput');
@@ -147,8 +151,8 @@
         for (const shape in localStorage) {
             if (localStorage.hasOwnProperty(shape)) {
                 const shapeArray = JSON.parse(localStorage[shape]);
-                shapeArray.forEach((shapeInfo,index) => {
-                    drawShapes[shape](shapeInfo,index);
+                shapeArray.forEach((shapeInfo, index) => {
+                    drawShapes[shape](shapeInfo, index);
                 });
             }
         }
