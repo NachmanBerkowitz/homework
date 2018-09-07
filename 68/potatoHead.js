@@ -36,15 +36,15 @@
                     inSandbox.addClass('in_sandbox');
                 }
             } else if (inSandbox[0] && inSandbox[0].getBoundingClientRect().left < _sandbox_.left) {
-                inSandbox.removeClass('in_sandbox');
-                inSandbox.removeClass('bright');
+                const temp = inSandbox;
                 inSandbox = $();
+                temp.removeClass('bright in_sandbox');
             }
         }
         event.preventDefault();
     }).mousemove(event => {
         if (dragging) {
-            dragging.css({ top: event.clientY - offset.y, left: event.clientX - offset.x });
+            dragging.css({ top: event.pageY - offset.y, left: event.pageX - offset.x });
             event.preventDefault();
         }
     });
