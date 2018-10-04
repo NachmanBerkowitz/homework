@@ -1,161 +1,237 @@
-/*global $*/
-(function () {
+/*global $ */
+(function() {
     'use strict';
+
     let dragging = false;
-    let wasDragged;
-    let inSandbox = $();
+    let currentSelected;
+    let previousSelected;
+    let blinking;
     let offset;
     let zIndex = 1;
-    const sandbox = $('#sandbox');
-    const left_button = $('#left_button');
-    const right_button = $('#right_button');
-    const copy_machine = $('#copy_machine');
-    $(document).on('mousedown', '.body_part, .body', function (event) {
-        offset = { x: event.offsetX, y: event.offsetY };
-        dragging = $(this);
-        dragging.css('z-index', zIndex++);
-        event.preventDefault();
-    }).on('mouseup', event => {
-        if (dragging) {
-            wasDragged = dragging;
-            dragging = null;
-            const _sandbox_ = {
-                left: sandbox[0].getBoundingClientRect().left,
-                bottom: sandbox[0].getBoundingClientRect().bottom
-            };
-            const _wasDragged_ = {
-                left: wasDragged[0].getBoundingClientRect().left,
-                right: wasDragged[0].getBoundingClientRect().right,
-                bottom: wasDragged[0].getBoundingClientRect().bottom
-            };
-            if (_wasDragged_.left > _sandbox_.left
-                && _wasDragged_.bottom < _sandbox_.bottom) {
-                if (wasDragged.css('z-index') !== inSandbox.css('z-index')) {
-                    inSandbox.removeClass('in_sandbox');
-                    inSandbox = wasDragged;
-                    inSandbox.addClass('in_sandbox');
+    let inter;
+    const in_drawerHeight = '24px';
+    const grow_button = $('#grow');
+    const spin_button = $('#spin');
+    const flip_button = $('#flip');
+    const shrink_button = $('#shrink');
+    const delete_button = $('#delete');
+    const save_game_button = $('#save_game');
+    const restart_game_button = $('#restart_game');
+    const inDrawerCss = { position: 'initial', height: in_drawerHeight, zIndex: 0 };
+    const clickInDrawerCss = { position: 'absolute', height: 'initial', zIndex: 1 };
+    $(document)
+        .on('mousedown', '.body_part, .body', function(event) {
+            offset = { x: event.offsetX, y: event.offsetY };
+            dragging = $(this);
+            console.log(dragging.css('z-index'));
+            if (!dragging.is(currentSelected)) {
+                previousSelected = currentSelected;
+            }
+            currentSelected = dragging;
+            if (!dragging.is('.body')) {
+                dragging.css('z-index', zIndex++);
+            }
+            event.preventDefault();
+        })
+        .on('mousedown', function(event) {
+            if (!$(event.target).is('.body_part, .body, .game_button')) {
+                previousSelected = currentSelected;
+                currentSelected = null;
+            }
+        })
+        .on('mouseup', event => {
+            if (dragging) {
+                dragging = null;
+            }
+            event.preventDefault();
+        })
+        .mousemove(event => {
+            if (dragging) {
+                dragging.css({ top: event.pageY - offset.y, left: event.pageX - offset.x });
+                event.preventDefault();
+            }
+        })
+        .on('mouseup', blink);
+
+    function blink(event) {
+        if (!$(event.target).is('.game_button')) {
+            if (currentSelected && !currentSelected.is('.in_drawer')) {
+                let bright = false;
+                clearInterval(blinking);
+                if (previousSelected) {
+                    previousSelected.removeClass('bright');
                 }
-            } else if (inSandbox[0] && inSandbox[0].getBoundingClientRect().left < _sandbox_.left) {
-                const temp = inSandbox;
-                inSandbox = $();
-                temp.removeClass('bright in_sandbox');
+                blinking = setInterval(() => {
+                    if (currentSelected) {
+                        if (!bright) {
+                            currentSelected.addClass('bright');
+                            bright = true;
+                        } else {
+                            currentSelected.removeClass('bright');
+                            bright = false;
+                        }
+                    }
+                }, 500);
+            } else if (blinking) {
+                clearInterval(blinking);
+                if (previousSelected) {
+                    previousSelected.removeClass('bright');
+                }
             }
         }
-        event.preventDefault();
-    }).mousemove(event => {
-        if (dragging) {
-            dragging.css({ top: event.pageY - offset.y, left: event.pageX - offset.x });
-            event.preventDefault();
-        }
-    });
-
-    $('#set_rotate').on('click', function () {
-        right_button.text('clock-wise');
-        left_button.text('counter-clock-wise');
-    });
-    $('#set_size').on('click', function () {
-        left_button.text('smaller');
-        right_button.text('bigger');
-    });
-    right_button.on('click', function () {
-        if (right_button.text() === 'bigger') {
-            const height = parseInt(inSandbox.css('height'));
-            const width = parseInt(inSandbox.css('width'));
-            const newHeight = height + 5;
-            const newWidth = (newHeight * width) / height;
-            inSandbox.css({ height: `${newHeight}`, width: `${newWidth}` });
-        } else {
-            let deg = inSandbox.data().deg || 0;
-            inSandbox.css('transform', `rotate(${deg += 5}deg)`);
-            inSandbox.data({ deg });
-        }
-    });
-    left_button.on('click', function () {
-        if (left_button.text() === 'smaller') {
-            const height = parseInt(inSandbox.css('height'));
-            const width = parseInt(inSandbox.css('width'));
-            const newHeight = height - 5;
-            const newWidth = (newHeight * width) / height;
-            inSandbox.css({ height: `${newHeight}`, width: `${newWidth}` });
-        } else {
-            let deg = inSandbox.data().deg || 0;
-            inSandbox.css('transform', `rotate(${deg -= 5}deg)`);
-            inSandbox.data({ deg });
-        }
-    });
-    $('#copy').on('click', function () {
-        if (inSandbox[0]) {
-            $(`<img src=${inSandbox[0].src}>`).appendTo(copy_machine)
-                .addClass('body_part new');
-        }
-    });
-    $('#delete').on('click', function () {
-        inSandbox.remove();
-        $(document).trigger('mouseup');
-    });
-    $('#save').on('click', function () {
-        const oldParts = $('.old');
-        const newParts = $('.new');
-        const oldPartsArray = saveParts(oldParts);
-        const newPartsArray = saveParts(newParts);
-        localStorage.oldParts = JSON.stringify(oldPartsArray);
-        localStorage.newParts = JSON.stringify(newPartsArray);
-        localStorage.p_headZindex = zIndex;
-    });
-    function saveParts(parts) {
-        const partsArray = [];
-        for (let part of parts) {
-            const o = {
-                src: part.src,
-                style: part.style.cssText,
-                class: part.className,
-                id: part.id,
-                parentId: part.parentElement.id
-            };
-            partsArray.push(o);
-        }
-        return partsArray;
     }
-    $('#reset').on('click', () => {
-        localStorage.removeItem('oldParts');
-        document.location.reload();
-    });
 
-    const tracks = $('.bg_music');
-    tracks.each(function (index, track) {
-        const nextTrack = (index + 1 < tracks.length) ? index + 1 : 0;
-        $(track).on('ended', function () {
-            tracks[nextTrack].play();
+    const getParts = async function() {
+        const fetch_parts = await fetch('parts.json');
+        const parts = await fetch_parts.json();
+        delete parts['blank'];
+        for (const part_name in parts) {
+            if (parts.hasOwnProperty(part_name)) {
+                drawerBuilder(part_name);
+            }
+        }
+        function drawerBuilder(part_name) {
+            let partToShow;
+            const drawer = {};
+            drawer.partsTags = [];
+            drawer.JQdrawer = $(`#${part_name}_drawer`);
+            parts[part_name].forEach(part => {
+                drawer.partsTags.push(part.tag);
+            });
+            if (drawer.partsTags.length > 1) {
+                drawer.JQdrawer.prepend(`<p class="part_button next_part" id="${part_name}_button">next</p>`);
+            }
+            drawer.nextButton = drawer.JQdrawer.find('.next_part');
+            drawer.current = 0;
+            drawer.next = function() {
+                partToShow = $(drawer.partsTags[drawer.current++])
+                    .addClass('in_drawer')
+                    .css({ transform: 'translateX(-115%)' })
+                    .css(inDrawerCss)
+                    .data({ deg: 0, flipped: false });
+                partToShow[0].onload = () => {
+                    partToShow.css('transform', 'translateX(0)');
+                };
+                drawer.JQdrawer.find('.part_holder').html(partToShow);
+                if (drawer.current === drawer.partsTags.length) {
+                    drawer.current = 0;
+                }
+            };
+            drawer.JQdrawer.on('mousedown', '.in_drawer', function() {
+                let moved = false;
+                const currentPart = partToShow;
+                currentPart.css(clickInDrawerCss);
+                drawer.JQdrawer.on('mousemove.in_drawer', '.in_drawer', () => {
+                    drawer.JQdrawer.off('.in_drawer').css('overflow', 'hidden');
+                    $('#play').append(currentPart);
+                    currentPart.removeClass('in_drawer').addClass('in_play');
+                    moved = true;
+                    drawer.next();
+                }).on('mouseup.in_drawer', () => {
+                    if (!moved) {
+                        currentSelected = null;
+                        currentPart.css(inDrawerCss);
+                    }
+                    drawer.JQdrawer.off('.in_drawer');
+                });
+            });
+            drawer.nextButton.on('click', drawer.next);
+            drawer.next();
+        }
+    };
+
+    function startInterval(callback) {
+        inter = setInterval(callback, 300);
+    }
+    function clearInter() {
+        clearInterval(inter);
+    }
+
+    const grow = {
+        event: {},
+        grow: function(event) {
+            grow.event = event;
+            grow.oneGrow();
+            startInterval(grow.oneGrow);
+        },
+        oneGrow: function() {
+            if (currentSelected) {
+                currentSelected.height(currentSelected.height() + grow.event.data.amount);
+            }
+        },
+    };
+
+    function spin() {
+        oneSpin();
+        startInterval(oneSpin);
+    }
+    function oneSpin() {
+        if (currentSelected) {
+            currentSelected.css('transform', `rotate(${(currentSelected.data().deg += 5)}deg)`);
+            if (currentSelected.data().flipped) {
+                currentSelected.data({ flipped: false });
+                flip();
+            }
+        }
+    }
+    function flip() {
+        if (currentSelected) {
+            const matrix = currentSelected.css('transform');
+            const a = matrix.substring(7, matrix.length - 1);
+            const b = a.split(', ');
+            currentSelected
+                .css('transform', `matrix(${b[0] * -1},${b[1]},${b[2] * -1},${b[3]},0,0)`)
+                .data({ flipped: !currentSelected.data().flipped });
+        }
+    }
+
+    function deletePart() {
+        if (currentSelected) {
+            currentSelected.remove();
+            currentSelected = null;
+        }
+    }
+
+    function saveGame() {
+        let zIndex = 1;
+        const save_parts = Array.from(document.querySelectorAll('.in_play')).sort((a, b) => {
+            return parseInt(a.style.zIndex) - parseInt(b.style.zIndex);
+        }).map(part => {
+            part.style.zIndex = zIndex++;
+            return part.outerHTML;
         });
-    });
+        localStorage.saved_game = JSON.stringify(save_parts);
+        localStorage.zIndex = zIndex;
+    }
+
+    function restartGame() {
+        $('.in_play').remove();
+        getParts();
+    }
+
+    grow_button.on('mousedown', { amount: 5 }, grow.grow);
+    shrink_button.on('mousedown', { amount: -5 }, grow.grow);
+    spin_button.on('mousedown', spin);
+    flip_button.on('click', flip);
+    delete_button.on('click', deletePart);
+    save_game_button.on('click', saveGame);
+    restart_game_button.on('click', restartGame);
+    $('.game_button')
+        .on('mouseup', clearInter)
+        .on('mouseleave', clearInter);
+
+    function loadSavedGame() {
+        if (localStorage.saved_game) {
+            const parts = JSON.parse(localStorage.saved_game);
+            parts.forEach(p => {
+                $('#play').append($(p));
+            });
+            zIndex = JSON.parse(localStorage.zIndex);
+        }
+    }
 
     (function setup() {
-        if (localStorage.oldParts) {
-            const oldParts = JSON.parse(localStorage.oldParts);
-            oldParts.forEach(part => {
-                $(`#${part.id}`).attr('style', part.style);
-            });
-            zIndex = JSON.parse(localStorage.p_headZindex);
-            const newParts = JSON.parse(localStorage.newParts);
-            newParts.forEach((part) => {
-                $(`<img src=${part.src}>`)
-                    .attr({ id: part.id, class: part.class, style: part.style })
-                    .appendTo(`#${part.parentId}`);
-            });
-        }
-        tracks[0].play();
-        let bright = false;
-        setInterval(() => {
-            if (inSandbox[0]) {
-                if (!bright) {
-                    inSandbox.addClass('bright');
-                    bright = true;
-                } else {
-                    inSandbox.removeClass('bright');
-                    bright = false;
-                }
-            }
-        }, 500);
-    }());
-
-}());
+        getParts();
+        loadSavedGame();
+    })();
+})();

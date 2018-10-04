@@ -1,9 +1,126 @@
 {
-    "nose": [
-        {
-            "id": ,
-            "src": ,
-            "class":
-        }
-    ]
+  "body": [
+    {
+      "type": "body",
+      "name": "body1",
+      "src": "parts/body1.png",
+      "class": ["body"],
+      "height": "203",
+      "width": "141",
+      "tag": "<img src=\"parts/body1.png\" class=\"body\" alt=\"\">"
+    }
+  ],
+  "nose": [
+    {
+      "type": "nose",
+      "name": "nose1",
+      "src": "parts/nose.png",
+      "class": ["body_part", "nose"],
+      "height": 54,
+      "width": 63,
+      "tag": "<img src=\"parts/nose1.png\" class=\"body_part nose\" alt=\"\">"
+    },
+    {
+      "type": "nose",
+      "name": "nose2",
+      "src": "parts/nose2.png",
+      "class": ["body_part", "nose"],
+      "height": 77,
+      "width": 109,
+      "tag": "<img src=\"parts/nose2.png\" class=\"body_part nose\" alt=\"\">"
+    }
+  ],
+  "eyes": [
+    {
+      "type": "eyes",
+      "name": "eyes1",
+      "src": "parts/eyes1.png",
+      "class": ["body_part", "eyes"],
+      "height": 37,
+      "width": 61,
+      "tag": "<img src=\"parts/eyes1.png\" class=\"body_part eyes\" alt=\"\">"
+    },
+    {
+      "type": "",
+      "name": "",
+      "src": "",
+      "class": [],
+      "height": "",
+      "width": "",
+      "tag": "<img src=\"parts/eyes2.png\" class=\"body_part eyes\" alt=\"\">"
+    },
+    {
+      "type": "",
+      "name": "",
+      "src": "",
+      "class": [],
+      "height": "",
+      "width": "",
+      "tag": "<img src=\"parts/eyes3.png\" class=\"body_part eyes\" alt=\"\">"
+    }
+  ],
+  "mouth": [
+    {
+      "type": "mouth",
+      "name": "mouth1",
+      "src": "parts/mouth.png",
+      "class": ["body_part", "mouth"],
+      "height": "58",
+      "width": "92",
+      "tag": "<img src=\"parts/mouth1.png\" class=\"body_part mouth\" alt=\"\">"
+    }
+  ],
+  "hand": [
+    {
+      "type": "hand",
+      "name": "hand1",
+      "src": "parts/hand1.png",
+      "class": ["body_part", "hand"],
+      "height": "76",
+      "width": "120",
+      "tag": "<img src=\"parts/hand1.png\" alt=\"\" class=\"body_part hand\" >"
+    },
+    {
+      "type": "hand",
+      "name": "hand2",
+      "src": "",
+      "class": ["body_part", "hand"],
+      "height": "",
+      "width": "",
+      "tag": "<img src=\"parts/hand2.png\" alt=\"\" class=\"body_part hand\" >"
+    }
+  ],
+  "feet": [
+    {
+      "type": "feet",
+      "name": "feet1",
+      "src": "",
+      "class": ["body_part", "feet"],
+      "height": "125",
+      "width": "179",
+      "tag": "<img src=\"parts/feet1.png\" alt=\"\" class=\"body_part feet\" >"
+    }
+  ],
+  "ear": [
+    {
+      "type": "ear",
+      "name": "ear1",
+      "src": "",
+      "class": ["body_part", "ear"],
+      "height": "56",
+      "width": "45",
+      "tag": "<img src=\"parts/ear1.png\" class=\"left body_part ear\" alt=\"\">"
+    }
+  ],
+  "blank": [
+    {
+      "type": "",
+      "name": "",
+      "src": "",
+      "class": [],
+      "height": "",
+      "width": "",
+      "tag": ""
+    }
+  ]
 }

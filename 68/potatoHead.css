@@ -1,5 +1,5 @@
 :root{
-    --sandbox_border:solid .5em red;
+    --text-color:brown;
 }
 body{
     background-image: url(bg/22900-blue-sky-prairie-scenery.jpg);
@@ -12,45 +12,83 @@ body{
 }
 #grid{
     display: grid;
-    grid-template: "d p s" minmax(26em, auto)
-                   "d p c"
-                    /1.5fr 3fr 2fr;
+    grid-template: "d p b" minmax(26em, auto)
+                   /max-content 4fr 1fr;
 }
 #drawers{
-    background-color: rgba(100, 100, 100, 0.6);
+    width:max-content;    
     grid-area: d;
     display:grid;
-    grid-template-areas: "a a";
-    grid-auto-rows: 1fr 1fr;
-}
-#sandbox{
-    grid-area: s;
-    border-left:var(--sandbox_border);
-    border-bottom:var(--sandbox_border);
-    display:grid;
-    background-image: url(bg/sandboximage.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+    grid-template: "a b" 4em
+                   "c d" 4em
+                   "e f" 4em
+                   "g h" 4em
+                   /4em 4em;
+    grid-gap: .1em;
 }
 .body_part, .body{
     position:absolute;
     cursor: pointer;
+    transition: height 0.5s, width 0.5s , filter 0.95s;
+    transform: matrix(1,0,0,1,0,0);
+    filter: brightness(100%);
 }
 .drawer{
-    height: 4.5em;
-    overflow: auto;
+    border:solid .05em rgb(190, 190, 235);
+    border-radius:30%;
+    overflow: hidden;
+    display:grid;
+    grid-template: "n" 1.3em
+                   "p";
 }
 #buttons, #change_buttons{
     text-align: center;
 }
-#copy_machine{
-    height:5em;
-    grid-area: c;
-}
-.in_sandbox{
-    transition: transform 0.5s, height 0.5s, width 0.5s , filter 0.95s;
-    filter: brightness(100%);
-}
 .bright{
-    filter: brightness(150%);
+    filter: brightness(175%);
+}
+.game_button{
+    width:80%;
+    height:4em;
+    border-radius: 20%;
+    background-color: rgb(149, 149, 206);
+    color: var(--text-color);
+    font-weight: bolder;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-style: oblique;
+    font-size: 1.4em;
+}
+.part_holder{
+    grid-area: p;
+    overflow: visible;
+    text-align: center;
+}
+.next_part{
+    margin: 0 auto;
+    text-align: center;
+    grid-area: n;
+    cursor: pointer;
+    color:var(--text-color);
+    font-weight: bolder;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-style: oblique;
+}
+.next_part:hover{
+    text-decoration: underline;
+    text-decoration-color: var(--text-color);
+}
+.in_drawer{
+    transition: transform .5s;
+}
+.body_part, .body, .next_part{
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
+}
+#buttons{
+    display: grid;
+    grid-template: "a a"/1fr 1fr;
+    justify-items: center;
+    align-items: center;
 }

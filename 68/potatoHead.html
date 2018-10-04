@@ -11,61 +11,45 @@
     <div id="whole">
         <div id="grid">
             <div id="drawers">
-                <div class="drawer" id="hat_drawer">
-                    <div class="drawer_cover"></div>
+                <div class="drawer" id="body_drawer">
+                    <div class="part_holder"></div>
+                </div><div class="drawer" id="hat_drawer">
+                    <div class="part_holder"></div>
                 </div>
                 <div class="drawer" id="eyes_drawer">
-                    <img src="parts/eyes.png" class="body_part old" id="eyes1" alt="">
-                    <div class="drawer_cover"></div>
+                    <div class="part_holder"></div>
                 </div>
-                <div class="drawer" id="right_ear_drawer">
-                    <img src="parts/ear.png" class="body_part old" id="right_ear1" alt="">
-                   <div class="drawer_cover"></div>
-                </div>
-                <div class="drawer" id="left_ear_drawer">
-                    <img src="parts/ear.png" class="left body_part old" id="left_ear1" alt="">
-                <div class="drawer_cover"></div>
+                <div class="drawer" id="ear_drawer">
+                   <div class="part_holder"></div>
                 </div>
                 <div class="drawer" id="nose_drawer">
-                    <img src="parts/nose.png" class="body_part old" id="nose1" alt="">
-                    <div class="drawer_cover"></div>
+                    <div class="part_holder"></div>
                 </div>
                 <div class="drawer" id="mouth_drawer">
-                    <img src="parts/mouth.png" class="body_part old" id="mouth1" alt="">
-                    <div class="drawer_cover"></div>
+                    <div class="part_holder"></div>
                 </div>
-                <div class="drawer" id="right_hand_drawer">
-                    <img src="parts/right_hand.png" alt="" class="body_part old" id="right_hand1">
-                    <div class="drawer_cover"></div>
-                </div>
-                <div class="drawer" id="left_hand_drawer">
-                    <img src="parts/left_hand.png" alt="" class="body_part old" id="left_hand1">
-                    <div class="drawer_cover"></div>
+                <div class="drawer" id="hand_drawer">
+                    <div class="part_holder"></div>
                 </div>
                 <div class="drawer" id="feet_drawer">
-                    <img src="parts/feet.png" alt="" class="body_part old" id="feet1">
-                    <div class="drawer_cover"></div>
+                    <div class="part_holder"></div>
                 </div>
             </div>
             <div id="play">
-                <button id="save">save</button>
-                <button id="reset">reset</button>
-                <img src="parts/body.png"  id="body"class="body old" alt="">
+                
             </div>
-            <div id="sandbox">
-                <div id="buttons">
-                    <button id="copy">copy</button>
-                    <button id="delete">delete</button>
-                    <br>
-                    <button id="set_size">resize</button>
-                    <button id="set_rotate">rotate</button>
-                    <br>
-                    <button id="left_button">?</button>
-                    <button id="right_button">?</button>
-                </div>
-                <div id="change"></div>
+            
+            <div id="buttons">
+                <button id="save_game" class="game_button">Save Game</button>
+                <button id="restart_game" class="game_button">Restart Game</button>
+                <button id="grow" class="game_button">Grow</button>
+                <button id="shrink" class="game_button">Shrink</button>
+                <button id="spin" class="game_button">Spin</button>
+                <button id="flip" class="game_button">Flip</button>
+                <button id="delete" class="game_button">Delete</button>
             </div>
-            <div id="copy_machine"></div>
+            
+        
         </div>
     </div>
     <audio src="music/Shmuel Kunda-When zaidy was young 1-Track 1.mp3" class="bg_music" id="track_1"></audio>
