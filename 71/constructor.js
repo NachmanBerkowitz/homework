@@ -24,7 +24,8 @@
         go : function (speed='unknown'){
             this.speed=speed;
             console.log(`now flying at speed ${this.speed}`);
-        }
+        },
+        constuctor: Plane
     };
 
     function Plane(color='unknown'){
