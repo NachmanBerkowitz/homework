@@ -19,11 +19,17 @@
     const restart_game_button = $('#restart_game');
     const inDrawerCss = { position: 'initial', height: in_drawerHeight, zIndex: 0 };
     const clickInDrawerCss = { position: 'absolute', height: 'initial', zIndex: 1 };
+
     $(document)
         .on('mousedown', '.body_part, .body', function(event) {
-            offset = { x: event.offsetX, y: event.offsetY };
             dragging = $(this);
-            console.log(dragging.css('z-index'));
+            if(dragging.is('.in_drawer')){
+                const sizeRatio = (this.naturalHeight)/parseInt(in_drawerHeight);
+                console.log(this.naturalHeight,parseInt(in_drawerHeight),sizeRatio);
+                offset = { x: event.offsetX*sizeRatio, y: event.offsetY*sizeRatio};
+            }else{
+                offset = { x: event.offsetX, y: event.offsetY };
+            }
             if (!dragging.is(currentSelected)) {
                 previousSelected = currentSelected;
             }
