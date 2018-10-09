@@ -7,7 +7,7 @@
     let previousSelected;
     let blinking;
     let offset;
-    let zIndex = 1;
+    let zIndex = 2;
     let inter;
     const in_drawerHeight = '24px';
     const grow_button = $('#grow');
@@ -25,7 +25,6 @@
             dragging = $(this);
             if(dragging.is('.in_drawer')){
                 const sizeRatio = (this.naturalHeight)/parseInt(in_drawerHeight);
-                console.log(this.naturalHeight,parseInt(in_drawerHeight),sizeRatio);
                 offset = { x: event.offsetX*sizeRatio, y: event.offsetY*sizeRatio};
             }else{
                 offset = { x: event.offsetX, y: event.offsetY };
@@ -130,6 +129,9 @@
                 drawer.JQdrawer.on('mousemove.in_drawer', '.in_drawer', () => {
                     drawer.JQdrawer.off('.in_drawer').css('overflow', 'hidden');
                     $('#play').append(currentPart);
+                    if(currentPart.is('.body')){
+                        currentPart.css('z-index',0);
+                    }
                     currentPart.removeClass('in_drawer').addClass('in_play');
                     moved = true;
                     drawer.next();
