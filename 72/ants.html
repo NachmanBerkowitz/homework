@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ants</title>
+    <link rel="stylesheet" href="ants.css">
+</head>
+
+<body>
+    <div id="buttons">
+        <div id="color_picker" class="picker">
+            <label for="color">Ant Color</label>
+            <input id="color" type="color" name="color" value="#ffffff">
+        </div>
+        <div id="amount_picker" class="picker">
+            <label for="amount">Amount of ants: <span id="amount_num">10</span></label><br>
+            <input id="amount" type="range" name="amount" min="1" max="25" value="10">
+        </div>
+        <div id="adder" class="picker">
+            <button id="addAnt">New Ants</button>
+        </div>
+    </div>
+    <div id="canvasContainer">
+        <canvas id="theCanvas"></canvas>
+    </div>
+    <script src="../../jquery-3.3.1.min.js"></script>
+    <script src="ants.js"></script>
+</body>
+
+</html>
