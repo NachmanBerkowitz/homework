@@ -11,6 +11,7 @@
     let moves_per_second = 13;
     const addButtonText = 'New Ants';
     const context = canvas.getContext('2d');
+
     function resizeCanvas() {
         canvas.width = window.innerWidth - 2;
         canvas.height = canvasContainer.offsetHeight;
@@ -55,7 +56,7 @@
         }
 
         getRandomAmountOfTurns() {
-            return Ant.getRandomNumber(1, 300);
+            return Ant.getRandomNumber(1, 50);
         }
         setDirection() {
             this.move.x = Ant.getRandomNumber(-5,5);
@@ -109,6 +110,6 @@
     (function setup() {
         colorButton.val('#0000ff');
         color_clicker();
-        intervalStarter();
+        crawl=intervalStarter();
     })();
 })();
