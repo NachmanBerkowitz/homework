@@ -76,7 +76,7 @@
                 ant.crawl();
             });
         }, mlsec);
-        console.log(typeof mlsec);
+        console.log(mlsec);
         return crawl;
     }
 
