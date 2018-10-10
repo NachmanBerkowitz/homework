@@ -5,8 +5,10 @@
     const canvas = canvasContainer.querySelector('#theCanvas');
     const addButton = $('#addAnt');
     const colorButton = $('#color');
-    const amountButton = $('#amount');
-    const amount_num = $('#amount_num');
+    const speedRange = $('#speed');
+    const antAmountRange = $('#amount');
+    const amountRanges = $('.range');
+    let moves_per_second = 13;
     const addButtonText = 'New Ants';
     const context = canvas.getContext('2d');
     function resizeCanvas() {
@@ -18,118 +20,95 @@
     class Ant {
         constructor(color) {
             this.height = 10;
-            this.width =10;
+            this.width = 10;
             this.x = canvas.offsetWidth / 2;
             this.y = canvas.offsetHeight / 2;
             this.color = color;
-            this.moveAmount = 1;
-            this.fixed = {
-                x:true,
-                y:false
+            this.move = {
+                x: 0,
+                y: 0,
             };
-            this.direction = 0;
-            this.fixedTurns=0;
+            this.fixedTurns = 0;
         }
         crawl() {
-            if(--this.fixedTurns<=0){
+            if (--this.fixedTurns <= 0) {
                 this.setDirection();
             }
-            if(this.direction !== 0){
-                this.movementX();
-                this.movementY();
-            }else{
-                if(this.fixedTurns>20){
-                    this.fixedTurns = 10;
-                }
-            }
+            this.movementX();
+            this.movementY();
             context.fillStyle = this.color;
             context.fillRect(this.x, this.y, this.width, this.height);
         }
         movementX() {
-            let next_x;
-            if (this.fixed['x']) {
-                next_x = this.x + this.direction;
-            } else {
-                next_x = this.x + this.getRandomDirection();
-            }
-            if (next_x < 0 || next_x > (canvas.offsetWidth-1)-this.width) {
-                if (this.fixed['x']){
-                    next_x = this.x +(this.direction *= -1);
-                }else{
-                    next_x *= -1;
-                }
+            let next_x = this.x + this.move.x;
+            if (next_x < 0 || next_x > canvas.offsetWidth - 1 - this.width) {
+                next_x = this.x + (this.move.x *= -1);
             }
             this.x = next_x;
         }
         movementY() {
-            let next_y;
-            if (this.fixed['y']) {
-                next_y = this.y + this.direction;
-            } else {
-                next_y = this.y + this.getRandomDirection();
-            }
-            if (next_y < 0 || next_y > (canvas.offsetHeight-1)-this.height) {
-                if (this.fixed['y']){
-                    next_y = this.y +(this.direction *= -1);
-                }else{
-                    next_y *= -1;
-                }
+            let next_y = this.y + this.move.y;
+            if (next_y < 0 || next_y > canvas.offsetHeight - 1 - this.height) {
+                next_y = this.y + (this.move.y *= -1);
             }
             this.y = next_y;
         }
 
-        getRandomDirection(){
-            return Ant.getRandomNumber(-this.moveAmount,this.moveAmount);
+        getRandomAmountOfTurns() {
+            return Ant.getRandomNumber(1, 300);
         }
-        getRandomAmountOfTurns(){
-            return Ant.getRandomNumber(1,300);
-        }
-        getRandomPlane(){
-            const planes = [
-                'x',
-                'y'
-            ];
-            return planes[Ant.getRandomNumber(0,1)];
-        } 
-        setDirection(){
-            const fixedPlane = this.getRandomPlane();
-            const unfixedPlane = fixedPlane=== 'x' ? 'y' :'x';
-            this.fixed[fixedPlane]=true;
-            this.fixed[unfixedPlane]=false;
+        setDirection() {
+            this.move.x = Ant.getRandomNumber(-5,5);
+            this.move.y = Ant.getRandomNumber(-5,5);
             this.fixedTurns = this.getRandomAmountOfTurns();
-            this.direction = this.getRandomDirection();
-            console.log({fixedPlane},{unfixedPlane},this.fixedTurns,this.direction);
-        }      
+        }
         static getRandomNumber(min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
     }
     const theAnts = [];
-    setInterval(() => {
-        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        theAnts.forEach(ant => {
-            ant.crawl();
-            
-        });
-    }, 75);
-    addButton.on('click', () => {
-        for (let i = 0; i < amountButton[0].value; i++) {
+    let crawl;
+    function intervalStarter(){
+        const mlsec = parseInt(1000/moves_per_second);
+        const crawl =setInterval(() => {
+            context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            theAnts.forEach(ant => {
+                ant.crawl();
+            });
+        }, mlsec);
+        console.log(typeof mlsec);
+        return crawl;
+    }
+
+    addButton.on('click', addAnts);
+    colorButton.on('change', color_clicker);
+    amountRanges.on('change', amountChange);
+    speedRange.on('change',setSpeed);
+
+    function addAnts(){
+        console.log(antAmountRange);
+        for (let i = 0; i < antAmountRange[0].value; i++) {
             theAnts.push(new Ant(colorButton.val()));
         }
-    });
-    $('#color').on('change', color_clicker);
+    }
     function color_clicker() {
         $('#buttons').css('backgroundColor', `${colorButton.val()}AA`);
     }
-    amountButton.on('change', amountChange);
-    function amountChange() {
-        amount_num.text(this.value);
-        if (this.value === '1') {
+    function amountChange(e) {
+        $(e.target).siblings('label').find('span').text(this.value);
+        if ($(e.target).is('#mount')&&this.value === '1') {
             addButton.text(addButtonText.slice(0, addButtonText.length - 1));
         } else addButton.text(addButtonText);
     }
-    (function setup(){
+    function setSpeed(){
+        moves_per_second = this.value;
+        console.log(moves_per_second);
+        clearInterval(crawl);
+        crawl=intervalStarter();
+    }
+    (function setup() {
         colorButton.val('#0000ff');
         color_clicker();
-    }());
+        intervalStarter();
+    })();
 })();

@@ -15,12 +15,21 @@
             <label for="color">Ant Color</label>
             <input id="color" type="color" name="color" value="#ffffff">
         </div>
-        <div id="amount_picker" class="picker">
+        <div id="amount_picker" class="picker range">
             <label for="amount">Amount of ants: <span id="amount_num">10</span></label><br>
-            <input id="amount" type="range" name="amount" min="1" max="25" value="10">
+            <input class="range"id="amount" type="range" name="amount" min="1" max="25" value="10">
         </div>
         <div id="adder" class="picker">
             <button id="addAnt">New Ants</button>
+        </div>
+        <div id="speed_setter" class="picker range">
+            <label for="speed">
+                Speed:
+                <span id="speed_num">13</span>
+            </label>
+            <br>
+            <input class="range"type="range" id="speed" name="speed" min=".02" max="20" step=".02"value="13">
+
         </div>
     </div>
     <div id="canvasContainer">
