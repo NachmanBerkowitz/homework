@@ -15,7 +15,6 @@
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-    const moveAmount = 1;
     class Ant {
         constructor(color) {
             this.height = 10;
@@ -23,56 +22,84 @@
             this.x = canvas.offsetWidth / 2;
             this.y = canvas.offsetHeight / 2;
             this.color = color;
-            this.turns = {
-                x: 0,
-                y: 0,
+            this.moveAmount = 1;
+            this.fixed = {
+                x:true,
+                y:false
             };
-            this.move = {
-                x: 0,
-                y: 0,
-            };
+            this.direction = 0;
+            this.fixedTurns=0;
         }
         crawl() {
-            this.movementX();
-            this.movementY();
+            if(--this.fixedTurns<=0){
+                this.setDirection();
+            }
+            if(this.direction !== 0){
+                this.movementX();
+                this.movementY();
+            }else{
+                if(this.fixedTurns>20){
+                    this.fixedTurns = 10;
+                }
+            }
             context.fillStyle = this.color;
             context.fillRect(this.x, this.y, this.width, this.height);
         }
-        direction(plane) {
-            this.turns[plane] = Ant.getRandomNumber(1, 300);
-            const movement = Ant.getRandomNumber(-moveAmount, moveAmount);
-            this.move[plane] = movement;
-            return movement;
-        }
         movementX() {
             let next_x;
-            if (this.turns['x'] > 0) {
-                next_x = this.x + this.move['x'];
-                this.turns['x']--;
+            if (this.fixed['x']) {
+                next_x = this.x + this.direction;
             } else {
-                next_x = this.x + this.direction('x');
+                next_x = this.x + this.getRandomDirection();
             }
             if (next_x < 0 || next_x > (canvas.offsetWidth-1)-this.width) {
-                this.move['x'] *= -1;
-                next_x = this.x + this.move['x'];
+                if (this.fixed['x']){
+                    next_x = this.x +(this.direction *= -1);
+                }else{
+                    next_x *= -1;
+                }
             }
             this.x = next_x;
         }
         movementY() {
             let next_y;
-            if (this.turns['y'] > 0) {
-                next_y = this.y + this.move['y'];
-                this.turns['y']--;
+            if (this.fixed['y']) {
+                next_y = this.y + this.direction;
             } else {
-                next_y = this.y + this.direction('y');
+                next_y = this.y + this.getRandomDirection();
             }
             if (next_y < 0 || next_y > (canvas.offsetHeight-1)-this.height) {
-                this.move['y'] *= -1;
-                next_y = this.y + this.move['y'];
+                if (this.fixed['y']){
+                    next_y = this.y +(this.direction *= -1);
+                }else{
+                    next_y *= -1;
+                }
             }
             this.y = next_y;
         }
 
+        getRandomDirection(){
+            return Ant.getRandomNumber(-this.moveAmount,this.moveAmount);
+        }
+        getRandomAmountOfTurns(){
+            return Ant.getRandomNumber(1,300);
+        }
+        getRandomPlane(){
+            const planes = [
+                'x',
+                'y'
+            ];
+            return planes[Ant.getRandomNumber(0,1)];
+        } 
+        setDirection(){
+            const fixedPlane = this.getRandomPlane();
+            const unfixedPlane = fixedPlane=== 'x' ? 'y' :'x';
+            this.fixed[fixedPlane]=true;
+            this.fixed[unfixedPlane]=false;
+            this.fixedTurns = this.getRandomAmountOfTurns();
+            this.direction = this.getRandomDirection();
+            console.log({fixedPlane},{unfixedPlane},this.fixedTurns,this.direction);
+        }      
         static getRandomNumber(min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
