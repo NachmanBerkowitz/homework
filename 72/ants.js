@@ -4,8 +4,9 @@
     const canvasContainer = document.getElementById('canvasContainer');
     const canvas = canvasContainer.querySelector('#theCanvas');
     const addButton = $('#addAnt');
-    const colorButton = $('#color');
+    const colorRange = $('#color');
     const speedRange = $('#speed');
+    const sizeRange = $('#size');
     const antAmountRange = $('#amount');
     const amountRanges = $('.range');
     let moves_per_second = 13;
@@ -17,11 +18,10 @@
         canvas.height = canvasContainer.offsetHeight;
     }
     window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
     class Ant {
-        constructor(color) {
-            this.height = 10;
-            this.width = 10;
+        constructor(color,size) {
+            this.width = size;
+            this.height = this.width/2;
             this.x = canvas.offsetWidth / 2;
             this.y = canvas.offsetHeight / 2;
             this.color = color;
@@ -77,23 +77,21 @@
                 ant.crawl();
             });
         }, mlsec);
-        console.log(mlsec);
         return crawl;
     }
 
     addButton.on('click', addAnts);
-    colorButton.on('change', color_clicker);
+    colorRange.on('change', color_clicker);
     amountRanges.on('change', amountChange);
     speedRange.on('change',setSpeed);
 
     function addAnts(){
-        console.log(antAmountRange);
         for (let i = 0; i < antAmountRange[0].value; i++) {
-            theAnts.push(new Ant(colorButton.val()));
+            theAnts.push(new Ant(colorRange.val(),sizeRange.val()));
         }
     }
     function color_clicker() {
-        $('#buttons').css('backgroundColor', `${colorButton.val()}AA`);
+        $('#buttons').css('backgroundColor', `${colorRange.val()}AA`);
     }
     function amountChange(e) {
         $(e.target).siblings('label').find('span').text(this.value);
@@ -107,8 +105,10 @@
         clearInterval(crawl);
         crawl=intervalStarter();
     }
+
     (function setup() {
-        colorButton.val('#0000ff');
+        resizeCanvas();
+        colorRange.val('#0000ff');
         color_clicker();
         crawl=intervalStarter();
     })();

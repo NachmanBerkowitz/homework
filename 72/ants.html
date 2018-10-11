@@ -16,8 +16,12 @@
             <input id="color" type="color" name="color" value="#ffffff">
         </div>
         <div id="amount_picker" class="picker range">
-            <label for="amount">Amount of ants: <span id="amount_num">10</span></label><br>
-            <input class="range"id="amount" type="range" name="amount" min="1" max="25" value="10">
+            <label for="amount">Amount: <span id="amount_num">10</span></label><br>
+            <input class="range"id="amount" type="range" name="amount" min="1" max="250" value="10">
+        </div>
+        <div id="size_picker" class="picker range">
+            <label for="size">Size: <span id="size_num">10</span></label><br>
+            <input class="range"id="size" type="range" name="size" min="1" max="20" value="10">
         </div>
         <div id="adder" class="picker">
             <button id="addAnt">New Ants</button>
@@ -35,6 +39,7 @@
     <div id="canvasContainer">
         <canvas id="theCanvas"></canvas>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../../jquery-3.3.1.min.js"></script>
     <script src="ants.js"></script>
 </body>
