@@ -198,7 +198,7 @@
 
     
     const levelZero=new Level(0,0);
-    const levelOne = new Level(1,1);
+    const levelOne = new Level(1,15);
     const levelTwo = new Level(2,20);
     levelTwo.walls = function(){
         const verticalWallHeight = canvas.innerHeight-(canvas.innerHeight%snakeSize)*(3/4);
