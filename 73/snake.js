@@ -1,34 +1,34 @@
 /*global $*/
 (function() {
     'use strict';
-    class Level{
-        constructor(levelNum,passScore){
+    class Level {
+        constructor(levelNum, passScore) {
             /**
              * @type {number}
              */
             this.levelNum = levelNum;
-            this.passScore=passScore;
+            this.passScore = passScore;
         }
-        beforeSnakeMove(){}
-        afterSnakeMove(){}
-        ateApple(){}
+        beforeLevel() {}
+        beforeSnakeMove() {}
+        afterSnakeMove() {}
+        ateApple() {}
     }
 
-    const canvasContainer = document.getElementById('canvasContainer');
-    const canvas = canvasContainer.querySelector('#theCanvas');
+    const gameInfo = $('#game_info');
+    const canvas = document.getElementById('theCanvas');
     const context = canvas.getContext('2d');
     const apple = document.createElement('img');
     apple.src = 'pics/apple.png';
-    const snakeHead = document.createElement('img');
-    snakeHead.src = 'pics/snakeHead.png';
     const crunchSound = document.getElementById('crunch');
     crunchSound.playbackRate = 1.5;
     const gameOverSound = document.getElementById('game_over');
     const scoreSpan = $('#score');
+    const levelSpan = $('#level');
 
     let score = 0;
-    
-    let levelScore=0;
+
+    let levelScore = 0;
     let gameSpeed = 600;
     let currentLevel = 1;
 
@@ -38,55 +38,80 @@
         DOWN = 40;
     let direction = RIGHT;
 
-    const snakeSize = 20;
+    /**
+     * the size of the "building blocks" of game. screenUnit * screenUnit px
+     */
+    const screenUnit = 20;
     let headX = 0;
     let headY = 0;
-    const snakeArray = [{ x: headX, y: headY }]; //an array of cuurent position of snake parts
-
+    /**
+     * an array of cuurent position of snake parts
+     */
+    const snakeArray = [{ x: headX, y: headY }];
+    /**
+     * an array of occupied spotsn not incliding the snake
+     */
+    const occupiedArray = [];
     let appleX = -1;
     let appleY = 0;
 
-    let gameRunning; //for setInterval
-    let hue = 0; //for color of snake
+    canvas.width = window.innerWidth - 2 - ((window.innerWidth - 2) % screenUnit);
+    const tempHeight = window.innerHeight - 2 - gameInfo.height();
+    console.log(gameInfo.height());
+    canvas.height = tempHeight - (tempHeight % screenUnit);
+    /**
+     * width of canvas in screenUnits
+     */
+    const canvasWidth = canvas.width / screenUnit;
+    /**
+     * height of canvas in screenUnits
+     */
+    const canvasHeight = canvas.height / screenUnit;
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth - 2;
-        canvas.height = canvasContainer.offsetHeight;
-    }
+    /**
+     * for setInterval
+     */
+    let gameRunning;
+    /**
+     * for color of snake
+     */
+    let hue = 0;
+
     function render() {
         levels[currentLevel].beforeSnakeMove();
 
         gameRunning = setInterval(() => {
             switch (direction) {
             case LEFT:
-                headX -= snakeSize;
+                headX -= screenUnit;
                 break;
             case UP:
-                headY -= snakeSize;
+                headY -= screenUnit;
                 break;
             case RIGHT:
-                headX += snakeSize;
+                headX += screenUnit;
                 break;
             case DOWN:
-                headY += snakeSize;
+                headY += screenUnit;
                 break;
             }
 
             levels[currentLevel].afterSnakeMove();
 
-            const { x, y } = snakeArray[0];
-            context.fillStyle = '#ffffff';
-            context.beginPath();
-            context.rect(x, y,snakeSize,snakeSize);
-            context.fill();
-            context.fillStyle = `hsl(${(hue += 2)}, 100%, 50%)`;
-            context.beginPath();
-            context.rect(headX, headY,snakeSize,snakeSize);
-            context.fill();
             if (crash()) {
                 gameOver();
                 return;
             }
+
+            const { x: tailX, y: tailY } = snakeArray[0];
+            context.fillStyle = '#ffffff';
+            context.beginPath();
+            context.rect(tailX, tailY, screenUnit, screenUnit);
+            context.fill();
+            context.fillStyle = `hsl(${(hue += 2)}, 100%, 50%)`;
+            context.beginPath();
+            context.rect(headX, headY, screenUnit, screenUnit);
+            context.fill();
 
             snakeArray.push({ x: headX, y: headY });
 
@@ -97,7 +122,7 @@
                 scoreSpan.text(score);
                 levelScore++;
                 levels[currentLevel].ateApple();
-                if(levelComplete()){
+                if (levelComplete()) {
                     wonLevel();
                     return;
                 }
@@ -114,14 +139,20 @@
         }, gameSpeed);
     }
 
+    function placeSnake(){
+        context.fillStyle = `hsl(${hue}, 100%, 50%)`;
+        context.beginPath();
+        context.rect(headX, headY, screenUnit, screenUnit);
+        context.fill();
+    }
     function placeApple() {
         do {
-            appleX = getRandomNumber(0, canvas.width - snakeSize);
-            appleY = getRandomNumber(0, canvas.height - snakeSize);
-            appleX = appleX - (appleX % snakeSize);
-            appleY = appleY - (appleY % snakeSize);
+            appleX = getRandomNumber(0, canvas.width - screenUnit);
+            appleY = getRandomNumber(0, canvas.height - screenUnit);
+            appleX = appleX - (appleX % screenUnit);
+            appleY = appleY - (appleY % screenUnit);
         } while (occupied(appleX, appleY));
-        context.drawImage(apple, appleX, appleY, snakeSize, snakeSize);
+        context.drawImage(apple, appleX, appleY, screenUnit, screenUnit);
     }
     function ateApple() {
         return headX === appleX && headY === appleY;
@@ -130,59 +161,114 @@
         return (
             headX < 0 ||
             headY < 0 ||
-            headX + snakeSize >= canvas.offsetWidth - 1 ||
-            headY + snakeSize >= canvas.offsetHeight - 1 ||
+            headX + screenUnit >= canvas.offsetWidth - 1 ||
+            headY + screenUnit >= canvas.offsetHeight - 1 ||
             occupied(headX, headY)
         );
     }
     function gameOver() {
         clearInterval(gameRunning);
-        $(canvasContainer).html('GAME OVER');
+        gameInfo.prepend('<span>GAME OVER</span>');
         gameOverSound.play();
     }
-    function gameWon(){
+    function gameWon() {
         clearInterval(gameRunning);
-        $(canvasContainer).html('GAME WON');
+        gameInfo.prepend('<span>GAME WON</span>');
     }
     function occupied(spotX, spotY) {
-        return snakeArray.some(bodyPart => bodyPart.x === spotX && bodyPart.y === spotY);
+        return (
+            snakeArray.some(bodyPart => bodyPart.x === spotX && bodyPart.y === spotY) ||
+            occupiedArray.some(thing => thing.x === spotX && thing.y === spotY)
+        );
     }
-    function levelComplete(){
+    function levelComplete() {
         return levels[currentLevel].passScore === levelScore;
     }
-    function prepForNewLevel(){
+    function prepForNewLevel() {
         clearInterval(gameRunning);
         context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        levelScore=0;
+        levelScore = 0;
         gameSpeed = 600;
         currentLevel++;
+        levelSpan.text(currentLevel);
         headX = 0;
         headY = 0;
         direction = RIGHT;
-        placeApple();
-        snakeArray.splice(0,snakeArray.length,{ x: headX, y: headY });
-        render();
+        snakeArray.splice(0, snakeArray.length, { x: headX, y: headY });
+        occupiedArray.splice(0, occupiedArray.length);
     }
-    function wonLevel(){
-        if(levels.length-1 === currentLevel){
+    function wonLevel() {
+        if (levels.length - 1 === currentLevel) {
             gameWon();
-        }else{
+        } else {
             prepForNewLevel();
+            levels[currentLevel].beforeLevel();
+            placeSnake();
+            placeApple();
+            render();
         }
     }
     function getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-    (function setup() {
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        apple.onload = placeApple;
-        snakeHead.onload = render;
-        context.fillStyle = `hsl(${hue}, 100%, 50%)`;
+    const levelNone = new Level(0, 0);
+    const levelOne = new Level(1, 11);
+    const levelTwo = new Level(2, 10);
+    const levelThree = new Level(3, 11);
+    levelTwo.beforeLevel = function() {
+        gameSpeed = 570;
+        const unitsFromEdge = 4;
+        const horizontalWallStartX = screenUnit * unitsFromEdge;
+        const horizontalWallStartY = Math.floor(canvasHeight / 2) * screenUnit;
+        const horizontalWallLength = canvasWidth * screenUnit - screenUnit * (unitsFromEdge * 2);
         context.beginPath();
-        context.rect(headX, headY,snakeSize,snakeSize);
+        context.rect(horizontalWallStartX, horizontalWallStartY, horizontalWallLength, screenUnit);
+        context.fillStyle = 'black';
         context.fill();
+        for (
+            let wallPartX = horizontalWallStartX;
+            wallPartX < horizontalWallStartX + horizontalWallLength;
+            wallPartX += screenUnit
+        ) {
+            occupiedArray.push({ x: wallPartX, y: horizontalWallStartY });
+        }
+        console.log(canvasWidth - 6, occupiedArray.length);
+    };
+    levelThree.beforeLevel = function() {
+        gameSpeed = 540;
+        const unitsBtwnWalls = 3;
+        const wallOneHeight = Math.floor((canvasHeight - unitsBtwnWalls) / 2) * screenUnit;
+        const wallTwoHeight = Math.ceil((canvasHeight - unitsBtwnWalls) / 2) * screenUnit;
+        const wallTwoStartY = wallOneHeight + screenUnit * unitsBtwnWalls;
+        const wallX = Math.floor(canvasWidth / 2) * screenUnit;
+        context.beginPath();
+        context.rect(wallX, 0, screenUnit, wallOneHeight);
+        context.fillStyle = 'black';
+        context.fill();
+        context.beginPath();
+        context.rect(wallX, wallTwoStartY, screenUnit, wallTwoHeight);
+        context.fillStyle = 'black';
+        context.fill();
+        for (let wallPartY = 0; wallPartY < wallOneHeight; wallPartY += screenUnit) {
+            occupiedArray.push({ x: wallX, y: wallPartY });
+        }
+        for (let wallPartY = wallTwoStartY; wallPartY < wallTwoStartY+wallTwoHeight; wallPartY += screenUnit) {
+            occupiedArray.push({ x: wallX, y: wallPartY });
+        }
+        console.log(wallTwoHeight / screenUnit + wallOneHeight / screenUnit, occupiedArray.length);
+    };
+    /**
+     * to hold methods and variables of levels
+     * @type {Level[]}
+     */
+    const levels = [levelNone, levelOne, levelTwo, levelThree]; //to hold methods and variables of levels
+    
+    (function setup() {
+        levels[currentLevel].beforeLevel();
+        placeSnake();
+        apple.onload = placeApple;
+        render();
         document.addEventListener('keydown', event => {
             switch (
                 event.keyCode // note, keyCode is DEPRECATED
@@ -195,19 +281,4 @@
             }
         });
     })();
-
-    
-    const levelZero=new Level(0,0);
-    const levelOne = new Level(1,15);
-    const levelTwo = new Level(2,20);
-    levelTwo.walls = function(){
-        const verticalWallHeight = canvas.innerHeight-(canvas.innerHeight%snakeSize)*(3/4);
-        const horizontalWallWidth = canvas.innerWidth-(canvas.innerWidth%snakeSize)*(3/4);
-    };
-    /**
-     * to hold methods and variables of levels
-     * @type {Object[]}
-     */
-    const levels = [levelZero,levelOne,levelTwo];//to hold methods and variables of levels
 })();
-

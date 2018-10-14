@@ -8,6 +8,4 @@ html, body {
 #theCanvas {
   border: 1px solid black;
 }
-#canvasContainer {
-    height: 500px;
-  }
+
