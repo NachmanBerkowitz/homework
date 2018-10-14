@@ -57,7 +57,6 @@
 
     canvas.width = window.innerWidth - 2 - ((window.innerWidth - 2) % screenUnit);
     const tempHeight = window.innerHeight - 2 - gameInfo.height();
-    console.log(gameInfo.height());
     canvas.height = tempHeight - (tempHeight % screenUnit);
     /**
      * width of canvas in screenUnits
@@ -233,7 +232,6 @@
         ) {
             occupiedArray.push({ x: wallPartX, y: horizontalWallStartY });
         }
-        console.log(canvasWidth - 6, occupiedArray.length);
     };
     levelThree.beforeLevel = function() {
         gameSpeed = 540;
@@ -256,7 +254,6 @@
         for (let wallPartY = wallTwoStartY; wallPartY < wallTwoStartY+wallTwoHeight; wallPartY += screenUnit) {
             occupiedArray.push({ x: wallX, y: wallPartY });
         }
-        console.log(wallTwoHeight / screenUnit + wallOneHeight / screenUnit, occupiedArray.length);
     };
     /**
      * to hold methods and variables of levels
