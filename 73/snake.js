@@ -8,6 +8,10 @@
              */
             this.levelNum = levelNum;
             this.passScore = passScore;
+            /**
+             * how many mllsec per move at begining of level
+             */
+            this.speed = 600;
         }
         beforeLevel() {}
         beforeSnakeMove() {}
@@ -29,7 +33,7 @@
     let score = 0;
 
     let levelScore = 0;
-    let gameSpeed = 600;
+    let gameSpeed;
     let currentLevel = 1;
 
     const LEFT = 37,
@@ -49,7 +53,7 @@
      */
     const snakeArray = [{ x: headX, y: headY }];
     /**
-     * an array of occupied spotsn not incliding the snake
+     * an array of occupied spots not including the snake
      */
     const occupiedArray = [];
     let appleX = -1;
@@ -138,7 +142,7 @@
         }, gameSpeed);
     }
 
-    function placeSnake(){
+    function placeSnake() {
         context.fillStyle = `hsl(${hue}, 100%, 50%)`;
         context.beginPath();
         context.rect(headX, headY, screenUnit, screenUnit);
@@ -188,7 +192,6 @@
         context.clearRect(0, 0, window.innerWidth, window.innerHeight);
         levelScore = 0;
         gameSpeed = 600;
-        currentLevel++;
         levelSpan.text(currentLevel);
         headX = 0;
         headY = 0;
@@ -200,12 +203,17 @@
         if (levels.length - 1 === currentLevel) {
             gameWon();
         } else {
-            prepForNewLevel();
-            levels[currentLevel].beforeLevel();
-            placeSnake();
-            placeApple();
-            render();
+            currentLevel++;
+            nextLevel();
         }
+    }
+    function nextLevel() {
+        prepForNewLevel();
+        levels[currentLevel].beforeLevel();
+        gameSpeed = levels[currentLevel].speed;
+        placeSnake();
+        placeApple();
+        render();
     }
     function getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -215,8 +223,8 @@
     const levelOne = new Level(1, 11);
     const levelTwo = new Level(2, 10);
     const levelThree = new Level(3, 11);
+    levelTwo.speed = 570;
     levelTwo.beforeLevel = function() {
-        gameSpeed = 570;
         const unitsFromEdge = 4;
         const horizontalWallStartX = screenUnit * unitsFromEdge;
         const horizontalWallStartY = Math.floor(canvasHeight / 2) * screenUnit;
@@ -233,8 +241,8 @@
             occupiedArray.push({ x: wallPartX, y: horizontalWallStartY });
         }
     };
+    levelThree.speed = 540;
     levelThree.beforeLevel = function() {
-        gameSpeed = 540;
         const unitsBtwnWalls = 3;
         const wallOneHeight = Math.floor((canvasHeight - unitsBtwnWalls) / 2) * screenUnit;
         const wallTwoHeight = Math.ceil((canvasHeight - unitsBtwnWalls) / 2) * screenUnit;
@@ -251,7 +259,11 @@
         for (let wallPartY = 0; wallPartY < wallOneHeight; wallPartY += screenUnit) {
             occupiedArray.push({ x: wallX, y: wallPartY });
         }
-        for (let wallPartY = wallTwoStartY; wallPartY < wallTwoStartY+wallTwoHeight; wallPartY += screenUnit) {
+        for (
+            let wallPartY = wallTwoStartY;
+            wallPartY < wallTwoStartY + wallTwoHeight;
+            wallPartY += screenUnit
+        ) {
             occupiedArray.push({ x: wallX, y: wallPartY });
         }
     };
@@ -260,12 +272,8 @@
      * @type {Level[]}
      */
     const levels = [levelNone, levelOne, levelTwo, levelThree]; //to hold methods and variables of levels
-    
-    (function setup() {
-        levels[currentLevel].beforeLevel();
-        placeSnake();
-        apple.onload = placeApple;
-        render();
+
+    function gameSetup() {
         document.addEventListener('keydown', event => {
             switch (
                 event.keyCode // note, keyCode is DEPRECATED
@@ -277,5 +285,32 @@
                 direction = event.keyCode;
             }
         });
+        nextLevel();
+    }
+
+    (function preGame() {
+        $('#level_picker').prop('max',`${levels.length-1}`).on('change', amountChange);
+        $('#speed_picker').on('change', speedChange);
+        $('#go').on('click', startGame);
+        function amountChange() {
+            levelSpan.text(this.value);
+        }
+        function speedChange(){
+            const speedSpan = $('#speed');
+            const speed = parseInt(this.value);
+            if(speed === 1){
+                speedSpan.text('normal');
+            }else if(speed === 2){
+                speedSpan.text('fast');
+            }else if(speed === 3){
+                speedSpan.text('very fast');
+            }
+        }
+        function startGame() {
+            $('#picker_div').hide();
+            currentLevel = $('#level_picker').val();
+            levels[currentLevel].speed = 600 - (($('#speed_picker').val()-1)*200);
+            gameSetup();
+        }
     })();
 })();
