@@ -1,24 +1,6 @@
 /*global $*/
 (function() {
     'use strict';
-    class Level {
-        constructor(levelNum, passScore) {
-            /**
-             * @type {number}
-             */
-            this.levelNum = levelNum;
-            this.passScore = passScore;
-            /**
-             * how many mllsec per move at begining of level
-             */
-            this.speed = 600;
-        }
-        beforeLevel() {}
-        beforeSnakeMove() {}
-        afterSnakeMove() {}
-        ateApple() {}
-    }
-
     const gameInfo = $('#game_info');
     const canvas = document.getElementById('theCanvas');
     const context = canvas.getContext('2d');
@@ -33,6 +15,7 @@
     let score = 0;
 
     let levelScore = 0;
+    let baseSpeed = 600;
     let gameSpeed;
     let currentLevel = 1;
 
@@ -84,20 +67,7 @@
         levels[currentLevel].beforeSnakeMove();
 
         gameRunning = setInterval(() => {
-            switch (direction) {
-            case LEFT:
-                headX -= screenUnit;
-                break;
-            case UP:
-                headY -= screenUnit;
-                break;
-            case RIGHT:
-                headX += screenUnit;
-                break;
-            case DOWN:
-                headY += screenUnit;
-                break;
-            }
+            setNewSnakePosition();
 
             levels[currentLevel].afterSnakeMove();
 
@@ -130,12 +100,12 @@
                     return;
                 }
                 placeApple();
-                clearInterval(gameRunning);
-                if (gameSpeed >= 100) {
+                if (gameSpeed >= 80) {
                     gameSpeed -= 50;
+                    clearInterval(gameRunning);
+                    render();
                 }
                 hue += 10;
-                render();
             } else {
                 snakeArray.shift();
             }
@@ -156,6 +126,25 @@
             appleY = appleY - (appleY % screenUnit);
         } while (occupied(appleX, appleY));
         context.drawImage(apple, appleX, appleY, screenUnit, screenUnit);
+    }
+    /**
+     * sets the new position of the snake head, moving it one over in the direction of players last input
+     */
+    function setNewSnakePosition() {
+        switch (direction) {
+        case LEFT:
+            headX -= screenUnit;
+            break;
+        case UP:
+            headY -= screenUnit;
+            break;
+        case RIGHT:
+            headX += screenUnit;
+            break;
+        case DOWN:
+            headY += screenUnit;
+            break;
+        }
     }
     function ateApple() {
         return headX === appleX && headY === appleY;
@@ -185,7 +174,7 @@
         );
     }
     function levelComplete() {
-        return levels[currentLevel].passScore === levelScore;
+        return levelScore === levels[currentLevel].passScore;
     }
     function prepForNewLevel() {
         clearInterval(gameRunning);
@@ -203,6 +192,7 @@
         if (levels.length - 1 === currentLevel) {
             gameWon();
         } else {
+            levels[currentLevel].levelWon();
             currentLevel++;
             nextLevel();
         }
@@ -210,7 +200,7 @@
     function nextLevel() {
         prepForNewLevel();
         levels[currentLevel].beforeLevel();
-        gameSpeed = levels[currentLevel].speed;
+        gameSpeed = baseSpeed - levels[currentLevel].speed;
         placeSnake();
         placeApple();
         render();
@@ -219,13 +209,45 @@
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-    const levelNone = new Level(0, 0);
-    const levelOne = new Level(1, 11);
-    const levelTwo = new Level(2, 10);
-    const levelThree = new Level(3, 11);
-    levelTwo.speed = 570;
+    /**
+     * to hold methods and variables of levels
+     * @type {Level[]}
+     */
+    const levels = [];
+    class Level {
+        /**
+         * To construct a Level
+         * @param {number} levelNum the number of the level
+         * @param {number} passScore the score that must be accrued in this level to move on to the next level
+         * @param {number} speed how many mllsec to subtract from base speed per turn
+         */
+        constructor(levelNum, passScore, speed = 0) {
+            /**
+             * @type {number}
+             */
+            this.levelNum = levelNum;
+            this.passScore = passScore;
+            /**
+             * how many mllsec to subtract from base speed
+             */
+            this.speed = speed;
+            this.stuff = {};
+            levels[levelNum] = this;
+        }
+        beforeLevel() {}
+        beforeSnakeMove() {}
+        afterSnakeMove() {}
+        ateApple() {}
+        levelWon() {}
+    }
+
+    new Level(0, -1, 350);
+    new Level(1, 11);
+    const levelTwo = new Level(2, 10, 30);
+    const levelThree = new Level(3, 11, 60);
+    const levelFour = new Level(4, 10, 70);
     levelTwo.beforeLevel = function() {
-        const unitsFromEdge = 4;
+        const unitsFromEdge = 5;
         const horizontalWallStartX = screenUnit * unitsFromEdge;
         const horizontalWallStartY = Math.floor(canvasHeight / 2) * screenUnit;
         const horizontalWallLength = canvasWidth * screenUnit - screenUnit * (unitsFromEdge * 2);
@@ -241,7 +263,6 @@
             occupiedArray.push({ x: wallPartX, y: horizontalWallStartY });
         }
     };
-    levelThree.speed = 540;
     levelThree.beforeLevel = function() {
         const unitsBtwnWalls = 3;
         const wallOneHeight = Math.floor((canvasHeight - unitsBtwnWalls) / 2) * screenUnit;
@@ -267,11 +288,79 @@
             occupiedArray.push({ x: wallX, y: wallPartY });
         }
     };
-    /**
-     * to hold methods and variables of levels
-     * @type {Level[]}
-     */
-    const levels = [levelNone, levelOne, levelTwo, levelThree]; //to hold methods and variables of levels
+    levelFour.stuff = {
+        gateBrightness: 50,
+        gateColor: `hsl(60,100%,${levelFour.gateBrightness}%)`,
+
+        gateColorThrob() {
+            const stuff  = levelFour.stuff;
+            let brightness = true;
+            if (stuff.gateBrightness >= 70 || stuff.gateBrightness<=10) {
+                brightness =!brightness;
+            }
+            if(brightness){
+                stuff.gateBrightness += 5;
+            }else{
+                stuff.gateBrightness -= 5;
+            }
+            stuff.gateColor = `hsl(60,100%,${stuff.gateBrightness}%)`;
+            stuff.gates.forEach(gate => {
+                context.beginPath();
+                context.rect(gate.x, gate.y, screenUnit, screenUnit);
+                context.fillStyle = stuff.gateColor;
+                context.fill();
+            });
+        },
+    };
+    levelFour.beforeLevel = function() {
+        const stuff = this.stuff;
+        const fullVerticalWallHeight = canvasHeight * screenUnit;
+        const wallX = Math.floor(canvasWidth / 2) * screenUnit;
+        context.beginPath();
+        context.rect(wallX, 0, screenUnit, fullVerticalWallHeight);
+        context.fillStyle = 'black';
+        context.fill();
+        for (let wallPartY = 0; wallPartY < fullVerticalWallHeight; wallPartY += screenUnit) {
+            occupiedArray.push({ x: wallX, y: wallPartY });
+        }
+        const gateOneSpot = {
+            x: Math.floor(canvasWidth / 4) * screenUnit,
+            y: Math.floor(canvasHeight / 2) * screenUnit,
+        };
+        const gateTwoSpot = {
+            x: Math.floor(canvasWidth * (3 / 4)) * screenUnit,
+            y: Math.floor(canvasHeight / 2) * screenUnit,
+        };
+        stuff.gates =[gateOneSpot,gateTwoSpot];
+        stuff.gates.forEach(gate=>{
+            occupiedArray.push(gate);
+        });
+        context.beginPath();
+        context.rect(gateOneSpot.x, gateOneSpot.y, screenUnit, screenUnit);
+        context.fillStyle = 'yellow';
+        context.fill();
+        context.beginPath();
+        context.rect(gateTwoSpot.x, gateTwoSpot.y, screenUnit, screenUnit);
+        context.fillStyle = 'yellow';
+        context.fill();
+        stuff.intrvl = setInterval(stuff.gateColorThrob,150);
+    };
+    levelFour.afterSnakeMove = function() {
+        const gates = levelFour.stuff.gates;
+        gates.some((entrance,i)=>{
+            const bool = headX === entrance.x && headY === entrance.y;
+            if(bool){
+                const exit = gates[(gates.length-1)-i];
+                headX = exit.x;
+                headY = exit.y;
+                setNewSnakePosition();
+            }
+            return bool;
+        });
+    };
+    levelFour.levelWon=function(){
+        clearInterval(levelFour.stuff.intrvl);
+    };
 
     function gameSetup() {
         document.addEventListener('keydown', event => {
@@ -289,27 +378,35 @@
     }
 
     (function preGame() {
-        $('#level_picker').prop('max',`${levels.length-1}`).on('change', amountChange);
+        $('#level_picker')
+            .prop('max', `${levels.length - 1}`)
+            .on('change', amountChange);
         $('#speed_picker').on('change', speedChange);
         $('#go').on('click', startGame);
+        $('#freePlay').on('click',()=>{
+            $('#picker_div').hide();
+            $('#level').text('Free Play');
+            currentLevel = 0;
+            gameSetup();
+        });
         function amountChange() {
             levelSpan.text(this.value);
         }
-        function speedChange(){
+        function speedChange() {
             const speedSpan = $('#speed');
             const speed = parseInt(this.value);
-            if(speed === 1){
+            if (speed === 1) {
                 speedSpan.text('normal');
-            }else if(speed === 2){
+            } else if (speed === 2) {
                 speedSpan.text('fast');
-            }else if(speed === 3){
+            } else if (speed === 3) {
                 speedSpan.text('very fast');
             }
         }
         function startGame() {
             $('#picker_div').hide();
             currentLevel = $('#level_picker').val();
-            levels[currentLevel].speed = 600 - (($('#speed_picker').val()-1)*200);
+            baseSpeed = 600 - ($('#speed_picker').val() - 1) * 200;
             gameSetup();
         }
     })();
