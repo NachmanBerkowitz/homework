@@ -11,17 +11,19 @@ export default class RecipeName extends Component {
   }
   toggleDets = () => {
     if(!this.state.dets){
-      console.log(this.props.recipe);
     this.setState({dets:<RecipeDetails ingredients={this.props.recipe}/>})
     }else{
       this.setState({dets:null})
     }
   };
   render() {
-    return <div onClick={this.toggleDets} >
+    return (<div>
+    <div onClick={this.toggleDets} >
     <span>{this.props.name}</span>
+    </div>
     {this.state.dets}
-    </div>}
+    </div>)
+  }
 
   }
 

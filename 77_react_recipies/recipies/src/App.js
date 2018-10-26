@@ -8,7 +8,6 @@ async function getRecipes(){
   const recipes = await recipesFetch.json();
   return recipes.recipes;
 }
-let x =1;
 class App extends Component {
   constructor(props) {
     super(props)
@@ -22,11 +21,9 @@ class App extends Component {
   }
   async componentDidMount(){
     const recipes = await getRecipes()
-    console.log(recipes);
     this.setState({recipes:recipes})
   }
   render() {
-    console.log(x++)
 
     return (
       <div className="App" id="app">

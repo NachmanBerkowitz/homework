@@ -10,7 +10,6 @@ export default class RecipeNameList extends Component {
     }
 
     getRecipeNames(){
-      console.log(this.state.recipes);
       return this.state.recipes.map(recipe=><RecipeName name={recipe.name} key={recipe.id} recipe={recipe.ingredients}/>)
     }
     

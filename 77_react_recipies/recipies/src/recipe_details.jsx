@@ -23,7 +23,7 @@ export default class RecipeDetails extends Component {
   }
 
   getRecipe(){
-      return this.state.ingredients.map(ingr=><IngredientDets ingredient={ingr.ingredient} amount={ingr.amount}/>)
+      return this.state.ingredients.map(ingr=><IngredientDets key={ingr.ingredient} ingredient={ingr.ingredient} amount={ingr.amount}/>)
   }
 
   render() {
