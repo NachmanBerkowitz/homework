@@ -14,16 +14,10 @@ function IngredientDets(props) {
   );
 }
 export default class RecipeDetails extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      ingredients: this.props.ingredients
-    };
-  }
+  
 
   getRecipe(){
-      return this.state.ingredients.map(ingr=><IngredientDets key={ingr.ingredient} ingredient={ingr.ingredient} amount={ingr.amount}/>)
+      return this.props.ingredients.map(ingr=><IngredientDets key={ingr.ingredient} ingredient={ingr.ingredient} amount={ingr.amount}/>)
   }
 
   render() {

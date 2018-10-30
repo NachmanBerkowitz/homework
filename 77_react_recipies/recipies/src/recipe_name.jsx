@@ -9,11 +9,13 @@ export default class RecipeName extends Component {
       dets:null
     };
   }
+  
   toggleDets = () => {
     if(!this.state.dets){
-    this.setState({dets:<RecipeDetails ingredients={this.props.recipe}/>})
+    this.setState({dets:<RecipeDetails ingredients={this.props.recipe}/>});
+    this.props.display(this.props.recipe);
     }else{
-      this.setState({dets:null})
+      this.setState({dets:null});
     }
   };
   render() {

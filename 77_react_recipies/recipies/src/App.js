@@ -13,7 +13,6 @@ class App extends Component {
     super(props)
     
     this.state = {
-      // recipes : require('./recipes.json').recipes
       recipes:[]
     }
     
@@ -21,7 +20,7 @@ class App extends Component {
   }
   async componentDidMount(){
     const recipes = await getRecipes()
-    this.setState({recipes:recipes})
+    this.setState({recipes})
   }
   render() {
 
