@@ -15,7 +15,8 @@ export default class ZipInput extends Component {
   };
 
   validateZip(num) {
-    return num.length === 5 && !isNaN(parseInt(num));
+    return /\d{5}/.exec(parseInt(num));
+    // num.length === 5 &&   !isNaN();
   }
   
   handleSubmit = event => {
@@ -32,6 +33,7 @@ export default class ZipInput extends Component {
         <form action="">
           <label htmlFor="zipInput">Enter a Zip Code. Get the weather!</label>
           <input
+            value={this.state.zipInput}
             type="text"
             placeholder="00000"
             id="zipInput"

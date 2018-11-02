@@ -17,7 +17,8 @@ export default class Weather extends Component {
     const weather = await data.json();
     console.log(weather);
     if(weather.cod === 200){
-    this.setState({current:{weather:weather.main.temp,
+      document.title = weather.name;
+      this.setState({current:{weather:weather.main.temp,
       city:weather.name}})
     }else{
       this.setState({current:{weather:'',
@@ -26,6 +27,7 @@ export default class Weather extends Component {
   }
 
   render() {
+    
     return (
       <div>
         <ZipInput updateCurrentZip={
