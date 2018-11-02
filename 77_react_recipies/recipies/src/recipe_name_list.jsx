@@ -19,12 +19,13 @@ export default class RecipeNameList extends Component {
     setDets=(recipe)=>{
       this.setState({currentRecipe:recipe})
     }
+
     render() {
 
     return (
       <div>
         {this.getRecipeNames()}
-        <RecipeDetails ingredients={this.state.currentRecipe} display={this.setDets}/>
+        <RecipeDetails ingredients={this.state.currentRecipe}/>
       </div>
     )
   }
