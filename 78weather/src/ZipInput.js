@@ -16,7 +16,6 @@ export default class ZipInput extends Component {
 
   validateZip(num) {
     return /\d{5}/.exec(parseInt(num));
-    // num.length === 5 &&   !isNaN();
   }
   
   handleSubmit = event => {
