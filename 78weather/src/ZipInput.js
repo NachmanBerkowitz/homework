@@ -9,7 +9,7 @@ export default class ZipInput extends Component {
     const target = event.target;
     let value = target.type === 'checkbox' ? target.checked : target.value;
     console.log(value);
-    if(!value||!this.validateIsDigit(value[value.length-1])){
+    if(value && !this.validateIsDigit(value[value.length-1])){
       value = this.state.zipInput;
     }
     this.setState({
@@ -23,15 +23,15 @@ export default class ZipInput extends Component {
   }
 
   validateZip(num) {
-    return num.split('').every(char=>this.validateIsDigit(char));
+    return num.length === 5 && num.split('').every(char=>this.validateIsDigit(char));
   }
   
   handleSubmit = event => {
     const zip = this.state.zipInput;
     if (this.validateZip(zip)) {
       this.props.updateCurrentZip(zip);
+      event.preventDefault();
     }
-    event.preventDefault();
   };
 
   render() {
