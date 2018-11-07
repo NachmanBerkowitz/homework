@@ -9,13 +9,13 @@ export default class ZipInput extends Component {
     const target = event.target;
     let value = target.type === 'checkbox' ? target.checked : target.value;
     console.log(value);
-    if(value && !this.validateIsDigit(value[value.length-1])){
+    if(!value.split('').every(char=>this.validateIsDigit(char))){
       value = this.state.zipInput;
     }
-    this.setState({
+    this.setState({ 
       zipInput: value
     });
-  
+    console.log(this.state.zipInput);
   };
 
   validateIsDigit(char){
