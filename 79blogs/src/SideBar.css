@@ -1,0 +1,14 @@
+#sidebar{
+    padding:2em;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    position: sticky;
+    top:0;
+    grid-area: side;
+    color:var(--home_color);
+}
+#sidebar, .user_name, .co_name{
+    color:var(--home_color);
+}
+#sideInfo p{
+    font-size: 2em;
+}

@@ -1,0 +1,5 @@
+#home{
+    display: grid;
+    grid-template-areas: "u u";
+    grid-auto-columns: 1fr 1fr;
+}

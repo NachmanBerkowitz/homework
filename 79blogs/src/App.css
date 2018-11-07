@@ -1,0 +1,14 @@
+:root{
+    --home_color:blue;
+    --blogs_color:green;
+}
+#grid{
+    display:grid;
+    grid-template: "nav  nav  nav" 3em
+                   "main main side" minmax(33em, auto)
+                   /2fr  2fr 1fr;
+}
+.link{
+    color:var(--home_color);
+    cursor: pointer;
+}

@@ -1,0 +1,6 @@
+#homeButton{
+    text-decoration: underline;
+    color:rgb(173, 150, 250);
+    font-size: 2em;
+    cursor:pointer;
+}

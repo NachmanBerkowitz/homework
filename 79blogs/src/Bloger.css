@@ -1,0 +1,19 @@
+.bloger_name, .co_name{
+    color:var(--home_color);
+}
+.bloger{
+    border: 1px solid black;
+    padding: 2em;
+    overflow: hidden;
+}
+.bloger .company{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+.bloger a{
+    float: right;
+}
+.bloger p{
+    margin-bottom: .2em;
+    font-size: 1.2em;
+}
