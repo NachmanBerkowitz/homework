@@ -11,7 +11,6 @@ componentDidMount(){
 }
 
   render() {
-    
     return (
       <div id="home">
         {this.props.blogers.map((bloger)=><Bloger bloger={bloger} key={bloger.id} showBlogs={this.props.showBlogs}/>)}

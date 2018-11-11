@@ -4,11 +4,10 @@
     position: sticky;
     top:0;
     grid-area: side;
-    color:var(--home_color);
-}
-#sidebar, .user_name, .co_name{
-    color:var(--home_color);
 }
 #sideInfo p{
     font-size: 2em;
+}
+#homeSide{
+    color: var(--home_color);
 }

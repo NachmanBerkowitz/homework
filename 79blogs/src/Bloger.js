@@ -6,13 +6,11 @@ export default class Bloger extends Component {
     bloger={
         ...this.props.bloger
     }
-    showBlogs=()=>{
-        this.props.showBlogs(this.bloger.id);
-    }
-    render() {
-    const {username:blogername,website,company} = this.bloger;
     
+    render() {
+    const {name:blogername,website,company,id} = this.bloger;
     return (
+        company&&
     <div className="bloger">
     <h3 className="bloger_name">{blogername}</h3>
     <div className="company">
@@ -21,11 +19,11 @@ export default class Bloger extends Component {
         <span className="cf">{company.catchPhrase}</span>
     </div>
     <span><i>{website}</i></span><br/>
-    <Link to={{pathname:`/blogs`,
+    <Link to={{pathname:`/blogs/${id}`,
                 search:`name=${blogername}`,
-                state:{...this.bloger}}} 
+                state:{bloger:this.bloger}
+            }} 
                 >see my blogs</Link>
-    {/* <span className="link" onClick={this.showBlogs}></span> */}
 </div>
     )
 }

@@ -1,8 +1,8 @@
 import React from 'react'
+import './Blog.css'
 
 export default function Blog(props){
     const {title,body,id}=props.blogInfo;
-    console.log(props);
     const blogNum = (id - props.firstBlogId) + 1;
   return (
     

@@ -1,0 +1,9 @@
+.show_comments{
+    text-align: center;
+}
+.show_comments span{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: rgba(0,126,0,.5);
+    border-radius: 2em;
+    padding: 0 .5em 0 .5em ;
+}

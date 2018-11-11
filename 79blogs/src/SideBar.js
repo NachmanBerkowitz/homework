@@ -1,5 +1,5 @@
 import React from 'react'
-import BlogerInfo from './BlogerInfo';
+import BlogerInfoSide from './BlogerInfoSide';
 import HomeButton from './HomeButton';
 import MissionStatement from './MissionStatement';
 import './SideBar.css';
@@ -13,7 +13,7 @@ export default function SideBar(props) {
         <MissionStatement/>
         <div id="sideInfo">
             {props.showing.home && <HomePageSide/>}
-            <Route path="/blogs" component={BlogerInfo}/>
+            <Route path="/blogs/:blogerID" render={(p)=><BlogerInfoSide {...p} actions={props.actions}/>}/>
         </div>
     </div>
   )
