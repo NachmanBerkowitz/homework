@@ -1,0 +1,42 @@
+{
+  "recipes": [
+    {
+      "name": "candy",
+      "id": 1,
+      "ingredients": [
+        {
+          "ingredient": "sugar",
+          "amount": "alot"
+        },
+        {
+          "ingredient": "salt",
+          "amount": "not so much"
+        },
+        {
+          "ingredient": "everything else",
+          "amount": "to taste"
+        }
+      ],
+      "directions":"mix ingredients. Enjoy!"
+    },
+    {
+      "name": "health food",
+      "id": 2,
+      "ingredients": [
+        {
+          "ingredient": "disgusting stuff",
+          "amount": "alot"
+        },
+        {
+          "ingredient": "salt",
+          "amount": "not so much"
+        },
+        {
+          "ingredient": "everything else",
+          "amount": "to taste"
+        }
+      ],
+      "directions":"Mix ingredients. Be healthy!"
+    }
+  ]
+}
