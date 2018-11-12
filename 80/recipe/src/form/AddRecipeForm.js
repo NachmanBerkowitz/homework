@@ -2,23 +2,27 @@ import React, { Component } from 'react'
 import IngredientAndAmount from './IngredientAndAmount';
 import DirectionsInput from './DirectionsInput';
 import NameInput from './NameInput';
+import { Redirect } from 'react-router-dom';
 
 export default class AddRecipeForm extends Component {
   state={
     name:'',
     ingredientAndAmountInputs:[{id:0,ingredient:'',amount:''}],
-    directions:''
+    directions:'',
+    submitted:false
   }
   displayIngredientAndAmountInputs(){
     return this.state.ingredientAndAmountInputs
     .map((input)=><IngredientAndAmount removeInput={this.removeInput} key={input.id} id={input.id}
-     disableRemoveButton={this.state.ingredientAndAmountInputs.length>1?false:true}
-     handleIngredientAndAmountChange={this.handleIngredientAndAmountChange}/>)
+     disableRemoveButton={this.state.ingredientAndAmountInputs.length===1}
+     handleIngredientAndAmountChange={this.handleIngredientAndAmountChange}
+     ingredientValue={input.ingredient}
+     amountValue={input.amount}/>)
   }
   addInputs=()=>{
-    const newInputId = this.state.ingredientAndAmountInputs.length;
     const tempIngredientAndAmountInputs = this.state.ingredientAndAmountInputs.slice();
-    tempIngredientAndAmountInputs.push({id:newInputId,ingredientValue:'',amountValue:''});
+    const newInputId = tempIngredientAndAmountInputs.length;
+    tempIngredientAndAmountInputs.push({id:newInputId,ingredient:'',amount:''});
     this.setState({amountOfIngredientInputs:newInputId,ingredientAndAmountInputs:tempIngredientAndAmountInputs});
   }
   removeInput=(id)=>{
@@ -39,7 +43,6 @@ export default class AddRecipeForm extends Component {
     handleIngredientAndAmountChange=(id,name,value)=>{
       const tempIngredientAndAmountInputs = this.state.ingredientAndAmountInputs.slice();
       const ingredientAndAmountTemp = this.getIngredientAndAmountCopybyId(id);
-      console.log(id);
       ingredientAndAmountTemp[name]=value;
       tempIngredientAndAmountInputs[id]=ingredientAndAmountTemp;
       this.setState({ingredientAndAmountInputs:tempIngredientAndAmountInputs})
@@ -51,17 +54,22 @@ export default class AddRecipeForm extends Component {
                       ingredients:ingredients,
                       directions:form.directions};
       this.props.updateRecipes(recipe);
+      this.setState({submitted:true})
     }
   
   render() {
     return (
+      !this.state.submitted 
+      ?
       <div>
-        <NameInput handleInputChange={this.handleInputChange}/><br/>
+        <NameInput value={this.state.name} handleInputChange={this.handleInputChange}/><br/>
         {this.displayIngredientAndAmountInputs()}
-        <button onClick={this.addInputs}>add ingredient</button>
-        <DirectionsInput handleInputChange={this.handleInputChange}/>
-        <button onClick={this.submit}>submit</button>
+        <button onClick={this.addInputs} disabled={this.state.ingredientAndAmountInputs.length >= 20}>add ingredient</button>
+        <DirectionsInput value={this.state.directions} handleInputChange={this.handleInputChange}/>
+        <button onClick={this.submit}>submit </button>
       </div>
+      :
+      <Redirect to="/recipe-book"/>
     )
   }
 }

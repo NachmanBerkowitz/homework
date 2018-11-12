@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-export default class NameInput extends Component {
+export default class NameInput extends PureComponent {
     state = {
         changes: 0,
       };

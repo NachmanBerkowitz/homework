@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-export default class AmountInput extends Component {
+export default class AmountInput extends PureComponent {
   state = {
     changes: 0,
   };
@@ -14,7 +14,7 @@ export default class AmountInput extends Component {
 
   render() {
     return (
-        <label htmlFor="">Amount:<input type="text" name="amount" value={this.props.value} onChange={this.handleInputChange} /></label>
+        <label htmlFor="">Amount:<input type="text" maxLength="100" name="amount" value={this.props.value} onChange={this.handleInputChange} /></label>
     );
   }
 }

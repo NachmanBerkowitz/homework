@@ -23,7 +23,10 @@ export default class RecipeDetails extends Component {
     fetch('/recipes.json')
       .then(data => data.json())
       .then(recipes => {
-        const recipe = recipes.recipes.find(recipe => recipe.id === parseInt(this.props.match.params.id));
+        let recipe = recipes.recipes.find(recipe => recipe.id === parseInt(this.props.match.params.id));
+        if(!recipe){
+          recipe = this.props.getRecipes().find(recipe => recipe.id === parseInt(this.props.match.params.id));
+        }
         this.setState({ recipe });
       });
   }

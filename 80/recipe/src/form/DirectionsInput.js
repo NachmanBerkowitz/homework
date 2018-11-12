@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-export default class DirectionsInput extends Component {
+export default class DirectionsInput extends PureComponent {
 
     state={
         changes:0
@@ -16,7 +16,7 @@ export default class DirectionsInput extends Component {
   render() {
     return (
       <div>
-          <textarea name="directions" placeholder="Recipe Directions..."cols="30" rows="10"></textarea>
+          <textarea onChange={this.handleInputChange} name="directions" value={this.props.value} placeholder="Recipe Directions..."cols="100" rows="10"></textarea>
       </div>
     )
   }

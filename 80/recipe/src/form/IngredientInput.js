@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-export default class IngredientInput extends Component {
+export default class IngredientInput extends PureComponent {
   state = {
     changes: 0,
   };
@@ -8,7 +8,6 @@ export default class IngredientInput extends Component {
   handleInputChange=(event)=> {
     const target = event.target;
     let value = target.type === 'checkbox' ? target.checked : target.value;
-    console.log(target);
     this.props.handleInputChange(this.props.id,target.name,value);
     this.setState({ changes: this.state.changes + 1 });
   }
