@@ -59,6 +59,14 @@ export default class AddRecipeForm extends Component {
     tempIngredientAndAmountInputs[id] = ingredientAndAmountTemp;
     this.setState({ ingredientAndAmountInputs: tempIngredientAndAmountInputs });
   };
+  startOver=()=>{
+    this.setState({
+      name: '',
+      ingredientAndAmountInputs: [{ id: 0, ingredient: '', amount: '' }],
+      directions: '',
+      submitted: false,
+    })
+  }
   submit = () => {
     const form = document.querySelector('#form');
     const requiredNodeList = form.getElementsByClassName('required');
@@ -126,7 +134,8 @@ export default class AddRecipeForm extends Component {
           add ingredient
         </button>
         <DirectionsInput value={this.state.directions} handleInputChange={this.handleInputChange} />
-        <button onClick={this.submit}>submit </button>
+        <button className="startOver" onClick={this.startOver}>Start Over</button> 
+        <button onClick={this.submit}>Submit </button>
       </div>
     ) : (
       <Redirect to="/recipe-book" />
