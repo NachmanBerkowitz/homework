@@ -1,20 +1,25 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent } from 'react';
 
 export default class IngredientInput extends PureComponent {
-  state = {
-    changes: 0,
-  };
-
-  handleInputChange=(event)=> {
+  handleInputChange = event => {
     const target = event.target;
     let value = target.type === 'checkbox' ? target.checked : target.value;
-    this.props.handleInputChange(this.props.id,target.name,value);
-    this.setState({ changes: this.state.changes + 1 });
-  }
+    this.props.handleInputChange(this.props.id, target.name, value);
+  };
 
   render() {
     return (
-        <label htmlFor="">Ingredient:<input name="ingredient" type="text" maxLength="100" value={this.props.value} onChange={this.handleInputChange} /></label>
+      <label htmlFor="">
+        Ingredient:
+        <input
+          className={this.props.class}
+          name="ingredient"
+          type="text"
+          maxLength="100"
+          value={this.props.value}
+          onChange={this.handleInputChange}
+        />
+      </label>
     );
   }
 }

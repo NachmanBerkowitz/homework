@@ -34,7 +34,7 @@ export default class RecipeDetails extends Component {
   getRecipe() {
     const ingredients = this.state.recipe.ingredients;
     return ingredients.map(ingr => (
-      <IngredientDets key={ingr.ingredient} ingredient={ingr.ingredient} amount={ingr.amount} />
+      <IngredientDets key={ingr.ingredient+ingr.amount} ingredient={ingr.ingredient} amount={ingr.amount} />
     ));
   }
 
@@ -46,7 +46,7 @@ export default class RecipeDetails extends Component {
         {this.getRecipe()}
         <p>{this.state.recipe.directions}</p>
       </div>
-      :null
+      :<h1>Recipe Not Found</h1>
     )
   }
 }
