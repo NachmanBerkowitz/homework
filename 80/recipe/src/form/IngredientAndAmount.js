@@ -15,7 +15,7 @@ export default class IngredientAndAmount extends Component {
           handleInputChange={this.props.handleInputChange}
           class={
             !this.props.ingredientHasValue &&
-            (!this.props.hasValid || this.props.amountHasValue)
+            ((!this.props.hasValid && this.props.id===0)|| this.props.amountHasValue)
               ? 'required'
               : 'unrequired'
           }
@@ -26,7 +26,7 @@ export default class IngredientAndAmount extends Component {
           handleInputChange={this.props.handleInputChange}
           class={
             !this.props.amountHasValue  &&
-            (!this.props.hasValid || this.props.ingredientHasValue)
+            ((!this.props.hasValid && this.props.id===0) || this.props.ingredientHasValue)
               ? 'required'
               : 'unrequired'
           }
