@@ -29,7 +29,7 @@ export default class Main extends Component {
             render={props => (
               <Home
                 {...props}
-                setStateAppShowing={this.props.setStateAppShowing}
+                setAppState={this.props.setAppState}
                 blogers={this.state.blogers}
               />
             )}
@@ -39,8 +39,8 @@ export default class Main extends Component {
             render={props => (
               <Blogs
                 {...props}
-                setStateAppShowing={this.props.setStateAppShowing}
-                actions={this.props.actions}
+                setAppState={this.props.setAppState}
+                sideBarOnclick={this.props.sideBarOnclick}
               />
             )}
           />

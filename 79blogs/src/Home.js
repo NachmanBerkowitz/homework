@@ -7,7 +7,7 @@ export default class Home extends Component {
 
 componentDidMount(){
   
-  this.props.setStateAppShowing('home');
+  this.props.setAppState('showing',{home:true});
 }
 
   render() {

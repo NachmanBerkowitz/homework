@@ -13,7 +13,9 @@ export default function SideBar(props) {
         <MissionStatement/>
         <div id="sideInfo">
             {props.showing.home && <HomePageSide/>}
-            <Route path="/blogs/:blogerID" render={(p)=><BlogerInfoSide {...p} actions={props.actions}/>}/>
+            <Route path="/blogs/:blogerID" render={(p)=><BlogerInfoSide {...p}
+            sideBarOnclick={props.sideBarOnclick}
+            isBlogs={props.isBlogs}/>}/>
         </div>
     </div>
   )

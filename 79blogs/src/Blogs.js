@@ -2,29 +2,27 @@ import React, { Component } from 'react';
 import Blog from './Blog';
 
 export default class Blogs extends Component {
-  state = {
+  constructor(props) {
+    super(props);
+    this.state={
     blogs: [],
     blogGroup: 0,
     amountToShow: 3,
     firstBlogToShow: 0,
   };
-
-  async getBlogs() {
-    const blogerID = this.props.match.params.blogerID;
-    const data = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${blogerID}`);
-    this.setState({ blogs: await data.json(), blogGroup: 1 });
+    const sideBarOnclick = this.props.sideBarOnclick;
+    sideBarOnclick.showNextBlogs = this.nextBlogs;
+    sideBarOnclick.showPreviousBlogs = this.previousBlogs;
+    this.props.setAppState('showing', { blogs: true });
   }
-
-  componentWillMount = async () => {
-    const actions = this.props.actions;
-    actions.nextBlogs = this.nextBlogs;
-    actions.previousBlogs = this.previousBlogs;
-    this.props.setStateAppShowing('blogs');
-    await this.getBlogs();
-  };
-
-  blogsToShow=(start)=> {
-    
+  componentDidMount(){
+    const blogerID = this.props.match.params.blogerID;
+    fetch(`https://jsonplaceholder.typicode.com/posts?userId=${blogerID}`)
+      .then(data => data.json())
+      .then(response => this.setState({ blogs: response}))
+      .then(()=>{this.nextBlogs()});
+  }
+  blogsToShow = start => {
     const blogs = this.state.blogs;
     let blogsToShow = [];
     for (
@@ -34,50 +32,54 @@ export default class Blogs extends Component {
     ) {
       blogsToShow.push(blogs[blog_index]);
     }
-    this.props.actions.sideInfoLoaded&&this.toggleButtonCssClass();
     return blogsToShow;
-  }
+  };
 
-  toggleButtonCssClass=() =>{
-    const { blogGroup, amountToShow, blogs } = this.state;
+  setButtonState = (blogGroup) => {
+    
+    const { amountToShow, blogs } = this.state;
+    const setAppState = this.props.setAppState;
     if (blogGroup > 1) {
-      this.props.actions.previousButton.classList.remove('disabled');
-    }else{
-      this.props.actions.previousButton.classList.add('disabled');
+      setAppState('isPreviousBlogs', true);
+    } else {
+      setAppState('isPreviousBlogs', false);
     }
     if (blogGroup * amountToShow >= blogs.length) {
-      this.props.actions.nextButton.classList.add('disabled');
-    }else{
-      this.props.actions.nextButton.classList.remove('disabled');
+      setAppState('isNextBlogs', false);
+    } else {
+      setAppState('isNextBlogs', true);
     }
-  }
+  };
 
   nextBlogs = () => {
     let { blogGroup, amountToShow, blogs } = this.state;
     if (blogGroup * amountToShow < blogs.length) {
+      const group = blogGroup+1;
       this.setState({
-        blogGroup: blogGroup + 1,
+        blogGroup: group,
         firstBlogToShow: blogGroup * amountToShow,
       });
+      this.setButtonState(group);
     }
   };
 
   previousBlogs = () => {
     let { blogGroup, amountToShow } = this.state;
     if (blogGroup > 1) {
+      const group = blogGroup-1;
       this.setState({
-        blogGroup: blogGroup - 1,
+        blogGroup: group,
         firstBlogToShow: (blogGroup - 2) * amountToShow,
       });
+      this.setButtonState(group);
     }
   };
-  
 
   render() {
     return (
       <>
         {this.blogsToShow(this.state.firstBlogToShow).map(blog => (
-          <Blog blogInfo={blog} firstBlogId={this.state.blogs[0].id} />
+          <Blog key={blog.id} blogInfo={blog} firstBlogId={this.state.blogs[0].id} />
         ))}
       </>
     );

@@ -1,9 +1,45 @@
+.blog h3 span{
+    color:black;
+}
+.blog h3{
+    color:var(--blogs_color);
+    text-transform: capitalize;
+}
+.blog p::first-letter{
+    text-transform: capitalize;
+    font-size:1.5em;
+    color:var(--blogs_color);
+    font-family: 'Times New Roman', Times, serif;
+}
+.blog p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 .show_comments{
     text-align: center;
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
 }
 .show_comments span{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color:var(--blogs_color);
     background-color: rgba(0,126,0,.5);
     border-radius: 2em;
     padding: 0 .5em 0 .5em ;
+}
+.comment{
+    width: 80%;
+    margin:auto;
+}
+.comment kbd{
+    float:right;
+    color:var(--blogs_color);
+}
+.comment cite{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.comment p{
+    font-size: .8em;
+    text-indent: 20px;
 }

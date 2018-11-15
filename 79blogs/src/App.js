@@ -8,21 +8,18 @@ class App extends Component {
 
   state = {
     showing: { home: true },
+    isNextBlogs:false,
+    isPreviousBlogs:false,
   };
 
-  actions = {
-    nextBlogs: undefined,
-    previousBlogs: undefined,
-    previousButton: undefined,
-    nextButton: undefined,
-    sideInfoLoaded:undefined
+  sideBarOnclick = {
+    showNextBlogs: undefined,
+    showPreviousBlogs: undefined,
   };
 
-  setStateAppShowing = page => {
+  setAppState = (key,value) => {
     this.setState({
-      showing: {
-        [`${page}`]: true,
-      },
+      [key]:value
     });
   };
 
@@ -31,8 +28,9 @@ class App extends Component {
     return (
       <div className="App" id="grid">
         <Header />
-        <Main setStateAppShowing={this.setStateAppShowing} actions={this.actions} />
-        <SideBar showing={this.state.showing} actions={this.actions} />
+        <Main setAppState={this.setAppState} sideBarOnclick={this.sideBarOnclick} />
+        <SideBar showing={this.state.showing} sideBarOnclick={this.sideBarOnclick}
+        isBlogs={{isNextBlogs:this.state.isNextBlogs,isPreviousBlogs:this.state.isPreviousBlogs}}/>
       </div>
     );
   }

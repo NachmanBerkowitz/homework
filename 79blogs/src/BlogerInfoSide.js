@@ -3,26 +3,20 @@ import './BlogerInfoSide.css';
 
 
 export default class BlogerInfo extends Component {
-  state = {
-    bloger: null,
-  };
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       bloger: null
+    }
 
-  componentWillMount = async ()=> {
-    
     if (this.props.location.state) {
-      this.setState({ bloger: this.props.location.state.bloger });
+      this.state={ bloger: this.props.location.state.bloger };
     } else {
-      this.setState({bloger: await this.getBlogerInfo()});
+      this.getBlogerInfo().then((data)=>{this.state={bloger:data}})
     }
   }
-
-  componentDidMount(){
-    this.props.actions.previousButton = document.getElementById('previous');
-    this.props.actions.nextButton = document.getElementById('next');
-    this.props.actions.sideInfoLoaded = true;
-  }
   
-
   async getBlogerInfo() {
     const data = await fetch(
       `https://jsonplaceholder.typicode.com/users/${this.props.match.params.blogerID}`,
@@ -31,11 +25,11 @@ export default class BlogerInfo extends Component {
   }
 
   previous = () => {
-    this.props.actions.previousBlogs();
+    this.props.sideBarOnclick.showPreviousBlogs();
   };
 
   next = () => {
-    this.props.actions.nextBlogs();
+    this.props.sideBarOnclick.showNextBlogs();
   };
 
   render() {
@@ -46,23 +40,23 @@ export default class BlogerInfo extends Component {
       name,
       company: { name: company },
     } = this.state.bloger;
-
+    const {isPreviousBlogs,isNextBlogs} = this.props.isBlogs;
     return (
       <div id="blogs_info">
         <p>{name}</p>
         <div>Company: {company}</div>
-        <div className="get_posts">
+        {(isPreviousBlogs||isNextBlogs)&&<div className="get_posts">
           <h3>There's More!</h3>
-          <span id="previous" className="disabled" onClick={this.previous}>
+          <span id="previous" className={isPreviousBlogs?null:'disabled'} onClick={isPreviousBlogs?this.previous:null}>
             {' '}
             previous{' '}
           </span>
           |
-          <span id="next" onClick={this.next}>
+          <span id="next" className={isNextBlogs?null:'disabled'} onClick={isNextBlogs?this.next:null}>
             {' '}
             next{' '}
           </span>
-        </div>
+        </div>}
       </div>
     );
   }

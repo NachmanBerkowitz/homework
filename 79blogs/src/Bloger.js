@@ -15,7 +15,7 @@ export default class Bloger extends Component {
     <h3 className="bloger_name">{blogername}</h3>
     <div className="company">
         <p>Company: <span className="co_name"> {company.name}</span></p>
-        <span className="bs">"{company.bs}"</span>
+        <span className="bs">"{company.bs}" </span>
         <span className="cf">{company.catchPhrase}</span>
     </div>
     <span><i>{website}</i></span><br/>
