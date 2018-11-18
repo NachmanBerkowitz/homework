@@ -44,7 +44,7 @@ export default class AddRecipeForm extends Component {
   };
   getIngredientAndAmountCopybyId(id) {
     const tempIngredientAndAmountInputs = this.state.ingredientAndAmountInputs.slice();
-    return tempIngredientAndAmountInputs.find(input => input.id === id);
+    return {...tempIngredientAndAmountInputs.find(input => input.id === id)};
   }
   storeInSessionStorage() {
     setTimeout(() => (sessionStorage.form = JSON.stringify(this.state)), 0);
