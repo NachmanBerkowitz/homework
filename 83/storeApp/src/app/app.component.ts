@@ -10,6 +10,7 @@ export class AppComponent {
   mockData=mockData;
   selectedDepartmentIndex='Choose...';
   selectedDepartment:Department;
+  addCategory:boolean=false;
   getDepartmentByIndex(int:number):Department{
     return mockData[int];
   }
@@ -19,5 +20,10 @@ export class AppComponent {
   selectDepartment(int:number):void{
     this.selectedDepartment=this.getDepartmentByIndex(int);
   }
-  
+  toggleAddCategory=()=>{
+    this.addCategory=!this.addCategory;
+  }
+  addACategory(name:string){
+    mockData.push({department: { category: name },items:[]})
+  }
 }

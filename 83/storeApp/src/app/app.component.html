@@ -15,7 +15,10 @@
       </option>
     </select>
   </div>
-  <label for="addCategory">Add Category: <button id="addCategory">Add</button></label>
+  <label for="addCategory">Add Category: <button id="addCategory" (click)="toggleAddCategory()">{{!addCategory?'Add':'Go Back'}}</button></label>
+  <div *ngIf="addCategory">
+    <app-new-category-form [addACategory]="addACategory" [toggleAddCategory]="toggleAddCategory"></app-new-category-form>
+  </div>
   <div *ngIf="selectedDepartment">
     <p>Items</p>
     <!-- <app-department-details [items]="selectedDepartment.items"></app-department-details> -->

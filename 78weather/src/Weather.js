@@ -17,7 +17,6 @@ export default class Weather extends Component {
   async fetchWeather(zip){
     const data = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip}&APPID=faee83170cf031bea8f21d2ec064e4d7&units=imperial`)
     const weather = await data.json();
-    console.log(weather);
     if(weather.cod === 200){
       document.title = weather.name;
       this.setState({current:{weather:weather.main.temp,

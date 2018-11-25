@@ -5,6 +5,6 @@
     <span>{{item.price}}</span><br/>
     <button (click)="deleteItem(item)">Delete Item</button>
   </li>
-  <button (click)="addItem.show=true">Add Item</button>
+  <button (click)="addItem.show=!addItem.show">{{!addItem.show?'Add Item':'Go Back'}}</button>
 </ul>
 <app-new-item-form *ngIf="addItem.show" [addItem]="addItem" [items]=items></app-new-item-form>

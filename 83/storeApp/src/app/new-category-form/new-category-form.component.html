@@ -1,0 +1,7 @@
+<form (submit)="$event.preventDefault(); onAddCategory(categoryInput.value);">
+<!--  -->
+
+  <label for="name">Enter category name:  </label>
+  <input required  #categoryInput id="name" name="name" type="text"/>
+  <button>Submit</button>
+</form>

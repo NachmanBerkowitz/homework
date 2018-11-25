@@ -5,12 +5,15 @@ import {FormsModule} from '@angular/forms'
 import { AppComponent } from './app.component';
 import { DepartmentDetailsComponent } from './department-details/department-details.component';
 import { NewItemFormComponent } from './new-item-form/new-item-form.component';
+import { NewCatergoryFormComponent } from './new-catergory-form/new-catergory-form.component';
+import { NewCategoryFormComponent } from './new-category-form/new-category-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DepartmentDetailsComponent,
-    NewItemFormComponent
+    NewItemFormComponent,
+    NewCategoryFormComponent
   ],
   imports: [
     BrowserModule,
