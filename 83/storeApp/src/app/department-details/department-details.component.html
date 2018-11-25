@@ -1,0 +1,10 @@
+<ul>
+  <li *ngFor="let item of items">
+    <span #name>{{item.name}}</span><br/>
+    <span>"{{item.discription}}"</span><br/>
+    <span>{{item.price}}</span><br/>
+    <button (click)="deleteItem(item)">Delete Item</button>
+  </li>
+  <button (click)="addItem.show=true">Add Item</button>
+</ul>
+<app-new-item-form *ngIf="addItem.show" [addItem]="addItem" [items]=items></app-new-item-form>

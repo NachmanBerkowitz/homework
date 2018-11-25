@@ -1,0 +1,19 @@
+<form action="none" #addItem="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">name<input [(ngModel)]="name" id="name" name="name" type="text" class="form-control" required></label>
+  </div>
+  <div class="form-group">
+    <label for="discription" >discription
+        <input id="discription" [(ngModel)]="discription"
+        name="discription"
+       type="text"
+        class="form-control"
+        required>
+</label>
+  </div>
+  <div class="form-group">
+    <label for="price">price<input id="price" [(ngModel)]="price" name="price" type="text" class="form-control" required></label>
+  </div>
+  <br />
+  <button (click)="(onSubmit())" [disabled]="!addItem.form.valid" class="btn btn-success">Submit</button>
+</form>

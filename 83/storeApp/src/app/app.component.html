@@ -1,0 +1,26 @@
+<!-- The content below is only a placeholder and can be replaced. -->
+<form action="">
+  <div class="form-group">
+    <label for="departments-select">Select a department: </label>
+    <select class="form-control"
+      #departmentsSelect
+      name="departments-select"
+      id="departments-select"
+      [(ngModel)]="selectedDepartmentIndex"
+      (change)="selectDepartment($event.target.value)"
+    >
+      <option hidden>Choose...</option>
+      <option *ngFor="let department of mockData;let i=index" value={{i}}>
+        {{ department.department.category }}
+      </option>
+    </select>
+  </div>
+  <label for="addCategory">Add Category: <button id="addCategory">Add</button></label>
+  <div *ngIf="selectedDepartment">
+    <p>Items</p>
+    <!-- <app-department-details [items]="selectedDepartment.items"></app-department-details> -->
+    <app-department-details
+      [items]="getItemsByDepartmentIndex(selectedDepartmentIndex)" [index]="selectedDepartmentIndex"
+    ></app-department-details>
+  </div>
+</form>
