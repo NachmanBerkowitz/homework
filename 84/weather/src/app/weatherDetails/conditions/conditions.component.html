@@ -1,0 +1,4 @@
+<div *ngIf="weatherService.weatherInfo?.weather as conditions">
+  <p *ngFor="let c of conditions">{{c.description}}</p>
+  <p>Humidity: {{weatherService.weatherInfo.main.humidity}}%</p>
+</div>

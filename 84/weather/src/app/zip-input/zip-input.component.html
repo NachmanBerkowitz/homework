@@ -1,0 +1,18 @@
+<form action="">
+  <label for="zipInput">Enter a Zip: <input 
+    #zipInput
+    [(ngModel)]="zip"
+    type="text"
+    placeholder="00000"
+    id="zipInput"
+    name="zipInput"
+    minLength="5"
+    maxLength="5"
+    pattern="\d{5}"
+    required
+    ></label>
+    <button 
+    (click)="handleSubmit($event)">
+      GO
+    </button>
+</form>

@@ -1,0 +1,8 @@
+<h2 >{{locationName}} </h2>
+<div *ngIf="weatherService.weatherInfo" class="nav">
+  <a *ngIf="locationName" [routerLink]="['temperature']">Temperature</a>
+  <a *ngIf="locationName" [routerLink]="['conditions']">Conditions</a>
+  <a *ngIf="locationName" [routerLink]="['wind']">Wind</a>
+</div>
+<router-outlet></router-outlet>
+ 
