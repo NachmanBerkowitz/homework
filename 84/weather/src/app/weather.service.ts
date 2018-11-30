@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ConnectableObservable } from 'rxjs';
+import { Observable, ConnectableObservable, iif } from 'rxjs';
 import { publishReplay } from 'rxjs/operators';
 
 export interface Weather {
     name: string;
-    main:object
+    main: { humidity: string };
+    weather: any[];
+    wind: object;
 }
 
 @Injectable({
@@ -14,49 +16,65 @@ export interface Weather {
 export class WeatherService {
     constructor(private httpClient: HttpClient) {}
 
-    zip: string;
-
-    weatherInfo: Weather;
-    // weatherObserver: ConnectableObservable<any>;
-
-    getWeather(zip?): Promise<Weather> {
-        return new Promise((resolve, reject) => {
-            if (zip && (this.zip !== zip || !this.weatherInfo)) {
-                console.log('FETCHING', zip);
-                this.httpClient
-                    .get<Weather>(
-                    `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&APPID=faee83170cf031bea8f21d2ec064e4d7&units=imperial`,
+    weather = (function(httpClnt: HttpClient) {
+        let zip: string;
+        let weatherInfo;
+        let weatherChanged: Function;
+        let weatherFetchError: Function;
+        let gotWeather = [];
+        const setWeatherInfo = () => {
+            weatherChanged();
+            gotWeather.forEach(func => func());
+            gotWeather = [];
+        };
+        const fetchWeather = (z)=> {
+            httpClnt
+                .get(
+                    `https://api.openweathermap.org/data/2.5/weather?zip=${z}&APPID=faee83170cf031bea8f21d2ec064e4d7&units=imperial`,
                 )
-                    .subscribe(
-                        w => {
-                            console.log(w);
-                            this.weatherInfo = w as Weather;
-                            resolve(this.weatherInfo);
-                        },
-                        err => {
-                            reject(err);
-                        },
-                    );
-            } else {
-                if (this.weatherInfo) {
-                    resolve(this.weatherInfo);
-                }else(reject('no weather info found'))
+                .subscribe(w => {
+                    weatherInfo = w;
+                    setWeatherInfo();
+                },e=>weatherFetchError(e))
+        };
+        const weatherObs = Observable.create(obs => {
+            if (weatherInfo) {
+                obs.next(weatherInfo);
+            }
+            weatherChanged = () => {
+                obs.next(weatherInfo);
+            };
+            weatherFetchError=(e)=>{
+                console.log(e);
+                obs.error(e);
             }
         });
-    }
-    // getWeather(zip) {
-    //   if(this.zip!==zip){
-    //       console.log('FETCHING',zip)
-    //     this.zip=zip;
-    //     // this.weatherObserver=
-    //     this.httpClient.get(
-    //         `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&APPID=faee83170cf031bea8f21d2ec064e4d7&units=imperial`,
-    //     ).subscribe(w=>this.weatherInfo=w);
-    //     // .pipe(publishReplay()) as ConnectableObservable<any>;
-    //     // this.weatherObserver.connect();
-    //   }
-    // //   this.weatherObserver.subscribe(w=>console.log(w));
-    // //   return this.weatherObserver;
-    // return this.weatherInfo;
-    // }
+
+        return {
+            hasWeather: function(): Observable<Weather> {
+                return Observable.create(obs => {
+                    if (weatherInfo) {
+                        obs.next(weatherInfo);
+                        obs.complete();
+                    } else {
+                        gotWeather.push(() => {
+                            obs.next(weatherInfo);
+                            obs.complete();
+                        });
+                    }
+                });
+            },
+            getWeatherObs: (z): Observable<Weather> => {
+                if (z && (z !== zip || !this.weatherInfo)) {
+                    fetchWeather(z);
+                }
+                return weatherObs;
+            },
+            setWeather: (z): Observable<any> => {
+                if (z !== zip || !this.weatherInfo) {
+                    return weatherObs;
+                }
+            },
+        };
+    })(this.httpClient);
 }

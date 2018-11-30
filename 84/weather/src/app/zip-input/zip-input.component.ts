@@ -25,14 +25,13 @@ export class ZipInputComponent {
     handleSubmit(event) {
         const zip = this.zip;
         if (this.validateZip(zip)) {
-            this.weatherService
-                .getWeather(zip)
-                .then(
+            this.weatherService.weather
+                .setWeather(zip)
+                .subscribe(
                     () => this.router.navigate([`/weather/${zip}/temperature`]),
                     () => this.router.navigate(['/weather/error']),
                 );
             this.zip = '';
-            console.log(this.weatherInfo);
             event.preventDefault();
         }
     }

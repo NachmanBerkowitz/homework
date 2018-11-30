@@ -9,8 +9,9 @@ import { WeatherService } from 'src/app/weather.service';
 export class WindComponent implements OnInit {
 
   constructor(private weatherService: WeatherService) {}
-
+  wind;
   ngOnInit() {
+    this.weatherService.weather.hasWeather().subscribe(w=>this.wind=w.wind);
   }
 
 }

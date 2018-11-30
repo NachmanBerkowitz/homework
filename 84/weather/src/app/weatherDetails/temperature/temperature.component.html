@@ -1,5 +1,5 @@
-<div *ngIf="weatherService.weatherInfo?.main as weather">
-    <p>The temperature is: {{weather.temp}}</p>
-    <p>Todays High: {{weather.temp_max}}</p>
-    <p>Todays Low: {{weather.temp_min}}</p>
-  </div>
+<div>
+  <p>The temperature is: {{ temperature?.temp }}</p>
+  <p>Todays High: {{ temperature?.temp_max }}</p>
+  <p>Todays Low: {{ temperature?.temp_min }}</p>
+</div>

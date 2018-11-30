@@ -15,6 +15,7 @@ export class temperatureComponent implements OnInit {
 
   ngOnInit() {
     console.count('TEMP');
+    this.weatherService.weather.hasWeather().subscribe(w=>this.temperature=w.main);
   }
 
 }

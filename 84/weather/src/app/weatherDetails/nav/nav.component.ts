@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WeatherService} from './../../weather.service';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-nav',
@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
     styleUrls: ['./nav.component.css'],
     })
 export class NavComponent implements OnInit {
-    constructor(private route: ActivatedRoute, private weatherService: WeatherService) {}
+    constructor(private route: ActivatedRoute, private weatherService: WeatherService,private router: Router) {}
 
     @Input()
     locationName: string;
@@ -19,8 +19,9 @@ export class NavComponent implements OnInit {
         console.count('NAV');
         this.route.paramMap
         .pipe(
-          map((params: ParamMap)=>this.weatherService.getWeather(params.get('zip')))
+          switchMap((params: ParamMap)=>this.weatherService.weather.getWeatherObs(params.get('zip')))
         )
-        .subscribe(weatherPomise=>weatherPomise.then((w )=>{console.log(w);this.locationName=w.name}));
+        .subscribe((w )=>{console.log(w);this.locationName=w.name},
+        () => this.router.navigate(['/weather/error']));
     }
 }

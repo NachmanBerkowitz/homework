@@ -1,3 +1,3 @@
-<div *ngIf="weatherService.weatherInfo?.wind as wind">
-<p>Wind speed: {{wind.speed}} with gusts of {{wind.gust}}</p>
+<div >
+<p>Wind speed: {{wind?.speed}} <span *ngIf="wind?.gust">with gusts of {{wind.gust}}</span></p>
 </div>
