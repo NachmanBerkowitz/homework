@@ -26,9 +26,9 @@ export class ZipInputComponent {
         const zip = this.zip;
         if (this.validateZip(zip)) {
             this.weatherService.weather
-                .setWeather(zip)
+                .getWeatherObs(zip)
                 .subscribe(
-                    () => this.router.navigate([`/weather/${zip}/temperature`]),
+                    () => this.router.navigate([`/weather/${zip}`]),
                     () => this.router.navigate(['/weather/error']),
                 );
             this.zip = '';

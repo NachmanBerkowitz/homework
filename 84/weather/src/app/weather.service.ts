@@ -37,7 +37,8 @@ export class WeatherService {
                     setWeatherInfo();
                 },e=>weatherFetchError(e))
         };
-        const weatherObs = Observable.create(obs => {
+        const weatherObs = ()=>{
+            return Observable.create(obs => {
             if (weatherInfo) {
                 obs.next(weatherInfo);
             }
@@ -48,7 +49,8 @@ export class WeatherService {
                 console.log(e);
                 obs.error(e);
             }
-        });
+        })
+    };
 
         return {
             hasWeather: function(): Observable<Weather> {
@@ -64,17 +66,13 @@ export class WeatherService {
                     }
                 });
             },
-            getWeatherObs: (z): Observable<Weather> => {
+            getWeatherObs: (z?): Observable<Weather> => {
                 if (z && (z !== zip || !this.weatherInfo)) {
                     fetchWeather(z);
                 }
-                return weatherObs;
+                return weatherObs();
             },
-            setWeather: (z): Observable<any> => {
-                if (z !== zip || !this.weatherInfo) {
-                    return weatherObs;
-                }
-            },
+            
         };
     })(this.httpClient);
 }

@@ -14,7 +14,7 @@ const routes: Routes = [
         children: [
             { path: 'temperature', component: temperatureComponent },
             { path: 'conditions', component: ConditionsComponent },
-            { path: 'wind', component: WindComponent },
+            { path: 'wind', component: WindComponent }
         ],
     },
 ];
