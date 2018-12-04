@@ -1,0 +1,34 @@
+<div id="sidebar">
+  <a [routerLink]="['/']" id="homeButton">MAIN PAGE</a>
+  <app-mission-statement></app-mission-statement>
+  <div id="sideInfo">
+    <div id="blogs_info" *ngIf="blogger">
+      <p>{{ blogger.name }}</p>
+      <div>Company: {{ blogger.company.name }}</div>
+      <div *ngIf="blogsService.isTherePreviousBlogs || blogsService.isThereNextBlogs" class="get_posts">
+        <h3>There's More!</h3>
+        <span
+          id="previous"
+          (click)="blogsService.isTherePreviousBlogs && blogsService.previousBlogs()"
+          [ngClass]="blogsService.isTherePreviousBlogs ? null : 'disabled'"
+        >
+          {{ ' ' }}previous{{ ' ' }}
+        </span>
+        |
+        <span
+          id="next"
+          (click)="blogsService.isThereNextBlogs && blogsService.nextBlogs()"
+          [ngClass]="blogsService.isThereNextBlogs ? null : 'disabled'"
+        >
+          {{ ' ' }}next{{ ' ' }}
+        </span>
+      </div>
+    </div>
+  </div>
+  <!--
+    class={isPreviousBlogs?null:'disabled'}
+    class={isNextBlogs?null:'disabled'}
+    onClick={isPreviousBlogs?this.previous:null}
+    onClick={isNextBlogs?this.next:null}
+  -->
+</div>

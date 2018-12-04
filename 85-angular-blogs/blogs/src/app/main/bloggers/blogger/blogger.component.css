@@ -1,0 +1,14 @@
+.blogger_name, .co_name{
+    color:var(--home_color);
+}
+.blogger .company{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+.blogger a{
+    float: right;
+}
+.blogger p{
+    margin-bottom: .2em;
+    font-size: 1.2em;
+}

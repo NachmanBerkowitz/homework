@@ -1,0 +1,14 @@
+<div class="blogger">
+  <h3 class="blogger_name">{{ blogger.name }}</h3>
+  <div class="company">
+    <p>
+      Company: <span class="co_name"> {{ blogger.company.name }}</span>
+    </p>
+    <span class="bs">"{{ blogger.company.bs }}" </span>
+    <span class="cf">{{ blogger.company.catchPhrase }}</span>
+  </div>
+  <span
+    ><i>{{ blogger.website }}</i></span
+  ><br />
+  <a [routerLink]="['/blogs', blogger.id]">see my blogs</a>
+</div>

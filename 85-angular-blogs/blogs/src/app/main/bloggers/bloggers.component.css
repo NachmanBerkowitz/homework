@@ -1,0 +1,10 @@
+#bloggers{
+    display: grid;
+    grid-template-areas: "u u";
+    grid-auto-columns: 1fr 1fr;
+}
+.blogger{
+    border: 1px solid black;
+    padding: 2em;
+    overflow: hidden;
+}

@@ -1,0 +1,6 @@
+#sideInfo p{
+    font-size: 2em;
+}
+#homeSide{
+    color: var(--home_color);
+}

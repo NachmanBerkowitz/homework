@@ -1,0 +1,11 @@
+<div class="blog">
+  <h3>
+    <span> {{ blogNum }}. </span> <i>{{ blog.title }}</i>
+  </h3>
+  <p>{{ blog.body }}</p>
+  <div class="show_comments">
+    <span (click)="toggleComments()">{{ showingComments ? 'hide comments' : 'show comments' }}</span>
+  </div>
+  <app-comments *ngIf="showingComments" [blogId]="blog.id"></app-comments>
+  <hr />
+</div>
