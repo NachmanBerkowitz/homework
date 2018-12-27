@@ -11,9 +11,10 @@ http.createServer(function(req,res){
             hour : ISOtime.getHours(),
             minute : ISOtime.getMinutes(),
             second : ISOtime.getSeconds()
-        }
-        res.end(JSON.stringify(time))
+        };
+        res.end(JSON.stringify(time));
     }else{
-        res.end(JSON.stringify({unixtime:ISOtime.getTime()}))
+        res.end(JSON.stringify({unixtime:ISOtime.getTime()}));
     }
 }).listen(port);
+
