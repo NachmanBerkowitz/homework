@@ -31,6 +31,7 @@ app.use('/admin', (req, res, next) => {
 });
 app.use('/admin', (req, res) => {
     hfs('..\\admin.html').pipe(res);
+    
 });
 
 app.use((req, res) => {
