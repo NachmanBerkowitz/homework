@@ -18,11 +18,12 @@ router.get('/choices', (req, res) => {
         .on('complete', () => {
             const choices = JSON.parse(bl.toString())
                 .bestMatches.reduce((arry, obj) => {
-                    arry.push(objRewrite(obj));
+                    const newObj = objRewrite(obj);
+                    if (parseFloat(newObj.matchScore) >= 0.5) {
+                        arry.push(newObj);
+                    }
                     return arry;
-                }, [])
-                .filter(obj => parseFloat(obj.matchScore) >= 0.5);
-                console.log(choices);
+                }, []);
             res.render('choices', { choices, key });
         });
 });
