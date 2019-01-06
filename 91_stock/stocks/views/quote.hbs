@@ -1,0 +1,8 @@
+{{#if quote.price}}
+<h2>-{{company}}-</h2>
+<h3>Price: {{quote.price}}</h3>
+<h3>Previous Close: {{quote.previousClose}}</h3>
+<h3>Change: {{quote.changePercent}}</h3>
+{{else}}
+<p>Please try a new search</p>
+{{/if}}

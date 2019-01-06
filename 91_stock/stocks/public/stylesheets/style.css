@@ -1,8 +1,14 @@
 body {
-  padding: 5px;
+  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.choice{
+  height:1.5em;
+  border: .1em black solid;
+  padding: .3em;
 }

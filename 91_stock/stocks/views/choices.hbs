@@ -1,0 +1,16 @@
+{{#if choices}}
+<h3>Here are the closest matches</h3>
+<ol>
+
+{{#choices}}
+<li class="choice">
+    <span>symbol: {{symbol}}  Company name: {{name}}</span>
+  |<a href="/stocks/quote?symbol={{symbol}}&name={{name}}">GO</a>|
+  </li>
+  {{/choices}}
+</ol>
+{{else}}
+<p>
+  We found no similiar symbols to your search. Please try a new symbol.
+</p>
+{{/if}}
