@@ -61,7 +61,7 @@ router
             res.send(results);
         });
     }).put((req,res)=>{
-        db.query('UPDATE contacts SET ? WHERE id = ?',[req.body,req.params.id],(err,results)=>{
+        db.query('UPDATE contacts SET ? WHERE id = ?',[req.body, req.params.id],(err,results)=>{
             res.send(200);
         });
         console.log(req.body);

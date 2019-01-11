@@ -59,7 +59,6 @@
             isUpdated[$(event.target).attr('id')] = true;
         });
         addContactForm.slideDown(1000);
-        $('#formUpdateButton').off();
         $('#formUpdateButton').click(event => {
             const updates = {};
             for (const key in isUpdated) {
@@ -75,10 +74,10 @@
     });
 
     function addContact(newContact) {
+        
         if (!contacts.length) {
             theTableBody.empty();
         }
-
         contacts.push(newContact);
 
         const newRow = $(`<tr>
@@ -123,6 +122,8 @@
 
     function hideAddContactForm() {
         addContactForm.slideUp('slow');
+        $('#formUpdateButton').off();
+        addContactForm.find('input').off();
         addContactForm[0].reset();
     }
 
