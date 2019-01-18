@@ -1,0 +1,25 @@
+[
+{"type":"header","version":"4.8.4","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"nodeuser"},
+{"type":"table","name":"users","database":"nodeuser","data":
+[
+{"id":"1","username":"nb","password":"123","statement":"Hello"},
+{"id":"4","username":"user","password":"677","statement":"0"},
+{"id":"6","username":"bernach4@gmail.com","password":"ass","statement":"0"},
+{"id":"19","username":"Ddav","password":"sfg","statement":"dsgdsg"},
+{"id":"20","username":"frae","password":"afa","statement":"af"},
+{"id":"21","username":"wdwd","password":"wfw","statement":"wfwqf"},
+{"id":"22","username":"WDQD","password":"sgs","statement":"sgsgs"},
+{"id":"23","username":"wed","password":"dwe","statement":"referf"},
+{"id":"24","username":"WSD","password":"AWD","statement":"WEDWD"},
+{"id":"25","username":"daw","password":"awf","statement":"afaf"},
+{"id":"26","username":"ed","password":"dwd","statement":"xtbs"},
+{"id":"27","username":"sCD","password":"scd","statement":"sdcsdvc"},
+{"id":"28","username":"edad","password":"asf","statement":"asfsf"},
+{"id":"29","username":"asx","password":"asd","statement":"asfasf"},
+{"id":"30","username":"as","password":"asf","statement":"asff"},
+{"id":"31","username":"dfsfsdf","password":"321","statement":"dfsdfgd"},
+{"id":"32","username":"gxvgg","password":"433","statement":"drhh"}
+]
+}
+]

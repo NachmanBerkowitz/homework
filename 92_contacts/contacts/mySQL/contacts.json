@@ -1,0 +1,11 @@
+[
+{"type":"header","version":"4.8.4","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"nodeuser"},
+{"type":"table","name":"contacts","database":"nodeuser","data":
+[
+{"id":"1","firstname":"Nachman","lastname":"Berkowitz","email":"bernach4@gmail.com","phone":"6464103346"},
+{"id":"2","firstname":"dsfcA","lastname":"aaaaaa","email":"bernach4@gmail.com","phone":"2222"},
+{"id":"3","firstname":"Nachman","lastname":"Berkowitzsss","email":"bernach4@gmail.com","phone":"6464103346"}
+]
+}
+]
