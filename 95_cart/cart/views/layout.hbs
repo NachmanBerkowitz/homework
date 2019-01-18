@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PCS Store</title>
+    <link rel="shortcut icon" type="image/png" href="/images/nbFavicon.png"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+
+    {{#css}}
+    <link rel="stylesheet" href="stylesheets/{{this}}.css" />
+    {{/css}}
+    <title>PCS Store</title>
+  </head>
+  <body>
+    <div class="container">
+        <header>
+            <h1>PCS Store</h1>
+            <a href="/">shop</a> | <a href="/cart">cart</a>
+        </header>
+        <hr />
+        {{{body}}}
+    </div>
+  </body>
+</html>

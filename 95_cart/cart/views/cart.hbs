@@ -1,0 +1,55 @@
+<h2>Your cart contains</h2>
+{{#if empty}}
+<h1>NOTHING!</h1>
+<h3><a href="/">Fill it up</a></h3>
+{{else}}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>name</td>
+            <td>count</td>
+            <td></td>
+            <td>unit price</td>
+            <td>subtotal</td>
+        </tr>
+    </thead>
+    <tbody>
+        {{#items}}
+        <tr>
+            <td>{{item.name}}</td>
+            <td>
+                <form method="post" action="cart/ammendCart">
+                    <div class="form-row d-flex ">
+                        <input type="hidden" name="id" value={{item.id}} />
+                        <div class="col-auto">
+                            <input type="number" class="form-control mb-2" min="1" value={{count}} name="count">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-2">Apply</button>
+                        </div>
+                    </div>
+                </form>
+            </td>
+            <td>
+                <form method="post" action="cart/removeFromCart">
+                    <div class="form-row d-flex ">
+                        <input type="hidden" name="id" value={{item.id}} />
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-2">Delete Item</button>
+                        </div>
+                    </div>
+                </form>
+            </td>
+            <td>${{item.price}}</td>
+            <td>${{subtotal}}</td>
+
+        </tr>
+        {{/items}}
+    </tbody>
+    <tfoot>
+        <td>grand total</td>
+        <td colspan="3"></td>
+        <td>${{grandTotal}}</td>
+    </tfoot>
+</table>
+{{/if}}
