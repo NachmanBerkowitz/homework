@@ -9,9 +9,9 @@
     const messageInput = $('#messageInput');
     const loginForm = $('#loginForm');
     const messagesContainer = $('#messagesContainer');
-    const messageElem = $('#messages');
-    const messageForm = $('#messageForm');
-    const currentlyTyping = $('#currentlyTyping');
+    const messagesDispalyElem = $('#messagesDisplay');
+    const newMessageForm = $('#newMessageForm');
+    const currentlyTypingDisplayElem = $('#currentlyTypingDisplay');
 
     const typers = {};
 
@@ -28,13 +28,14 @@
         });
     });
 
-    messageForm.submit(e => {
+    newMessageForm.submit(e => {
         e.preventDefault();
         const message = messageInput.val();
+        if(message.trim().length === 0)return;
         const at = parseForAtUserName(message);
         if (at) {
             if (at.spaceIndex === -1 || !message[at.spaceIndex + 1]) {
-                return messageElem.append(
+                return messagesDispalyElem.append(
                     $('<div class="error">Please write a name and message before sending</div>'),
                 );
             }
@@ -42,7 +43,7 @@
                 if (exists) {
                     socket.emit('personalMessage', at.name, message.substring(at.spaceIndex + 1));
                 } else {
-                    messageElem.append($(`<div class="error">No user named ${at.name}</div>`));
+                    messagesDispalyElem.append($(`<div class="error">No user named ${at.name}</div>`));
                 }
             });
         } else {
@@ -56,11 +57,10 @@
     });
     socket.on('someoneIsTyping', name => {
         typers[name] = typers[name] || {};
-        console.log('sit',typers[name]);
         if (typers[name].countdown <= 0 || !typers[name].countdown) {
             const isTypingElem = $(`<div class="isTyping">${name} is typing</div>`);
             typers[name].elem = isTypingElem;
-            currentlyTyping.append(isTypingElem);
+            currentlyTypingDisplayElem.append(isTypingElem);
             let keyupInterval = setInterval(() => {
                 typers[name].countdown--;
                 if (typers[name].countdown <= 0) {
@@ -75,39 +75,39 @@
 
     socket.on('chatters', chatters => {
         let isOtherChatters;
-        const chatterers = $('#chatterers');
-        chatterers.empty();
+        const chatterersDisplayElem = $('#chatterersDisplay');
+        chatterersDisplayElem.empty();
         if (chatters.length) {
             chatters.forEach((c,i) => {
                 if (!user || user.name !== c) {
-                    chatterers.append(`<span> ${c}${chatters[i+1]?',':''} </span>`);
+                    chatterersDisplayElem.append(`<span> ${c}${chatters[i+1]?',':''} </span>`);
                     isOtherChatters = true;
                 }
             });
         }
         if (!isOtherChatters) {
-            chatterers.append('<span> No one else</span>');
+            chatterersDisplayElem.append('<span> No one else</span>');
         }
         $('#send').attr('disabled', !isOtherChatters);
     });
 
     socket.on('loggedIn', thisUser => {
         user = thisUser;
-        $('#userName').text(`User: ${user.name}`);
+        $('#userName').text(`Your user name: ${user.name}`);
     });
 
-    socket.on('message', (msg, personal) => {
-        messageElem.append(`<div>${msg.name} ${personal? personal.personal ? 'privately ' : '' : ''}says: ${msg.msg}</div>`);
-        if (msg.name !== user.name && typers[msg.name].elem) {
+    socket.on('message', (msg, personalObj) => {
+        const personal = personalObj ? personalObj.personal : false;
+        messagesDispalyElem.append(`<div>${personal? '<span class="privateMessage">(Private Message) </span>' : ''}${msg.name} says: ${msg.msg}</div>`);
+        if (typers[msg.name] && typers[msg.name].elem) {
             typers[msg.name].elem.remove();
             typers[msg.name].elem = $();
             typers[msg.name].countdown = 0;
-            console.log(typers[msg.name]);
         }
     });
 
     socket.on('status', msg => {
-        messageElem.append(`<div class="status">${msg}</div>`);
+        messagesDispalyElem.append(`<div class="status">${msg}</div>`);
     });
 
     const parseForAtUserName = string => {

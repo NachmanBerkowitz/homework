@@ -1,4 +1,4 @@
-#messages {
+#messagesDisplay {
     min-height: 300px;
     border: 1px solid black;
     margin-bottom: 1em;
@@ -8,7 +8,7 @@
     width: 90%;
 }
 
-#messageForm button {
+#newMessageForm button {
     float: right;
 }
 
@@ -25,12 +25,16 @@
     color: gray;
 }
 
-#chatterers{
+#chatterersDisplay{
     display:inline-block;
     color:red;
     font-weight: bolder;
 }
 
-#currentlyTyping{
+#currentlyTypingDisplay{
     color:blue;
+}
+.privateMessage{
+    color: green;
+    font-size: .8em;
 }

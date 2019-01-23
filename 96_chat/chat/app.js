@@ -12,7 +12,6 @@ socketIo.on('connection', socket => {
     let name;
     socket.on('login', (data, callback) => {
         const n = data.trim();
-        console.log('in');
         if (!n.length) {
             return callback('Username is required');
         }
