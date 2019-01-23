@@ -1,0 +1,36 @@
+#messages {
+    min-height: 300px;
+    border: 1px solid black;
+    margin-bottom: 1em;
+}
+
+#message {
+    width: 90%;
+}
+
+#messageForm button {
+    float: right;
+}
+
+#messagesContainer {
+    display: none;
+}
+
+.error {
+    color: red;
+}
+
+.status {
+    font-style: italic;
+    color: gray;
+}
+
+#chatterers{
+    display:inline-block;
+    color:red;
+    font-weight: bolder;
+}
+
+#currentlyTyping{
+    color:blue;
+}
