@@ -41,7 +41,9 @@
             }
             socket.emit('checkForUser', at.name, exists => {
                 if (exists) {
-                    socket.emit('personalMessage', at.name, message.substring(at.spaceIndex + 1));
+                    const msg = message.substring(at.spaceIndex + 1);
+                    socket.emit('personalMessage', at.name, msg);
+                    appendMessage({name:user.name,msg},{privateFromMe:at.name});
                 } else {
                     messagesDispalyElem.append($(`<div class="error">No user named ${at.name}</div>`));
                 }
@@ -96,20 +98,11 @@
         $('#userName').text(`Your user name: ${user.name}`);
     });
 
-    socket.on('message', (msg, personalObj) => {
-        const personal = personalObj ? personalObj.personal : false;
-        messagesDispalyElem.append(`<div>${personal? '<span class="privateMessage">(Private Message) </span>' : ''}${msg.name} says: ${msg.msg}</div>`);
-        if (typers[msg.name] && typers[msg.name].elem) {
-            typers[msg.name].elem.remove();
-            typers[msg.name].elem = $();
-            typers[msg.name].countdown = 0;
-        }
-    });
-
+    
     socket.on('status', msg => {
         messagesDispalyElem.append(`<div class="status">${msg}</div>`);
     });
-
+    
     const parseForAtUserName = string => {
         if (string[0] === '@') {
             const spaceIndex = string.indexOf(' ');
@@ -118,4 +111,17 @@
         }
         return false;
     };
+    
+    const appendMessage = (msg, personalObj={}) => {
+        // const personal = personalObj ? personalObj.personal : false;
+        messagesDispalyElem.append(`<div>${personalObj.personal? '<span class="privateMessage">(Private Message) </span>' : ''}
+        ${personalObj.privateFromMe? `<span class="privateMessage">(Private Message to ${personalObj.privateFromMe}) </span>` : ''}
+        <span class="messageName">${msg.name === user.name?'you':msg.name}: </span>${msg.msg}</div>`);
+        if (typers[msg.name] && typers[msg.name].elem) {
+            typers[msg.name].elem.remove();
+            typers[msg.name].elem = $();
+            typers[msg.name].countdown = 0;
+        }
+    };
+    socket.on('message', appendMessage);
 })();

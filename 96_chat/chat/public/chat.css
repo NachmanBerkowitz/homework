@@ -38,3 +38,8 @@
     color: green;
     font-size: .8em;
 }
+.messageName{
+    color: green;
+    font-weight: 500;
+    font-size:1.1em;
+}
