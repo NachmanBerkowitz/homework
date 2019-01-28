@@ -1,0 +1,37 @@
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid black;
+}
+
+label {
+    display: inline-block;
+    width: 40px;
+}
+
+#addContactForm {
+    background-color: lightblue;
+    padding: 8px;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 224px;
+    margin-left: -112px;
+    margin-top: -70px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.formGroup {
+    margin-bottom: 4px;
+}
+
+.buttons {
+    text-align: center;
+}
