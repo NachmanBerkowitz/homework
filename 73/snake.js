@@ -29,6 +29,7 @@
      * the size of the "building blocks" of game. screenUnit * screenUnit px
      */
     const screenUnit = 20;
+
     let headX = 0;
     let headY = 0;
     /**
@@ -46,16 +47,16 @@
     const tempHeight = window.innerHeight - 2 - gameInfo.height();
     canvas.height = tempHeight - (tempHeight % screenUnit);
     /**
-     * width of canvas in screenUnits
+     * width of canvas in `screenUnits`
      */
     const canvasWidth = canvas.width / screenUnit;
     /**
-     * height of canvas in screenUnits
+     * height of canvas in `screenUnits`
      */
     const canvasHeight = canvas.height / screenUnit;
 
     /**
-     * for setInterval
+     * for the return of `setInterval()`
      */
     let gameRunning;
     /**
@@ -132,23 +133,27 @@
      */
     function setNewSnakePosition() {
         switch (direction) {
-        case LEFT:
-            headX -= screenUnit;
-            break;
-        case UP:
-            headY -= screenUnit;
-            break;
-        case RIGHT:
-            headX += screenUnit;
-            break;
-        case DOWN:
-            headY += screenUnit;
-            break;
+            case LEFT:
+                headX -= screenUnit;
+                break;
+            case UP:
+                headY -= screenUnit;
+                break;
+            case RIGHT:
+                headX += screenUnit;
+                break;
+            case DOWN:
+                headY += screenUnit;
+                break;
         }
     }
     function ateApple() {
         return headX === appleX && headY === appleY;
     }
+    /**
+     * Calculate if snake crashed into an obstacle.
+     * @returns {boolean} Returns true if crashed.
+     */
     function crash() {
         return (
             headX < 0 ||
@@ -167,6 +172,12 @@
         clearInterval(gameRunning);
         gameInfo.prepend('<span>GAME WON</span>');
     }
+    /**
+     * Check if a spot is occupied by snake or other obstacles (besides walls).
+     * @param {number} spotX The x of the spot we are checking.
+     * @param {number} spotY The y of the spot we are checking.
+     * @return {boolean} returns true if occupied.
+     */
     function occupied(spotX, spotY) {
         return (
             snakeArray.some(bodyPart => bodyPart.x === spotX && bodyPart.y === spotY) ||
@@ -214,12 +225,16 @@
      * @type {Level[]}
      */
     const levels = [];
+    /**
+     * The level Api to construct the particulars of a level, and to define its lifecycle hooks.
+     * @api
+     */
     class Level {
         /**
          * To construct a Level
          * @param {number} levelNum the number of the level
          * @param {number} passScore the score that must be accrued in this level to move on to the next level
-         * @param {number} speed how many mllsec to subtract from base speed per turn
+         * @param {number} speed how many mllsec to subtract from base speed per turn making the snake move faster.
          */
         constructor(levelNum, passScore, speed = 0) {
             /**
@@ -228,9 +243,12 @@
             this.levelNum = levelNum;
             this.passScore = passScore;
             /**
-             * how many mllsec to subtract from base speed
+             * how many mllsec to subtract from `baseSpeed`, making the snake move faster.
              */
             this.speed = speed;
+            /**
+             * An object containing the particulars of a level. (Obstacles ect.)
+             */
             this.stuff = {};
             levels[levelNum] = this;
         }
@@ -241,11 +259,12 @@
         levelWon() {}
     }
 
-    new Level(0, -1, 350);
-    new Level(1, 11);
+    const infiniteLevel = new Level(0, -1, 350);
+    const levelOne = new Level(1, 11);
     const levelTwo = new Level(2, 10, 30);
     const levelThree = new Level(3, 11, 60);
     const levelFour = new Level(4, 10, 70);
+
     levelTwo.beforeLevel = function() {
         const unitsFromEdge = 5;
         const horizontalWallStartX = screenUnit * unitsFromEdge;
@@ -263,6 +282,7 @@
             occupiedArray.push({ x: wallPartX, y: horizontalWallStartY });
         }
     };
+
     levelThree.beforeLevel = function() {
         const unitsBtwnWalls = 3;
         const wallOneHeight = Math.floor((canvasHeight - unitsBtwnWalls) / 2) * screenUnit;
@@ -293,14 +313,14 @@
         gateColor: `hsl(60,100%,${levelFour.gateBrightness}%)`,
 
         gateColorThrob() {
-            const stuff  = levelFour.stuff;
+            const stuff = levelFour.stuff;
             let brightness = true;
-            if (stuff.gateBrightness >= 70 || stuff.gateBrightness<=10) {
-                brightness =!brightness;
+            if (stuff.gateBrightness >= 70 || stuff.gateBrightness <= 10) {
+                brightness = !brightness;
             }
-            if(brightness){
+            if (brightness) {
                 stuff.gateBrightness += 5;
-            }else{
+            } else {
                 stuff.gateBrightness -= 5;
             }
             stuff.gateColor = `hsl(60,100%,${stuff.gateBrightness}%)`;
@@ -331,8 +351,8 @@
             x: Math.floor(canvasWidth * (3 / 4)) * screenUnit,
             y: Math.floor(canvasHeight / 2) * screenUnit,
         };
-        stuff.gates =[gateOneSpot,gateTwoSpot];
-        stuff.gates.forEach(gate=>{
+        stuff.gates = [gateOneSpot, gateTwoSpot];
+        stuff.gates.forEach(gate => {
             occupiedArray.push(gate);
         });
         context.beginPath();
@@ -343,14 +363,14 @@
         context.rect(gateTwoSpot.x, gateTwoSpot.y, screenUnit, screenUnit);
         context.fillStyle = 'yellow';
         context.fill();
-        stuff.intrvl = setInterval(stuff.gateColorThrob,150);
+        stuff.intrvl = setInterval(stuff.gateColorThrob, 150);
     };
     levelFour.afterSnakeMove = function() {
         const gates = levelFour.stuff.gates;
-        gates.some((entrance,i)=>{
+        gates.some((entrance, i) => {
             const bool = headX === entrance.x && headY === entrance.y;
-            if(bool){
-                const exit = gates[(gates.length-1)-i];
+            if (bool) {
+                const exit = gates[gates.length - 1 - i];
                 headX = exit.x;
                 headY = exit.y;
                 setNewSnakePosition();
@@ -358,7 +378,7 @@
             return bool;
         });
     };
-    levelFour.levelWon=function(){
+    levelFour.levelWon = function() {
         clearInterval(levelFour.stuff.intrvl);
     };
 
@@ -367,11 +387,11 @@
             switch (
                 event.keyCode // note, keyCode is DEPRECATED
             ) {
-            case LEFT:
-            case UP:
-            case RIGHT:
-            case DOWN:
-                direction = event.keyCode;
+                case LEFT:
+                case UP:
+                case RIGHT:
+                case DOWN:
+                    direction = event.keyCode;
             }
         });
         nextLevel();
@@ -383,7 +403,7 @@
             .on('change', amountChange);
         $('#speed_picker').on('change', speedChange);
         $('#go').on('click', startGame);
-        $('#freePlay').on('click',()=>{
+        $('#freePlay').on('click', () => {
             $('#picker_div').hide();
             $('#level').text('Free Play');
             currentLevel = 0;
@@ -405,7 +425,7 @@
         }
         function startGame() {
             $('#picker_div').hide();
-            currentLevel = $('#level_picker').val();
+            currentLevel = +$('#level_picker').val();
             baseSpeed = 600 - ($('#speed_picker').val() - 1) * 200;
             gameSetup();
         }
